@@ -8,3 +8,43 @@
 ';
 
 /* append your custom style below */
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100..900;1,100..900&display=swap');
+@import 'https://pvinis.github.io/iosevka-webfont/7.0.2/iosevka.css';
+
+body {
+	font-family: "Inter Tight", sans-serif;
+  letter-spacing: 0.15px;
+}
+
+#search-results a,h5,h4,h3,h2,h1 {
+	font-family: "Inter Tight", serif;
+}
+
+pre, code, kbd, samp {
+	font-family: "Iosevka Web", monospace;
+}
+
+h1, h1 code {
+  font-weight: 1000;
+}
+
+h2, h2 code {
+  font-weight: 900;
+}
+
+h3, h3 code {
+  font-weight: 800;
+}
+
+h4, h4 code {
+  font-weight: 700;
+}
+
+h5, h5 code {
+  font-weight: 600;
+}
+
+h6, h6 code {
+  font-weight: 500;
+}
