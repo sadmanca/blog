@@ -48,3 +48,221 @@ h5, h5 code {
 h6, h6 code {
   font-weight: 500;
 }
+
+.image-gallery {
+  width: 110%; // Extend beyond 100% width of its parent
+  margin-left: -5%; // Adjust to center the gallery
+  margin-right: -5%; // Adjust to center the gallery
+  display: grid;
+  // --images-per-row: 3;
+  // grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjust minmax for your preferred min width */
+  grid-template-columns: repeat(auto-fit, minmax(calc(100% / var(--images-per-row, 4)), 1fr));
+  justify-items: center;
+  gap: 4px;
+}
+
+.div.content {
+  overflow-x: visible; // Adjust as necessary to handle the overflow
+}
+
+.box {
+  margin: 2px;
+  overflow: visible; /* Ensures that the scaled image on hover doesn't overflow the box */
+  position: relative; /* Added to ensure z-index works correctly */
+  // transition: transform 0.3s ease-in-out, z-index 0s ease 0.3s; /* Adjusted to include z-index transition */
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Add opacity to the transition */
+  z-index: 0; /* Ensure a default z-index is set */
+
+  // display: inline-block; /* Added to limit size to content */
+  // display: inline-flex; // Changed to inline-flex to better fit the image
+  // justify-content: center; // Center the image horizontally
+  // align-items:first baseline; // Center the image vertically
+
+  display: inline-block; /* Changed to inline-block to better fit the image */
+  text-align: center; /* Center the caption text */
+}
+
+.img-wrapper {
+  display: flex;
+  flex-direction: column; /* Ensures caption goes below the image */
+  align-items: center; /* Center the content */
+  // transition: transform 0.3s ease-in-out; /* Ensures the zoom effect is smooth */
+}
+
+.img-gallery {
+  width: 100%;
+  height: auto;
+  object-fit: cover; /* Ensures images cover their area without distorting */
+  // transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Add opacity to the transition */
+}
+
+.box:hover {
+  // transform: scale(1.3);
+  z-index: 9999; /* Bring to front */
+  // box-shadow: 0 0 10px rgba(0,0,0,0.5); /* Optional: Adds a shadow for better visual separation */
+
+  /* Remove the z-index transition delay on hover to make it immediate */
+  // transition: transform 0.3s ease-in-out, z-index 0s ease 0s;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.box:hover .img-gallery {
+  opacity: 1;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.box:hover .img-wrapper {
+  // Removed transform: scale(1.3); to prevent caption zoom
+  // transition: transform 0.3s ease-in-out, z-index 0s ease 0s, opacity 0.3s ease-in-out;
+  transition: z-index 0s ease 0s, opacity 0.3s ease-in-out;
+}
+
+
+.img-caption-container {
+  background-color: white; /* Solid white background for the container */
+  padding: 0 8px 8px 8px; /* Padding around the sides and bottom */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.caption {
+  margin-top: -10px; /* Reduced space between the image and the caption */
+  font-size: 14px;
+  color: #555;
+  background-color: white; /* Solid white background */
+  padding: 12px 8px;
+  border-radius: 4px;
+  position: relative;
+  z-index: 1; /* Lower z-index than the image */
+
+  /* Adjust the white background to start below and extend above the caption */
+  &::before {
+    content: "";
+    position: absolute;
+    top: -48px; /* Negative value to start above and extend below the caption */
+    left: 0;
+    right: 0;
+    height: 60px; /* Adjusted height to ensure part of the background extends above */
+    background-color: white;
+    z-index: -1; /* Ensure it's behind the caption text */
+  }
+}
+
+/* Ensure the image has a higher z-index if not already set */
+.img-gallery {
+  position: relative;
+  z-index: 2; /* Higher z-index to ensure it's above the extended background */
+}
+
+.content img {
+  overflow: hidden; // Contain the zoomed image within its original space
+  display: inline-block; // Necessary for the overflow to work
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; // Smooth transition for the zoom effect and opacity
+  width: 100%; // Ensure the image fills its container
+  position: relative; // Make position relative to allow z-index to work correctly
+  z-index: 1; // Set a higher z-index to ensure it's above most other elements
+
+  &:hover {
+    transform: scale(1.35); // Scale the image up to 135% on hover
+    z-index: 9999; // Ensure the image is in front of all other elements during transition
+  }
+}
+
+.year.lead.d-block::after {
+  transform: translateX(-5px);
+}
+
+.pl-xl-3, .day {
+  font-family: monospace !important;
+}
+
+// ----------------------------------
+
+pre[class*="sql"] {
+  background-color: #f5f5f5; /* Light grey background */
+  color: #333; /* Dark grey text */
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  overflow: auto;
+  font-family: 'Consolas', 'Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-size: 16px;
+}
+
+:root {
+  --sqlime-font-family: monospace;
+  --sqlime-font-size: 0.95em;
+  --sqlime-line-height: 0.9;
+}
+
+.sqlime-example, pre.sql {
+    font-family: var(--sqlime-font-family) !important;
+    font-size: var(--sqlime-font-size) !important;
+    line-height: var(--sqlime-line-height) !important;
+}
+
+.sqlime-example div:nth-child(1), pre.sql div:nth-child(1) {
+    margin: 1em 0;
+}
+
+.sqlime-example div:nth-child(2), pre.sql div:nth-child(2) {
+    margin: 1em 0;
+    padding: 1rem;
+    background-color: rgba(233,236,239,.30);
+    border: 1px solid rgba(233,236,239,.30);
+    border-radius: 0.25rem;
+    max-width: 70em;
+    max-height: 40em;
+    overflow: auto;
+}
+
+.sqlime-example table, pre.sql table {
+    border: 1px solid #000000;
+    line-height: 1;
+    margin-bottom: 0;
+}
+
+.sqlime-example table th, pre.sql table th {
+    vertical-align: top;
+    padding: 0.5em;
+    border-top: none;
+    border-right: none;
+    border-bottom: 1px solid #000000;
+    border-left: none;
+    font-size: 1em;
+    line-height: 1;
+}
+
+.sqlime-example table th:first-child, pre.sql table th:first-child {
+    padding-left: 1em;
+}
+
+.sqlime-example table th:last-child, pre.sql table th:last-child {
+    padding-right: 1em;
+}
+
+.sqlime-example table td, pre.sql table td {
+    vertical-align: top;
+    padding: 0.3em 0.5em;
+    border: none;
+    font-size: 1em;
+    line-height: 1;
+}
+
+.sqlime-example table td:first-child, pre.sql table td:first-child {
+    padding-left: 1em;
+}
+
+.sqlime-example table td:last-child, pre.sql table td:last-child {
+    padding-right: 1em;
+}
+
+.sqlime-example table tr:first-child td, pre.sql table tr:first-child td {
+    padding-top: 0.8em;
+}
+
+.sqlime-example table tr:last-child td, pre.sql table tr:last-child td {
+    padding-bottom: 0.8em;
+}

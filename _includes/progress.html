@@ -1,0 +1,14 @@
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://raw.githack.com/mburakerman/prognroll/master/src/prognroll.min.js"></script>
+
+<script>
+  $(function() {
+    var progressBarColor = "{{ page.progressBarColor | default: '#6953ff' }}";
+
+    $("body").prognroll({
+      height: 4, // progress bar height
+      color: progressBarColor, // progress bar background color
+      custom: false // if you make it true, you can add your custom div and see its scroll progress on the page
+    });
+  });
+</script>

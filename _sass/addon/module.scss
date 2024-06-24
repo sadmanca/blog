@@ -55,8 +55,8 @@
 }
 
 %link-hover {
-  color: #6953ff !important;
-  border-bottom: 2px solid  #6953ff;
+  color: #014791 !important;
+  border-bottom: 1px solid  #014791;
   text-decoration: none;
 }
 
@@ -118,7 +118,7 @@
   display: -webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3 !important;
   -webkit-box-orient: vertical;
 }
 
