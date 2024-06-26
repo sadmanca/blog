@@ -83,6 +83,10 @@ refactor: true
                 <i class="far fa-calendar fa-fw me-1"></i>
                 {% include datetime.html date=post.date lang=lang %}
 
+                <!-- reading time -->
+                <i class="far fa-clock fa-fw me-1"></i>
+                {% include read-time.html content=post.content prompt=true lang=lang %}
+
                 <!-- categories -->
                 {% if post.categories.size > 0 %}
                   <i class="far fa-folder-open fa-fw me-1"></i>
@@ -93,9 +97,6 @@ refactor: true
                     {% endfor %}
                   </span>
                 {% endif %}
-
-                <i class="far fa-clock fa-fw me-1"></i>
-                {% include read-time.html content=content prompt=true lang=lang %}
               </div>
 
               {% if post.pin %}
