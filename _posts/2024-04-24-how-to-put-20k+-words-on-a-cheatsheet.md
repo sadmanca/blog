@@ -13,7 +13,7 @@ progressBarColor: "#43298c"
 image:
   show: false
   path: assets/img/posts/2024-04-24-how-to-put-20k+-words-on-a-cheatsheet/thumbnail.svg
-  lqip: data:image/webp;base64,UklGRpoAAABXRUJQVlA4WAoAAAAQAAAADwAABwAAQUxQSDIAAAARL0AmbZurmr57yyIiqE8oiG0bejIYEQTgqiDA9vqnsUSI6H+oAERp2HZ65qP/VIAWAFZQOCBCAAAA8AEAnQEqEAAIAAVAfCWkAALp8sF8rgRgAP7o9FDvMCkMde9PK7euH5M1m6VWoDXf2FkP3BqV0ZYbO6NA/VFIAAAA
+  lqip: data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoQAAgAB0CWJaQAA3AA/u+5AAA=
   alt: Responsive rendering of Chirpy theme on multiple devices.
 
 my-cheatsheet-gallery:

@@ -4,7 +4,7 @@ Gem::Specification.new do |spec|
   spec.name          = "jekyll-theme-chirpy"
   spec.version       = "7.0.1"
   spec.authors       = ["Sadman Hossain"]
-  spec.email         = ["sadman.hossain@mail.utoronto.ca"]
+  spec.email         = [""]
 
   spec.summary       = "A minimal, responsive, and feature-rich Jekyll theme for technical writing."
   spec.homepage      = "https://github.com/cotes2020/jekyll-theme-chirpy"

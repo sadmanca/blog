@@ -4,8 +4,10 @@ description: Collecting unstructured data on ~2k job postings from UofT's PEY Co
 author: sadman
 date: 2024-05-22 17:12:00 -400
 last_modified_at: 2024-06-23 18:07:53 -400
-categories: [Work, Co-op, University, Data Analysis, Programming, Python, SQL]
+categories: [Work, SQL, Test]
+categories: [Co-op, Data Analysis]
 tags: [university, code, python, work, co-op]
+
 pin: true
 math: false
 mermaid: false
@@ -13,20 +15,20 @@ progressBarColor: "#315080"
 image:
   show: false
   path: assets/img/posts/2024-05-22-analyzing-pey-postings-part-1/00-thumbnail.svg
-  lqip: data:image/webp;base64,UklGRpoAAABXRUJQVlA4WAoAAAAQAAAADwAABwAAQUxQSDIAAAARL0AmbZurmr57yyIiqE8oiG0bejIYEQTgqiDA9vqnsUSI6H+oAERp2HZ65qP/VIAWAFZQOCBCAAAA8AEAnQEqEAAIAAVAfCWkAALp8sF8rgRgAP7o9FDvMCkMde9PK7euH5M1m6VWoDXf2FkP3BqV0ZYbO6NA/VFIAAAA
+  lqip: data:image/webp;base64,UklGRjQAAABXRUJQVlA4ICgAAADQAQCdASoQAAgAB0CWJZACw7DblLQgAAD8TrA05a4HpUWnCgqDAAAA
   alt: Responsive rendering of Chirpy theme on multiple devices.
 aliases: ["/pey-job-postings-database.html"]
 
 gallery-pey-01:
-  # - image_path: assets/img/posts/2024-05-22-analyzing-pey-postings-part-1/01-pey-landing-page.jpg
-  #   alt: "The PEY Co-op job board landing page ("Job Postings")"
-  #   caption: "The PEY Co-op job board landing page ("Job Postings")"
-  - image_path: assets/img/posts/2024-05-22-analyzing-pey-postings-part-1/01-pey-viewed.jpg
-    alt: "Viewed jobs (Viewed)"
-    caption: "Viewed jobs (Viewed)"
+  - image_path: assets/img/posts/2024-05-22-analyzing-pey-postings-part-1/01-pey-landing-page.jpg
+    alt: "The PEY Co-op job board landing page (Job Postings)"
+    caption: "The PEY Co-op job board landing page (Job Postings)"
   - image_path: assets/img/posts/2024-05-22-analyzing-pey-postings-part-1/01-pey-advanced-search.jpg
     alt: "Advanced search options (Search Job Postings)"
     caption: "Advanced search options (Search Job Postings)"
+##   - image_path: assets/img/posts/2024-05-22-analyzing-pey-postings-part-1/01-pey-viewed.jpg
+##     alt: "Viewed jobs (Viewed)"
+##     caption: "Viewed jobs (Viewed)"
 
 gallery-pey-02:
   - image_path: assets/img/posts/2024-05-22-analyzing-pey-postings-part-1/02-pey-old-posting.jpg
@@ -37,14 +39,13 @@ gallery-pey-02:
     caption: "Current design for PEY job postings. One of the most recent jobs posted at the time of writing. Shown: Software Developer Intern @ Geotab"
 
 ---
-
 Whether you're a new applicant to engineering/computer science at the University of Toronto (UofT) or someone who's going through their first, second, or even third or fourth years, you've probably been curious at one point or another about **what 12-16 month job positions are actually posted on the much acclaimed PEY Co-op job board**.
 
 Well, as a computer engineering student at UofT who's just finished their third year (and who's consequently been able to access the portal for the past two semesters), I thought it would be interesting to my own little data collection on the topic, along with some analysis on recurring patterns (e.g. locations, international opportunities, etc.), and share both my findings and the raw data (thousands of jobs posted across several months) so that future PEY Co-op students can get a better idea of what they can expect from the portal.
 
 **For a sneak peek at the data, try running the SQL query below.**
 
-<!-- <script src="https://unpkg.com/@antonz/sqlite@3.40.0/dist/sqlite3.js" defer></script>
+<script src="https://unpkg.com/@antonz/sqlite@3.40.0/dist/sqlite3.js" defer></script>
 <script src="https://unpkg.com/sqlime@0.1.2/dist/sqlime-db.js" defer></script>
 <script src="https://unpkg.com/sqlime@0.1.2/dist/sqlime-examples.js" defer></script>
 
@@ -53,12 +54,11 @@ SELECT * FROM JobPostings LIMIT 5;
 </pre>
 
 <sqlime-db name="employees" path="/assets/img/posts/2021-04-13-advice-for-high-school-freshmen/job_postings.sql"></sqlime-db>
-<sqlime-examples db="employees" selector="pre.sql" editable></sqlime-examples> -->
+<sqlime-examples db="employees" selector="pre.sql" editable></sqlime-examples>
 
+## Scraping job posting data
 
-# Scraping job posting data
-
-The UofT PEY Co-op job board itself is located behind a login portal at [uoftengcareerportal.ca/myAccount/internship/postings.htm](https://uoftengcareerportal.ca/myAccount/internship/postings.htm). To get in, you need to:
+The UofT PEY Co-op job board itself is located behind a login portal at [https://www.uoftengcareerportal.ca/notLoggedIn](https://www.uoftengcareerportal.ca/notLoggedIn). To get in, you need to:
 
 1. be a student at UofT (to have valid login credentials);
 2. be enrolled in the PEY Co-op program; and
@@ -66,9 +66,12 @@ The UofT PEY Co-op job board itself is located behind a login portal at [uofteng
 
 All of which means that unless you're a keen student in your second year who's opted in to get access and do your PEY early, you're either in your third year or you don't have access to the job portal. As an engineering student who's just finished their third year (at the time of writing), I've had privileged access for 8 months and counting, and I've been able to save data on every single job posted on the portal since the very first I've had access.
 
-## What you can expect from the job board
+![PEY job board login portal](assets/img/posts/2024-05-22-analyzing-pey-postings-part-1/01-01-pey-login.png)
+_The PEY job board login portal at [https://www.uoftengcareerportal.ca/notLoggedIn](https://www.uoftengcareerportal.ca/notLoggedIn)_
 
-![The PEY Co-op job board landing page (Job Postings).](assets/img/posts/2024-05-22-analyzing-pey-postings-part-1/01-pey-landing-page.jpg){: width="1000" .w-50 .right}
+### What you can expect from the job board
+
+<!-- ![The PEY Co-op job board landing page (Job Postings).](assets/img/posts/2024-05-22-analyzing-pey-postings-part-1/01-pey-landing-page.jpg){: width="1000" .w-50 .right} -->
 
 The [landing page](https://uoftengcareerportal.ca/myAccount/internship/postings.htm) for the PEY Co-op job board hosts the same look as the one for all the cross-institutional job boards at UofT's [CLNx](https://clnx.utoronto.ca/myAccount/dashboard.htm) and uses the same organization of elements and processes for browsing, searching for, and applying to job postings, so if you're a UofT student who's used CLNx in the past (e.g. for applying to work study positions) you already know what it's like to experience using the PEY job board.
 
@@ -76,7 +79,10 @@ The [landing page](https://uoftengcareerportal.ca/myAccount/internship/postings.
 {% include my-gallery.html images=page.gallery-pey-01 %}
 </div>
 
-### Sample job postings
+![Viewed jobs (Viewed)](assets/img/posts/2024-05-22-analyzing-pey-postings-part-1/01-pey-viewed.jpg)
+_Viewed jobs (Viewed)_
+
+#### Sample job postings
 
 Your average PEY job postings look like the below. *Note:* The design on the left was used for a couple years, until the most recent redesign in late 2023 (which took place halfway through my fall semester of third year). If you're an upcoming PEY Co-op student, job postings should look like the right for you.
 
@@ -86,7 +92,7 @@ Your average PEY job postings look like the below. *Note:* The design on the lef
 
 Nothing much to look at, just some basic tables with information about the job and the company, which thankfully are simple to parse.
 
-## Getting the posting date for jobs
+### Getting the posting date for jobs
 
 One thing that's been important to me since the very start of this project is making sure that the timestamps of job postings are available to view. As someone who took a few months before I landed a position that I was really satisified with, there were times where I felt a bit apprehensive at turning down offers for roles that I thought were fine but didn't feel excited about. I had no data beyond anecdotes from upper years about what's posted over the course of the fall and winter semesters, and so I couldn't really predict whether that dream role I had in mind was just a couple days from being posted (or whether jobs would start drying up so I should stick with whatever I had at that point in time), which is why I hope that at least one of the things this project of mine can provide is some reassurance to future PEY students about what jobs are posted and when.
 
@@ -100,7 +106,7 @@ Whenever you login to the portal, that `New Posting Since Last Login` button get
 
 Which is why that's exactly what I've done for the **263 days that I've had access to the portal** (from *2023-09-17* to *2024-06-06*).
 
-### How I've been saving posting dates for jobs
+#### How I've been saving posting dates for jobs
 
 It's all thanks to [Gildas Lormeau's]((https://github.com/gildas-lormeau)) [SingleFile web extension](https://github.com/gildas-lormeau/SingleFile), which allows for saving a complete web page into a single HTML file (unlike Chrome[^chrome]). In addition (and rather importantly), the SingleFile extension allows for saving pages for *all tabs in the current window* (this is important for making the whole archival process a not-headache). While SingleFile is also usable as a CLI, the tricky navigation for the PEY job board website means that manually navigating to pages & then saving them using the extension is a lot easier.
 
@@ -137,14 +143,14 @@ By <kbd>CTRL</kbd>-clicking on every single job posting shown behind `New Postin
 └── 📁2024-05-17_16-25-26/
 ```
 
-### Why not write a script to automate saving postings?
+#### Why not write a script to automate saving postings?
 
 ![xkcd: "Is It Worth the Time?"](https://imgs.xkcd.com/comics/is_it_worth_the_time.png){: .w-25 .right}
 ![xkcd: "Automation"](https://imgs.xkcd.com/comics/automation.png){: .w-25 .right}
 Is it possible to automate the whole process of saving data for job postings? Technically, yes, it's absolutely feasible, but given how easy it is manually save data for job postings in a minute or two for every couple hundred of jobs (with the assistance of a few scripts to make the <kbd>CTRL</kbd>-clicking a lot faster), it's just not worth the time to make the routine task more efficient (I'd be spending more time than I'd save, as any XKCD enjoyer can relate to).
 
 
-# Storing job postings in a database
+## Storing job postings in a database
 
 HTML is fine for temporary storage purposes[^issok], but I need something that will allow me to view and analyze the data in a fast, efficient, and easy-to-use manner.
 
@@ -156,7 +162,7 @@ Now, I've never used SQLite before (just PostgreSQL, with a bit of Python on the
 
 But before I can start inputting all the data into a SQLite database, I need to figure out how to extract the key information (e.g. job title, location, description, company etc.) first.
 
-## Extracting data from HTML
+### Extracting data from HTML
 
 If it were just a single page, I could use something like [Microsoft Edge's Smart Copy](https://techcommunity.microsoft.com/t5/discussions/smart-copy-is-available-in-edge-now/m-p/1909748) or the [Table Capture extension](https://chromewebstore.google.com/detail/table-capture/iebpjdmgckacbodjpijphcplhebcmeop) and call it a day, but extracting data from >20k pages is a whole different ballgame.
 
@@ -209,10 +215,10 @@ def parse_html_file(filepath, verbose=False):
     soup = BeautifulSoup(html_content, 'lxml')
 
     data = {}
-    rows = soup.find_all('tr')  # find all table rows
+    rows = soup.find_all('tr')  ## find all table rows
 
     for row in rows:
-        tds = row.find_all('td')  # find all table data cells
+        tds = row.find_all('td')  ## find all table data cells
 
         if len(tds) >= 2:
             label_td = tds[0]
@@ -304,7 +310,7 @@ Length of Workterm:: FLEXIBLE PEY Co-op: 12-16 months (range)
 
 <div style="margin-bottom: 130px;"></div>
 
-### Finetuning data extraction
+#### Finetuning data extraction
 
 There's a few nuances to the data extraction that mean this simple script needs *just* a bit more extending so it can properly parse the entire dataset.
 
@@ -328,7 +334,7 @@ from bs4 import BeautifulSoup
 import re
 
 def extract_job_id_from_html(soup):
-    # try to find job ID in a <h1> tag with the specific class
+    ## try to find job ID in a <h1> tag with the specific class
     header_tag = soup.find('h1', class_='h3 dashboard-header__profile-information-name mobile--small-font color--font--white margin--b--s')
     if header_tag:
         header_text = header_tag.get_text(strip=True)
@@ -336,7 +342,7 @@ def extract_job_id_from_html(soup):
         if match:
             return match.group(1)
 
-    # if not found, try to find an <h1> tag containing the words "Job ID"
+    ## if not found, try to find an <h1> tag containing the words "Job ID"
     job_id_tag = soup.find('h1', string=re.compile(r'Job ID', re.IGNORECASE))
     if job_id_tag:
         job_id_text = job_id_tag.get_text(strip=True)
@@ -357,10 +363,10 @@ def parse_html_file(filepath, verbose=False):
     if job_id:
         data['Job ID'] = job_id
 
-    rows = soup.find_all('tr')  # find all table rows
+    rows = soup.find_all('tr')  ## find all table rows
 
     for row in rows:
-        tds = row.find_all('td')  # find all table data cells
+        tds = row.find_all('td')  ## find all table data cells
 
         if len(tds) >= 2:
             label_td = tds[0]
@@ -391,9 +397,9 @@ if __name__ == "__main__":
 
 Now with a method of easily extracting all the relevant data from each HTML page, all that's left is to automate running the parser across all files saved within timestamped subdirectories on my local computer and pipe the data into a SQLite DB.
 
-## Storing data in SQLite
+### Storing data in SQLite
 
-### Why SQLite?
+#### Why SQLite?
 
 SQLite sits right there in the sweet middle spot between raw data formats (like CSV, JSON) that are good fits for simple data (e.g. temperature, word lists) but aren't as great for larger datasets with more complexity (especially when it comes to data analysis) and other larger RDBMS (relational database management system) libraries that might be better designed for scaleability but are really just overkill for the little pet project that I have here at hand.
 
@@ -401,11 +407,11 @@ And the fact that SQLite is a single file on disk means that sharing the finely 
 
 Most importantly, SQLite is serverless (unlike PostgreSQL or MySQL), which saves me a lot of headache and setup[^especially] for this relatively small-scale project (especially since `sqlite3` is built into Python's standard library!).
 
-### Pipelining data from ~2k HTML files to a single SQLite DB
+#### Pipelining data from ~2k HTML files to a single SQLite DB
 
 Using SQLite with Python via `sqlite3` is [simple enough](https://www.digitalocean.com/community/tutorials/how-to-use-the-sqlite3-module-in-python-3). All I need to do is add some additional code for extracting the job posting date from the parent folder for each job posting's HTML page and for iterating across every subfolder for PEY job postings on my local computer, as well as draft up a schema for the SQLite DB and write some code for piping data from Python dictionaries to the DB file.
 
-#### Database Schema
+##### Database Schema
 
 Thankfully, all job postings share largely the same fields, so (for the time being) the schema just ends up being an amalgamation of all the relevant table fields.
 
@@ -416,7 +422,7 @@ I could potentially extend the schema with [functional dependencies](https://en.
 Regardless, I can update the previous python file used for parsing to handle the new SQLite schema easily enough:
 
 ```python
-# ...
+## ...
 
 def store_data_in_db(data, db_cursor):
     columns = ', '.join([f'"{key}"' for key in data.keys()])
@@ -456,11 +462,11 @@ def create_db_schema(db_cursor):
     ''')
 
 if __name__ == "__main__":
-    # ...
+    ## ...
 ```
 {: file='parse_to_db.py'}
 
-#### Parsing to `.db`
+##### Parsing to `.db`
 
 Finally, with some additional code for properly parsing through all subfolders in my local directory and setting the `postingDate` value based on the folder name[^timestamped] for each file, I can transform the entire dataset of >1.8k job postings into a single `.db` file under 10MB in size in ~3 min (which might've taken even less time if it weren't running on an old spinning hard drive).
 
@@ -474,7 +480,7 @@ from tqdm import tqdm
 import logging
 
 def extract_job_id_from_html(soup):
-    # Try to find job ID in a <h1> tag with the specific class
+    ## Try to find job ID in a <h1> tag with the specific class
     header_tag = soup.find('h1', class_='h3 dashboard-header__profile-information-name mobile--small-font color--font--white margin--b--s')
     if header_tag:
         header_text = header_tag.get_text(strip=True)
@@ -482,7 +488,7 @@ def extract_job_id_from_html(soup):
         if match:
             return match.group(1)
 
-    # If not found, try to find an <h1> tag containing the words "Job ID"
+    ## If not found, try to find an <h1> tag containing the words "Job ID"
     job_id_tag = soup.find('h1', string=re.compile(r'Job ID', re.IGNORECASE))
     if job_id_tag:
         job_id_text = job_id_tag.get_text(strip=True)
@@ -498,17 +504,17 @@ def parse_html_file(filepath, job_posting_date, verbose=False):
 
     soup = BeautifulSoup(html_content, 'lxml')
 
-    # Extract the year, month, and day from the job_posting_date string
+    ## Extract the year, month, and day from the job_posting_date string
     posting_date = job_posting_date.split('_')[0]
     data = {'postingDate': posting_date}
     job_id = extract_job_id_from_html(soup)
     if job_id:
         data['id'] = job_id
 
-    rows = soup.find_all('tr')  # find all table rows
+    rows = soup.find_all('tr')  ## find all table rows
 
     for row in rows:
-        tds = row.find_all('td')  # find all table data cells
+        tds = row.find_all('td')  ## find all table data cells
 
         if len(tds) >= 2:
             label_td = tds[0]
@@ -523,10 +529,10 @@ def parse_html_file(filepath, job_posting_date, verbose=False):
                 link_text = link.get_text()
                 value_text = value_text.replace(link_text, f'{link_text} ({url})')
 
-            # Map label_text to corresponding database column
+            ## Map label_text to corresponding database column
             column_mapping = {
-                # 'Job ID': 'id',
-                # 'Job Posting Date': 'postingDate',
+                ## 'Job ID': 'id',
+                ## 'Job Posting Date': 'postingDate',
                 'Job Title': 'title',
                 'Organization': 'company',
                 'Division': 'companyDivision',
@@ -548,10 +554,10 @@ def parse_html_file(filepath, job_posting_date, verbose=False):
                 'Additional Application Information': 'applicationDetails',
             }
 
-            # Check if label_text matches any of the predefined columns
+            ## Check if label_text matches any of the predefined columns
             if label_text in column_mapping:
                 db_column = column_mapping[label_text]
-                # If key already exists, append the value to it
+                ## If key already exists, append the value to it
                 if db_column in data:
                     data[db_column] += f'\n{value_text}'
                 else:
@@ -610,10 +616,10 @@ if __name__ == "__main__":
     cursor = conn.cursor()
     create_db_schema(cursor)
 
-    # Get the list of files
+    ## Get the list of files
     files = [os.path.join(dirpath, file) for dirpath, _, files in os.walk(args.directory) for file in files if file.endswith('.html') or file.endswith('.htm')]
 
-    # Create a progress bar
+    ## Create a progress bar
     with tqdm(total=len(files)) as pbar:
         for subdir, _, files in os.walk(args.directory):
             job_posting_date = os.path.basename(subdir)
@@ -623,7 +629,7 @@ if __name__ == "__main__":
                     logging.info(filepath)
                     data = parse_html_file(filepath, job_posting_date, args.verbose)
                     store_data_in_db(data, cursor)
-                    # Update the progress bar
+                    ## Update the progress bar
                     pbar.update(1)
 
     conn.commit()
@@ -634,7 +640,7 @@ if __name__ == "__main__":
 
 [^timestamped]: e.g. `📁2023-09-17_20-14-10`; easily achievable thanks to [github.com/sadmanca/ahk-scripts/blob/master/keys.ahk](https://github.com/sadmanca/ahk-scripts/blob/master/keys.ahk#L54)
 
-# Viewing the data
+## Viewing the data
 
 And so we have it: a single database file storing every single job posted on the UofT PEY Co-op job board for 2T5s[^2t5] (from 2023 to 2024). You can play around with querying the data below[^anotebaout], or download the SQLite `.db` file from the latest release at [github.com/sadmanca/uoft-pey-coop-job-postings](https://github.com/sadmanca/uoft-pey-coop-job-postings).
 
@@ -642,74 +648,78 @@ And so we have it: a single database file storing every single job posted on the
 
 [^anotebaout]: I've built-in a SQL view called `JobPostings` (the table with the actual data is called `JobPosting`, without the "s") that excludes some of the columns with very long values (e.g. `description`, `requirements`, `preferredDisciplines`, `applicationDetails`) to make table formatting look a bit better if you're running `SELECT *` queries. To run queries with the excluded columns, use the `JobPosting` table instead.
 
-```{.sql .interactive .job_postings}
+<pre class="sql">
 SELECT * FROM JobPostings LIMIT 5;
-```
+</pre>
 
-## Sample Queries
 
-### Which companies posted the most number of jobs?
 
-```{.sql .interactive .job_postings}
+### Sample Queries
+
+#### Which companies posted the most number of jobs?
+
+<pre class="sql">
 SELECT company, COUNT(*) as num_postings
 FROM JobPosting
 GROUP BY company
 ORDER BY num_postings DESC;
-```
+</pre>
 
-```{=html}
-<p style="margin-bottom:5pt;"></p>
-```
 
-### Where are most jobs located?
 
-```{.sql .interactive .job_postings}
+
+#### Where are most jobs located?
+
+<pre class="sql">
 SELECT location, COUNT(*) as num_postings
 FROM JobPosting
 GROUP BY location
 ORDER BY num_postings DESC;
-```
+</pre>
 
-```{=html}
+
+
+<!-- ```{=html}
 <p style="margin-bottom:5pt;"></p>
-```
+``` -->
 
-### How many job postings are there for mechatronics-adjacent positions?
+#### How many job postings are there for mechatronics-adjacent positions?
 
-```{.sql .interactive .job_postings}
+<pre class="sql">
 SELECT COUNT(*) AS num_mech_postings
 FROM JobPosting
-    WHERE title LIKE '%mechatronic%'
-    OR company LIKE '%mechatronic%'
-    OR companyDivision LIKE '%mechatronic%'
-    OR function LIKE '%mechatronic%'
-    OR description LIKE '%mechatronic%'
-    OR requirements LIKE '%mechatronic%'
-    OR preferredDisciplines LIKE '%mechatronic%';
-```
+WHERE title                LIKE '%mechatronic%'
+   OR company              LIKE '%mechatronic%'
+   OR companyDivision      LIKE '%mechatronic%'
+   OR function             LIKE '%mechatronic%'
+   OR description          LIKE '%mechatronic%'
+   OR requirements         LIKE '%mechatronic%'
+   OR preferredDisciplines LIKE '%mechatronic%';
+</pre>
 
-```{=html}
-<p style="margin-bottom:5pt;"></p>
-```
 
-### What does a job for a mechatronics-adjacent position look like?
 
-```{.sql .interactive .job_postings}
+#### What does a job for a mechatronics-adjacent position look like?
+
+<pre class="sql">
 SELECT *
 FROM JobPosting
-    WHERE title LIKE '%mechatronic%'
-    OR company LIKE '%mechatronic%'
-    OR companyDivision LIKE '%mechatronic%'
-    OR function LIKE '%mechatronic%'
-    OR description LIKE '%mechatronic%'
-    OR requirements LIKE '%mechatronic%'
-    OR preferredDisciplines LIKE '%mechatronic%'
+WHERE title                LIKE '%mechatronic%'
+   OR company              LIKE '%mechatronic%'
+   OR companyDivision      LIKE '%mechatronic%'
+   OR function             LIKE '%mechatronic%'
+   OR description          LIKE '%mechatronic%'
+   OR requirements         LIKE '%mechatronic%'
+   OR preferredDisciplines LIKE '%mechatronic%';
 LIMIT 1;
-```
+</pre>
+
+
+
 
 ***More to come in part 2!***
 
-## Next Steps
+### Next Steps
 
 You'll notice that the data still needs some cleaning[^example], which is fine, should be fairly simple to do by manually parsing through the dataset and aggregating similar values.
 
@@ -726,3 +736,9 @@ But after some basic data cleaning[^part2] is the fun part: **analyzing the data
 - ...and more! Feel free to suggest exploration ideas in the comments below.
 
 [^yeahidkaboutthiseither]: Something the Engineering Career Centre (ECC) people who run the PEY Co-op job board don't inform you about ahead of time, employers can *"repost"* a job with the same job id (usually several weeks) after the original which makes it'll show up under `New Posting Since Last Login` even if you've already viewed (and even though it's technically still the same single job posting). It's not commonplace but it did occur for a few dozen jobs (I imagine for those where the position was left unfilled after some initial batch of students applied and it was reposted to reinvigorate interest).
+
+-----
+
+-----
+
+-----

@@ -84,6 +84,24 @@
               <div class="text-muted">
                 <p>{% include post-description.html %}</p>
               </div>
+              <div class="post-meta mt-auto">
+                <!-- Categories -->
+                {% if post.categories.size > 0 %}
+                  <div class="categories" style="margin-bottom: 5px;"> <!-- Adjusted margin -->
+                    <i class="far fa-folder-open fa-fw me-1"></i>
+                    {% for category in post.categories %}
+                      {{ category }}{% unless forloop.last %}, {% endunless %}
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  <div class="categories" style="margin-bottom: 15px;"></div> <!-- Default margin for consistency -->
+                {% endif %}
+                <!-- Reading Time -->
+                <div class="reading-time">
+                  <i class="far fa-clock fa-fw me-1"></i>
+                  {% include read-time.html content=post.content prompt=true lang=include.lang %}
+                </div>
+              </div>
             </div>
           </a>
         </article>

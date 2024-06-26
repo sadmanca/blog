@@ -230,9 +230,9 @@ header {
 
 #toc-wrapper {
   border-left: 1px solid rgba(158, 158, 158, 0.17);
-  position: -webkit-sticky;
-  position: sticky;
-  top: 4rem;
+  position: fixed;
+
+  // top: 552px; // Adjusted to account for the header's height
   transition: top 0.2s ease-in-out;
   -webkit-animation: fade-up 0.8s;
   animation: fade-up 0.8s;
@@ -253,11 +253,9 @@ header {
       }
     }
 
-    /* Overwrite TOC plugin style */
-
     .toc-link {
       display: block;
-      white-space: nowrap;
+      white-space: pre-wrap;
       overflow: hidden;
       text-overflow: ellipsis;
 
@@ -310,13 +308,23 @@ header {
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 8;
     -webkit-box-orient: vertical;
   }
 
   .card {
+    transition: transform 0.3s ease, box-shadow 0.1s ease-in-out; // Add smooth transition for transform and box-shadow
+    will-change: transform, box-shadow; // Optimize for transform and box-shadow changes
+    box-shadow: var(--card-shadow); // Initial box-shadow
+    transform: translateY(0) scale(1); // Initial transform
+
     h4 {
       @extend %text-clip;
+    }
+
+    &:hover {
+      transform: translateY(-5px) scale(1.07); // Hover effect: Move up slightly and scale up
+      box-shadow: 0 8px 15px rgba(0,0,0,0.2); // Hover effect: Increase box-shadow for depth
     }
   }
 }

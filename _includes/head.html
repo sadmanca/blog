@@ -77,7 +77,35 @@
   <link rel="stylesheet" href="{{ '/assets/css/:THEME.css' | replace: ':THEME', site.theme | relative_url }}">
 
   <!-- Web Font -->
-  <link rel="stylesheet" href="{{ site.data.origin[type].webfonts | relative_url }}">
+  {% comment %} <link rel="stylesheet" href="{{ site.data.origin[type].webfonts | relative_url }}"> {% endcomment %}
+
+  <!-- Preconnect to the font file origin -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Preload the Inter Tight font CSS -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap" />
+
+  <!-- Asynchronously load the Inter Tight font CSS -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap" media="print" onload="this.media='all'" />
+
+  <!-- Fallback: Load the Inter Tight font CSS synchronously if JavaScript is disabled -->
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap" />
+  </noscript>
+
+  <!-- Preload the Inter font CSS (if you need both variants of the Inter font) -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap" />
+
+  <!-- Asynchronously load the Inter font CSS -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap" media="print" onload="this.media='all'" />
+
+  <!-- Fallback: Load the Inter font CSS synchronously if JavaScript is disabled -->
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap" />
+  </noscript>
+
+  <!-- For the Iosevka font, you can use a similar approach if it's hosted on a CDN that supports preconnect and preload. If not, just include it normally. -->
+  <link rel="stylesheet" href="https://pvinis.github.io/iosevka-webfont/7.0.2/iosevka.css" />
 
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="{{ site.data.origin[type].fontawesome.css | relative_url }}">
