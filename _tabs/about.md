@@ -7,9 +7,7 @@ order: 4
 > **Sadman Hossain** is a 3rd year computer engineering student at the Univeristy of Toronto. When not creating more AutoHotkey shortcuts for automating the mouse away, Sadman enjoys binge-reading really long sci-fi/apocalyptic/fantasy novels ([tracked on Goodreads](https://www.goodreads.com/review/list/152185079-sadman-hossain)).
 {: .prompt-info }
 
-<!-- ![Sadman Hossain](assets/img/profile.jpg){: width="972" height="589" .w-50 } -->
-
-
+![Sadman Hossain](assets/img/profile.jpg){: width="972" height="589" .w-50 }
 
   <!-- Show static HTML/CSS as a placeholder in case js is not enabled - javascript include will override this if things work -->
   <style type="text/css" media="screen">

@@ -1,5 +1,7 @@
 ---
 title: How I deal with email
+redirect_from:
+  - /posts/2020-10-03-how-i-deal-with-email/
 description: People loathe the experience of email. Here's my system of dealing with it.
 author: sadman
 date: 2020-10-03 04:10:00 +800

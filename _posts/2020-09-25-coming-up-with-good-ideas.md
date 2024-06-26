@@ -1,5 +1,7 @@
 ---
 title: Coming up with (good) ideas
+redirect_from:
+  - /posts/2020-09-25-coming-up-with-good-ideas/
 description: Coming up with good ideas can be tough, but the real magic lies in the process, not just the outcome.
 author: sadman
 date: 2020-09-25 14:10:00 +0800

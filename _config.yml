@@ -59,9 +59,9 @@ webmaster_verifications:
 # Web Analytics Settings
 analytics:
   google:
-    id: # fill in your Google Analytics ID
+    id: 'G-Q095PB1G6R'
   goatcounter:
-    id: # fill in your GoatCounter ID
+    id: 'sadmanca'
   umami:
     id: # fill in your Umami ID
     domain: # fill in your Umami domain
@@ -73,7 +73,7 @@ analytics:
 
 # Pageviews settings
 pageviews:
-  provider: # now only supports 'goatcounter'
+  provider: 'goatcounter' # now only supports 'goatcounter'
 
 # Prefer color scheme setting.
 #
@@ -228,3 +228,4 @@ jekyll-archives:
 
 plugins:
   - jekyll-pdf-embed
+  - jekyll-redirect-from

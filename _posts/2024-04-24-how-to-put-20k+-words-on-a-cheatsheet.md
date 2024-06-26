@@ -1,5 +1,7 @@
 ---
-title: Putting 20k+ words on a 1MB cheatsheet
+title: Putting 20k+ words on a 1 MB cheatsheet
+redirect_from:
+  - /posts/2024-04-24-how-to-put-20k+-words-on-a-cheatsheet/
 description: The art of maximizing content on a cheatsheet while maintaining readability using the cutting-edge in type-setting technology (ala Typst).
 author: sadman
 date: 2024-04-24 12:05:00 +800

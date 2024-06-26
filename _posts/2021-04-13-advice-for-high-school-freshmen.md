@@ -1,5 +1,7 @@
 ---
 title: Advice for high school freshmen
+redirect_from:
+  - /posts/2021-04-13-advice-for-high-school-freshmen/
 description: What I would’ve told myself back then if I could do so now
 author: sadman
 date: 2021-04-13 09:12:00 +800

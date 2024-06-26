@@ -1,5 +1,7 @@
 ---
 title: 'Software Showcase #1: Recording terminal sessions using asciinema and its derivatives'
+redirect_from:
+  - /posts/2024-05-27-software-showcase-01-asciinema/
 description: CLI tools for recording terminal sessions locally (and to the web) as asciicast files (.cast), GIFs, and animated SVGs
 author: sadman
 date: 2024-05-27 19:56:00 -400

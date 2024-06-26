@@ -1,5 +1,7 @@
 ---
 title: A guide to learning
+redirect_from:
+  - /posts/2020-12-14-a-guide-to-learning/
 description: 'Better alternatives to rote memorization (also known as cramming the night before an exam)'
 author: sadman
 date: 2020-12-14 07:13:00 +800
@@ -8,49 +10,47 @@ tags: [writing]
 pin: false
 math: false
 mermaid: false
-## image:
-##   show: false
-##   path: assets/img/posts/2020-12-14-a-guide-to-learning/turquoise.svg
-##   lqip: data:image/webp;base64,UklGRpoAAABXRUJQVlA4WAoAAAAQAAAADwAABwAAQUxQSDIAAAARL0AmbZurmr57yyIiqE8oiG0bejIYEQTgqiDA9vqnsUSI6H+oAERp2HZ65qP/VIAWAFZQOCBCAAAA8AEAnQEqEAAIAAVAfCWkAALp8sF8rgRgAP7o9FDvMCkMde9PK7euH5M1m6VWoDXf2FkP3BqV0ZYbO6NA/VFIAAAA
-##   alt: Responsive rendering of Chirpy theme on multiple devices.
+# image:
+#   show: false
+#   path: assets/img/posts/2020-12-14-a-guide-to-learning/turquoise.svg
+#   lqip: data:image/webp;base64,UklGRpoAAABXRUJQVlA4WAoAAAAQAAAADwAABwAAQUxQSDIAAAARL0AmbZurmr57yyIiqE8oiG0bejIYEQTgqiDA9vqnsUSI6H+oAERp2HZ65qP/VIAWAFZQOCBCAAAA8AEAnQEqEAAIAAVAfCWkAALp8sF8rgRgAP7o9FDvMCkMde9PK7euH5M1m6VWoDXf2FkP3BqV0ZYbO6NA/VFIAAAA
+#   alt: Responsive rendering of Chirpy theme on multiple devices.
 
 ---
 
-## The Memorization Strategy You’re Probably Most Familiar With
-
-### Rote Memorization
+## Rote Memorization
 
 **The memorization strategy you’re probably most familiar with is rote memorization**, where you try to memorize something by just repeating it to yourself over and over. And while this might work if you have a short test the day after, it's one of the worst ways you can memorize something. It's horrendously inefficient. It won't help you deeply understand a subject. And it's not going to help you remember things in the long term. But we can do better.
 
-#### Developing a Better Strategy
+## Developing a Better Strategy
 
 There are loads of little techniques you can use to help you remember things, but what's most important is going to be your overall strategy when it comes to approaching memorization, and a really good strategy is probably going to be incorporating these in some way.
 
-##### Encoding
+### Encoding
 
 Let's start with encoding. Encoding is all about organizing information, and it's the first step you take when you’re committing something to memory. How you encode information determines how easily you can store it in your memory and retrieve it later on. If you have poor encoding, you’re going to have poor retrieval. Good encoding can build connections between ideas, so that when you think of one concept, you’re reminded of all the concepts that it's connected to.
 
-###### Practicing Encoding
+#### Practicing Encoding
 
 Let's look at an example. Imagine if i told you to memorize a set of letters, not caring about their order. You could memorize this without much trouble. But if we reorganize the information it becomes ridiculously easy. That's encoding for you. What we just did is we took several lower bits of information and encoded them into just a few large bits that are effortless to remember.
 
-##### Structuring Your Notes
+## Structuring Your Notes
 
 Now, what is the point of all this? The point is you need to structure your notes. When you’re writing something down, don't copy it word for word. Write it in your own words, connect it to ideas you already know about. Reorganize the information so it's easiest for you to remember. Use the Cornell note taking method, use mnemonics, mind webs, diagrams, whatever. It doesn't matter what you do, as long as it works for you.
 
-##### Active Recall
+## Active Recall
 
 The next strategy is active recall. The idea behind active recall is that testing is better than review. Let me explain.
 
 Simply reading your textbook or reviewing your notes, is largely a passive process. You come across a concept, recognize that you “know” it, and you move on. You don't get the textbook on your test. You don't have your notes. On the test, you have to use the cues in the questions to recall everything from memory. So if you want to do well on tests, all you need to do is practice recalling information from your memory.
 
-###### Practicing Active Recall
+### Practicing Active Recall
 
 Now, what does this look like? Well, it could be something as simple as reading a chapter in the textbook, closing the textbook, and then writing out everything you can remember from memory. It could be explaining a concept to somebody else. It could be doing practice questions before you review notes. The key is to reduce the amount of recognition you’re doing and increase the amount of recall.
 
 If you’re learning something for the first time, this can be really tough. But it will do wonders for your memory. And what's really great about active recall, is that because it forces you to truly recall information from your memory, you’re able to get a much better understanding of what you actually remember and what you don't. And that's going to help you fill the gaps in your knowledge way better than just rereading your notes will.
 
-##### Spaced Repetition
+## Spaced Repetition
 
 And finally, we have the glue that keeps everything together and makes sure you don't forget what you memorize: spaced repetition.
 

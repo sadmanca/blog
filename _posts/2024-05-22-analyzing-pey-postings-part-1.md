@@ -1,5 +1,7 @@
 ---
 title: 'Analyzing UofT PEY Co-op Job Postings (2023-2024) - Part 1: Scraping Job Board Data'
+redirect_from:
+  - /posts/2024-05-22-analyzing-pey-postings-part-1/
 description: Collecting unstructured data on ~2k job postings from UofT's PEY Co-op job board & pipelining it to a single SQLite database less than 10 MB in size
 author: sadman
 date: 2024-05-22 17:12:00 -400

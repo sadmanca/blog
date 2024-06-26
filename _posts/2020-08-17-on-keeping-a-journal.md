@@ -1,5 +1,7 @@
 ---
 title: On keeping a journal
+redirect_from:
+  - /posts/2020-08-17-on-keeping-a-journal/
 description: Why you should be writing if you aren't already
 author: sadman
 date: 2020-08-17 11:33:00 +0800

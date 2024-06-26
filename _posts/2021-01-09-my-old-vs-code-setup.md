@@ -1,5 +1,7 @@
 ---
 title: A look at my (rather old) VS Code setup
+redirect_from:
+  - /posts/2021-01-09-my-vs-code-setup/
 description: Some snippets of tools I used to use back in my first year of university (and some that I still do too).
 author: sadman
 date: 2021-01-09 01:56:00 +800

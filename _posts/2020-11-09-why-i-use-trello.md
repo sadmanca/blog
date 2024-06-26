@@ -1,5 +1,7 @@
 ---
 title: Why I use Trello
+redirect_from:
+  - /posts/2020-11-09-why-i-use-trello/
 description: Everybody needs a system for making their to do list; Trello is mine.
 author: sadman
 date: 2020-11-09 06:47:00 +800
