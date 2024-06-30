@@ -14,6 +14,7 @@ pin: true
 math: false
 mermaid: false
 progressBarColor: "#315080"
+hoverColor: "#7aaeff"
 image:
   show: false
   path: assets/img/posts/2024-05-22-analyzing-pey-postings-part-1/00-thumbnail.svg

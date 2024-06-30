@@ -166,11 +166,11 @@ h6, h6 code {
 
   &:hover {
     // Default scale for larger screens
-    transform: scale(1.35); // Scale the image up to 135% on hover
+    transform: scale(1.15); // Scale the image up to 135% on hover
 
     // Reduce scale for smaller screens
     @media (max-width: 1800px) {
-      transform: scale(1.15); // Scale the image up to 115% on hover
+      transform: scale(1.07); // Scale the image up to 115% on hover
     }
 
     z-index: 9999; // Ensure the image is in front of all other elements during transition

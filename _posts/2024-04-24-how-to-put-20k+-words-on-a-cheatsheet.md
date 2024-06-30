@@ -12,6 +12,7 @@ pin: true
 math: false
 mermaid: false
 progressBarColor: "#43298c"
+hoverColor: "#9069ff"
 image:
   show: false
   path: assets/img/posts/2024-04-24-how-to-put-20k+-words-on-a-cheatsheet/thumbnail.svg

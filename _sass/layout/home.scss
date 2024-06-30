@@ -124,14 +124,12 @@
 // }
 
 .card.pinned {
-  // Original shadow
-  box-shadow: 0 4px 8px var(--progress-bar-shadow);
-  filter: brightness(110%);
+  box-shadow: 0 6px 20px var(--progress-bar-shadow);
   font-weight: 450 !important;
 
-  &:hover {
-    margin-top: 2.50rem;
-  }
+  // &:hover {
+  //   margin-top: 2.50rem;
+  // }
 
   &::after {
     content: '';
@@ -142,7 +140,7 @@
     top: 0;
     left: 0;
     box-shadow: 0 3px 10px rgba(255, 255, 255, 0.5);
-    border-radius: inherit; // Match the card's border-radius if any
+    border-radius: inherit;
   }
 }
 

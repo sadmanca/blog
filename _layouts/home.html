@@ -43,7 +43,7 @@ refactor: true
 <div id="post-list" class="flex-grow-1 px-xl-1">
   {% for post in posts %}
   <article class="card-wrapper card {% if post.pin == true %}pinned{% endif %}"
-    style="--progress-bar-shadow: {{ post.progressBarColor | default: 'rgba(183, 0, 255, 0.1)' }};">
+    style="--progress-bar-shadow: {{ post.hoverColor | default: 'rgba(183, 0, 255, 0.1)' }};">
 
       <a href="{{ post.url | relative_url }}" class="post-preview row g-0 flex-md-row-reverse">
         {% assign card_body_col = '12' %}

@@ -14,6 +14,7 @@ pin: true
 math: false
 mermaid: false
 progressBarColor: "#565656"
+hoverColor: "#b0b0b0"
 image:
   show: false
   path: assets/img/posts/2024-05-27-software-showcase-01-asciinema/00-thumbnail.svg
