@@ -13,11 +13,14 @@ math: false
 mermaid: false
 progressBarColor: "#43298c"
 hoverColor: "#9069ff"
+home_image:
+  path: assets/img/posts/2024-04-24-how-to-put-20k+-words-on-a-cheatsheet/00-thumbnail.svg
+  lqip: data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoQAAgAB0CWJaQAA3AA/u+5AAA=
+  alt: Typst cheatsheet
 image:
   show: false
-  path: assets/img/posts/2024-04-24-how-to-put-20k+-words-on-a-cheatsheet/thumbnail.svg
-  lqip: data:image/webp;base64,UklGRiQAAABXRUJQVlA4IBgAAAAwAQCdASoQAAgAB0CWJaQAA3AA/u+5AAA=
-  alt: Responsive rendering of Chirpy theme on multiple devices.
+  path: assets/img/posts/2024-04-24-how-to-put-20k+-words-on-a-cheatsheet/00-thumbnail.png
+  alt: Typst cheatsheet
 
 my-cheatsheet-gallery:
   - image_path: assets/img/posts/2024-04-24-how-to-put-20k+-words-on-a-cheatsheet/01-zoomed.png
@@ -296,3 +299,5 @@ Is it readable in real life? Quite so. In fact, do you know what I kept thinking
 ---
 ---
 ---
+
+## Footnotes

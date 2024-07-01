@@ -1,12 +1,12 @@
 ---
-title: 'Analyzing UofT PEY Co-op Job Postings (2023-2024) - Part 1: Scraping Job Board Data'
+title: 'Analyzing UofT PEY Co-op Job Postings — Part 1: Scraping Job Board Data'
 redirect_from:
   - /posts/2024-05-22-analyzing-pey-postings-part-1/
-description: Collecting unstructured data on ~2k job postings from UofT's PEY Co-op job board & pipelining it to a single SQLite database less than 10 MB in size
+  - /pey-job-postings-database
+description: Collecting unstructured data on 2k+ job postings from UofT's PEY Co-op job board & pipelining to a single SQLite database less than 10 MB in size
 author: sadman
 date: 2024-05-22 17:12:00 -400
-last_modified_at: 2024-06-23 18:07:53 -400
-categories: [Work, SQL, Test]
+last_modified_at: 2024-06-30 23:14:19 -400
 categories: [Co-op, Data Analysis]
 tags: [university, code, python, work, co-op]
 
@@ -15,12 +15,14 @@ math: false
 mermaid: false
 progressBarColor: "#315080"
 hoverColor: "#7aaeff"
-image:
-  show: false
+home_image:
   path: assets/img/posts/2024-05-22-analyzing-pey-postings-part-1/00-thumbnail.svg
   lqip: data:image/webp;base64,UklGRjQAAABXRUJQVlA4ICgAAADQAQCdASoQAAgAB0CWJZACw7DblLQgAAD8TrA05a4HpUWnCgqDAAAA
-  alt: Responsive rendering of Chirpy theme on multiple devices.
-aliases: ["/pey-job-postings-database.html"]
+  alt: Analyzing UofT PEY Co-op Job Postings — Part 1
+image:
+  show: false
+  path: assets/img/posts/2024-05-22-analyzing-pey-postings-part-1/00-thumbnail.png
+  alt: Analyzing UofT PEY Co-op Job Postings — Part 1
 
 gallery-pey-01:
   - image_path: assets/img/posts/2024-05-22-analyzing-pey-postings-part-1/01-pey-landing-page.jpg
@@ -42,15 +44,20 @@ gallery-pey-02:
     caption: "Current design for PEY job postings. One of the most recent jobs posted at the time of writing. Shown: Software Developer Intern @ Geotab"
 
 ---
-Whether you're a new applicant to engineering/computer science at the University of Toronto (UofT) or someone who's going through their first, second, or even third or fourth years, you've probably been curious at one point or another about **what 12-16 month job positions are actually posted on the much acclaimed PEY Co-op job board**.
+Whether you're a new applicant to engineering/computer science at the University of Toronto (UofT) or someone who's going through their 1st, 2nd, or even 3rd or 4th years, you've probably been curious at one point or another about **what 12-16 month job positions are actually posted on the much acclaimed PEY Co-op job board**.
 
-Well, as a computer engineering student at UofT who's just finished their third year (and who's consequently been able to access the portal for the past two semesters), I thought it would be interesting to my own little data collection on the topic, along with some analysis on recurring patterns (e.g. locations, international opportunities, etc.), and share both my findings and the raw data (thousands of jobs posted across several months) so that future PEY Co-op students can get a better idea of what they can expect from the portal.
+Well, as a computer engineering student at UofT who's just finished their third year (and consequently have been able to access the portal for the entire past two semesters), I thought it would be interesting to do my own data collection on the topic, along with some analysis on recurring patterns (e.g. locations, international opportunities, etc.), and share both my findings and the raw data (thousands of jobs posted across several months) so that future PEY Co-op students can get a better idea of what to expect from the portal.
 
 **For a sneak peek at the data, try running the SQL query below.**
 
-<script src="https://unpkg.com/@antonz/sqlite@3.40.0/dist/sqlite3.js" defer></script>
-<script src="https://unpkg.com/sqlime@0.1.2/dist/sqlime-db.js" defer></script>
-<script src="https://unpkg.com/sqlime@0.1.2/dist/sqlime-examples.js" defer></script>
+> Click on the **Load SQLite Database** button to load the SQLite database containing all of the job postings data. Once the database is loaded, you can run all interactive SQL queries.
+
+<button class="loadScripts btn btn-warning">Load SQLite Database</button>
+<!-- Repeat the button wherever needed on the page -->
+
+<!-- <script src="https://unpkg.com/@antonz/sqlite@3.40.0/dist/sqlite3.js" async></script>
+<script src="https://unpkg.com/sqlime@0.1.2/dist/sqlime-db.js" async></script>
+<script src="https://unpkg.com/sqlime@0.1.2/dist/sqlime-examples.js" async></script> -->
 
 <pre class="sql">
 SELECT * FROM JobPostings LIMIT 5;
@@ -67,7 +74,7 @@ The UofT PEY Co-op job board itself is located behind a login portal at [https:/
 2. be enrolled in the PEY Co-op program; and
 3. be registered to start your 12-16 month internship sometime between May and September following your current year.
 
-All of which means that unless you're a keen student in your second year who's opted in to get access and do your PEY early, you're either in your third year or you don't have access to the job portal. As an engineering student who's just finished their third year (at the time of writing), I've had privileged access for 8 months and counting, and I've been able to save data on every single job posted on the portal since the very first I've had access.
+All of which means that unless you're a keen student in your second year who's opted in to get access and do your PEY early, you're either in your third year or you don't have access to the job portal. As an engineering student who's just finished their third year (at the time of writing), I've had privileged access for 8 months and counting, and I've been able to save data on every single job posted on the portal since the very first day I've had access (I came prepared).
 
 ![PEY job board login portal](assets/img/posts/2024-05-22-analyzing-pey-postings-part-1/01-01-pey-login.png)
 _The PEY job board login portal at [https://www.uoftengcareerportal.ca/notLoggedIn](https://www.uoftengcareerportal.ca/notLoggedIn)_
@@ -76,7 +83,7 @@ _The PEY job board login portal at [https://www.uoftengcareerportal.ca/notLogged
 
 <!-- ![The PEY Co-op job board landing page (Job Postings).](assets/img/posts/2024-05-22-analyzing-pey-postings-part-1/01-pey-landing-page.jpg){: width="1000" .w-50 .right} -->
 
-The [landing page](https://uoftengcareerportal.ca/myAccount/internship/postings.htm) for the PEY Co-op job board hosts the same look as the one for all the cross-institutional job boards at UofT's [CLNx](https://clnx.utoronto.ca/myAccount/dashboard.htm) and uses the same organization of elements and processes for browsing, searching for, and applying to job postings, so if you're a UofT student who's used CLNx in the past (e.g. for applying to work study positions) you already know what it's like to experience using the PEY job board.
+The [landing page](https://uoftengcareerportal.ca/myAccount/internship/postings.htm) for the PEY Co-op job board has the same look as the one for all the cross-institutional job boards at UofT's [Career Learning Network (CLNx)](https://clnx.utoronto.ca/myAccount/dashboard.htm) and uses the same organization of elements and processes for browsing, searching for, and applying to job postings, so if you're a UofT student who's used CLNx in the past (e.g. for applying to work study positions) then you already know what it's like to experience using the PEY job board (from what I've seen on Reddit, I'm pretty sure WaterlooWorks uses the same frontend as well).
 
 <div style="--images-per-row: 3;">
 {% include my-gallery.html images=page.gallery-pey-01 %}
@@ -87,7 +94,9 @@ _Viewed jobs (Viewed)_
 
 #### Sample job postings
 
-Your average PEY job postings look like the below. *Note:* The design on the left was used for a couple years, until the most recent redesign in late 2023 (which took place halfway through my fall semester of third year). If you're an upcoming PEY Co-op student, job postings should look like the right for you.
+Your average PEY job postings look like the below.
+
+> *Note:* The design on the left was used for a couple years, until the most recent redesign in late 2023 (which took place halfway through my fall semester of third year). **If you're an upcoming PEY Co-op student, job postings should look like the right for you.**
 
 <div style="--images-per-row: 3;">
 {% include my-gallery.html images=page.gallery-pey-02 %}
@@ -150,7 +159,10 @@ By <kbd>CTRL</kbd>-clicking on every single job posting shown behind `New Postin
 
 ![xkcd: "Is It Worth the Time?"](https://imgs.xkcd.com/comics/is_it_worth_the_time.png){: .w-25 .right}
 ![xkcd: "Automation"](https://imgs.xkcd.com/comics/automation.png){: .w-25 .right}
-Is it possible to automate the whole process of saving data for job postings? Technically, yes, it's absolutely feasible, but given how easy it is manually save data for job postings in a minute or two for every couple hundred of jobs (with the assistance of a few scripts to make the <kbd>CTRL</kbd>-clicking a lot faster), it's just not worth the time to make the routine task more efficient (I'd be spending more time than I'd save, as any XKCD enjoyer can relate to).
+
+*Is it possible to automate the whole process of saving data for job postings?*
+
+Technically, yes, it's absolutely feasible, but given how easy it is manually save data for job postings in a minute or two for every couple hundred of jobs (with the assistance of a few scripts to make the <kbd>CTRL</kbd>-clicking a lot faster), it's just not worth the time to make the routine task more efficient (I'd be spending more time than I'd save, as any XKCD reader can relate to).
 
 
 ## Storing job postings in a database
@@ -651,6 +663,8 @@ And so we have it: a single database file storing every single job posted on the
 
 [^anotebaout]: I've built-in a SQL view called `JobPostings` (the table with the actual data is called `JobPosting`, without the "s") that excludes some of the columns with very long values (e.g. `description`, `requirements`, `preferredDisciplines`, `applicationDetails`) to make table formatting look a bit better if you're running `SELECT *` queries. To run queries with the excluded columns, use the `JobPosting` table instead.
 
+<button class="loadScripts btn btn-warning">Load SQLite Database</button>
+
 <pre class="sql">
 SELECT * FROM JobPostings LIMIT 5;
 </pre>
@@ -667,9 +681,6 @@ FROM JobPosting
 GROUP BY company
 ORDER BY num_postings DESC;
 </pre>
-
-
-
 
 #### Where are most jobs located?
 
@@ -699,8 +710,6 @@ WHERE title                LIKE '%mechatronic%'
    OR requirements         LIKE '%mechatronic%'
    OR preferredDisciplines LIKE '%mechatronic%';
 </pre>
-
-
 
 #### What does a job for a mechatronics-adjacent position look like?
 
@@ -745,3 +754,41 @@ But after some basic data cleaning[^part2] is the fun part: **analyzing the data
 -----
 
 -----
+
+## Footnotes
+
+<script>
+// Select all buttons with the class 'loadScripts'
+var buttons = document.querySelectorAll('.loadScripts');
+
+buttons.forEach(function(button) {
+    button.addEventListener('click', function() {
+        loadScript('https://unpkg.com/@antonz/sqlite@3.40.0/dist/sqlite3.js', function() {
+            loadScript('https://unpkg.com/sqlime@0.1.2/dist/sqlime-db.js', function() {
+                loadScript('https://unpkg.com/sqlime@0.1.2/dist/sqlime-examples.js', function() {
+                    // Update all buttons after scripts are loaded
+                    updateAllButtons();
+                });
+            });
+        });
+    });
+});
+
+function loadScript(src, callback) {
+    var script = document.createElement('script');
+    script.src = src;
+    script.async = true;
+    script.onload = function() {
+        if (callback) callback();
+    };
+    document.head.appendChild(script);
+}
+
+function updateAllButtons() {
+    buttons.forEach(function(button) {
+        button.className = 'btn btn-success';
+        button.innerText = 'SQLite Database Loaded';
+        button.setAttribute('disabled', true); // Add the disabled attribute
+    });
+}
+</script>

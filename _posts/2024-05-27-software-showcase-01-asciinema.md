@@ -2,45 +2,27 @@
 title: 'Software Showcase #1: Recording terminal sessions using asciinema and its derivatives'
 redirect_from:
   - /posts/2024-05-27-software-showcase-01-asciinema/
+  - /asciinema
 description: CLI tools for recording terminal sessions locally (and to the web) as asciicast files (.cast), GIFs, and animated SVGs
 author: sadman
 date: 2024-05-27 19:56:00 -400
 last_modified_at: 2024-06-24 21:19:53 -400
 categories: [Software Showcase, Website]
 tags: [code, python, asciinema, terminal, website, tools, cli]
-aliases: ["/asciinema"]
 
-pin: true
+pin: false
 math: false
 mermaid: false
 progressBarColor: "#565656"
 hoverColor: "#b0b0b0"
-image:
-  show: false
+home_image:
   path: assets/img/posts/2024-05-27-software-showcase-01-asciinema/00-thumbnail.svg
   lqip: data:image/webp;base64,UklGRioAAABXRUJQVlA4IB4AAAAwAQCdASoQAAgAB0CWJaQAA3AA/seUuxXH0+woAAA=
-  alt: Responsive rendering of Chirpy theme on multiple devices.
-aliases: ["/pey-job-postings-database.html"]
-
-gallery-pey-01:
-  - image_path: assets/img/posts/2024-05-22-analyzing-pey-postings-part-1/01-pey-landing-page.jpg
-    alt: "The PEY Co-op job board landing page (Job Postings)"
-    caption: "The PEY Co-op job board landing page (Job Postings)"
-  - image_path: assets/img/posts/2024-05-22-analyzing-pey-postings-part-1/01-pey-advanced-search.jpg
-    alt: "Advanced search options (Search Job Postings)"
-    caption: "Advanced search options (Search Job Postings)"
-##   - image_path: assets/img/posts/2024-05-22-analyzing-pey-postings-part-1/01-pey-viewed.jpg
-##     alt: "Viewed jobs (Viewed)"
-##     caption: "Viewed jobs (Viewed)"
-
-gallery-pey-02:
-  - image_path: assets/img/posts/2024-05-22-analyzing-pey-postings-part-1/02-pey-old-posting.jpg
-    alt: "Old design for PEY job postings. One of the earliest jobs to be posted on the job board for my cohort (2T5) in 2023. Shown: ML Developer - Software Automation & Developer Infrastructure @ Cerebras"
-    caption: "Old design for PEY job postings. One of the earliest jobs to be posted on the job board for my cohort (2T5) in 2023. Shown: ML Developer - Software Automation & Developer Infrastructure @ Cerebras"
-  - image_path: assets/img/posts/2024-05-22-analyzing-pey-postings-part-1/02-pey-sample-posting.jpg
-    alt: "Current design for PEY job postings. One of the most recent jobs posted at the time of writing. Shown: Software Developer Intern @ Geotab"
-    caption: "Current design for PEY job postings. One of the most recent jobs posted at the time of writing. Shown: Software Developer Intern @ Geotab"
-
+  alt: CLI tools for recording terminal sessions locally (and to the web) as asciicast files (.cast), GIFs, and animated SVGs
+image:
+  show: false
+  path: assets/img/posts/2024-05-27-software-showcase-01-asciinema/00-thumbnail.png
+  alt: Asciinema
 ---
 
 
@@ -371,3 +353,5 @@ The most notable feature that I've relegated to a future post is the concept of 
 ---------
 
 ---------
+
+## Footnotes
