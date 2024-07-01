@@ -52,7 +52,7 @@ Well, as a computer engineering student at UofT who's just finished their third 
 
 > Click on the **Load SQLite Database** button to load the SQLite database containing all of the job postings data. Once the database is loaded, you can run all interactive SQL queries.
 
-<button class="loadScripts btn btn-warning">Load SQLite Database</button>
+<button class="loadSqlite btn btn-warning">Load SQLite Database</button>
 <!-- Repeat the button wherever needed on the page -->
 
 <!-- <script src="https://unpkg.com/@antonz/sqlite@3.40.0/dist/sqlite3.js" async></script>
@@ -663,7 +663,7 @@ And so we have it: a single database file storing every single job posted on the
 
 [^anotebaout]: I've built-in a SQL view called `JobPostings` (the table with the actual data is called `JobPosting`, without the "s") that excludes some of the columns with very long values (e.g. `description`, `requirements`, `preferredDisciplines`, `applicationDetails`) to make table formatting look a bit better if you're running `SELECT *` queries. To run queries with the excluded columns, use the `JobPosting` table instead.
 
-<button class="loadScripts btn btn-warning">Load SQLite Database</button>
+<button class="loadSqlite btn btn-warning">Load SQLite Database</button>
 
 <pre class="sql">
 SELECT * FROM JobPostings LIMIT 5;
@@ -722,7 +722,7 @@ WHERE title                LIKE '%mechatronic%'
    OR function             LIKE '%mechatronic%'
    OR description          LIKE '%mechatronic%'
    OR requirements         LIKE '%mechatronic%'
-   OR preferredDisciplines LIKE '%mechatronic%';
+   OR preferredDisciplines LIKE '%mechatronic%'
 LIMIT 1;
 </pre>
 
@@ -757,38 +757,33 @@ But after some basic data cleaning[^part2] is the fun part: **analyzing the data
 
 ## Footnotes
 
-<script>
-// Select all buttons with the class 'loadScripts'
-var buttons = document.querySelectorAll('.loadScripts');
+<script defer>
+    function loadScript(src, callback, errorCallback) {
+        var script = document.createElement('script');
+        script.src = src;
+        script.async = true;
+        script.onload = callback;
+        script.onerror = errorCallback;
+        document.head.appendChild(script);
+    }
 
-buttons.forEach(function(button) {
-    button.addEventListener('click', function() {
-        loadScript('https://unpkg.com/@antonz/sqlite@3.40.0/dist/sqlite3.js', function() {
-            loadScript('https://unpkg.com/sqlime@0.1.2/dist/sqlime-db.js', function() {
-                loadScript('https://unpkg.com/sqlime@0.1.2/dist/sqlime-examples.js', function() {
-                    // Update all buttons after scripts are loaded
-                    updateAllButtons();
-                });
+    document.addEventListener('DOMContentLoaded', function() {
+        var buttons = document.querySelectorAll('.loadSqlite');
+        buttons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                loadScript('https://unpkg.com/@antonz/sqlite@3.40.0/dist/sqlite3.js', function() {
+                    loadScript('https://unpkg.com/sqlime@0.1.2/dist/sqlime-db.js', function() {
+                        loadScript('https://unpkg.com/sqlime@0.1.2/dist/sqlime-examples.js', function() {
+                            buttons.forEach(function(button1) {
+                                button1.classList.remove('btn-warning');
+                                button1.classList.add('btn-success');
+                                button1.innerText = 'SQLite Database Loaded';
+                                button1.setAttribute('disabled', true);
+                            });
+                        }, () => console.error("Error loading sqlime-examples.js"));
+                    }, () => console.error("Error loading sqlime-db.js"));
+                }, () => console.error("Error loading sqlite3.js"));
             });
         });
     });
-});
-
-function loadScript(src, callback) {
-    var script = document.createElement('script');
-    script.src = src;
-    script.async = true;
-    script.onload = function() {
-        if (callback) callback();
-    };
-    document.head.appendChild(script);
-}
-
-function updateAllButtons() {
-    buttons.forEach(function(button) {
-        button.className = 'btn btn-success';
-        button.innerText = 'SQLite Database Loaded';
-        button.setAttribute('disabled', true); // Add the disabled attribute
-    });
-}
 </script>
