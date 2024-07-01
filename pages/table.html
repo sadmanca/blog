@@ -1,0 +1,175 @@
+<html lang="en">
+ <head>
+   <!-- Includes all JS & CSS for the JavaScript Data Grid -->
+   <script src="https://cdn.jsdelivr.net/npm/ag-grid-enterprise/dist/ag-grid-enterprise.min.js"></script>
+   <style>
+    .cell-wrap-text {
+      white-space: normal !important;
+    }
+
+    .ag-theme-quartz .ag-cell-value {
+      line-height: 15px !important;
+      word-break: break-word; /* Adjusted to break-word for better handling in multi-line */
+      padding-top: 5px; /* space top */
+      padding-bottom: 5px; /* space bottom */
+    }
+
+    /* Updated CSS class for multi-line ellipsis */
+    .cell-ellipsis {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3; /* Number of lines to show */
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: normal; /* Adjusted to normal for multi-line text */
+    }
+  </style>
+ <body>
+   <!-- Your grid container -->
+   <div id="myGrid" style="width: 100%; height: 100%" class="ag-theme-quartz"></div>
+ </body>
+</html>
+
+<script>
+// Custom Cell Editor
+function MultiLineTextCellEditor() {}
+
+MultiLineTextCellEditor.prototype.init = function(params) {
+  this.params = params;
+  this.eGui = document.createElement('textarea');
+  this.eGui.style.width = '100%';
+  this.eGui.style.height = '100%';
+  this.eGui.value = params.value;
+
+  this.eGui.addEventListener('input', this.adjustTextArea.bind(this));
+};
+
+MultiLineTextCellEditor.prototype.getGui = function() {
+  return this.eGui;
+};
+
+MultiLineTextCellEditor.prototype.afterGuiAttached = function() {
+  this.eGui.focus();
+  this.eGui.select();
+  this.adjustTextArea();
+};
+
+MultiLineTextCellEditor.prototype.adjustTextArea = function() {
+  setTimeout(() => {
+    const textAreaHeight = this.eGui.scrollHeight;
+    const newHeight = Math.max(100, textAreaHeight); // Ensure minimum height
+    this.params.node.setRowHeight(newHeight);
+    this.params.api.onRowHeightChanged();
+  }, 10);
+};
+
+MultiLineTextCellEditor.prototype.getValue = function() {
+  return this.eGui.value;
+};
+
+MultiLineTextCellEditor.prototype.destroy = function() {
+  // Cleanup if needed
+};
+
+let lastClickedRowNode = null;
+
+let gridApi;
+
+const gridOptions = {
+  columnDefs: [
+    {
+      field: "latinText",
+      width: 350,
+      wrapText: true,
+      cellClass: 'cell-wrap-text', // Ensure text wraps within the cell
+    },
+    { field: "athlete" },
+    { field: "country" },
+    { field: "date" },
+    { field: "sport" },
+    { field: "gold" },
+    { field: "silver" },
+    { field: "bronze" },
+    { field: "total" },
+  ],
+  rowHeight: 100,
+  tooltipShowDelay: 10000,
+  defaultColDef: {
+    width: 170,
+    editable: true,
+    cellEditor: MultiLineTextCellEditor,
+    filter: true,
+  },
+  onCellFocused: function(event) {
+    if (event.rowIndex != null) { // Check if the focus event is associated with a row
+      const focusedRowNode = gridApi.getRowNode(event.rowIndex);
+      handleRowSelection(focusedRowNode);
+    }
+  },
+  onGridReady: function(params) {
+    gridApi = params.api; // Initialize gridApi
+    fetch("https://www.ag-grid.com/example-assets/olympic-winners.json")
+      .then((response) => response.json())
+      .then(function (data) {
+        console.log(data); // Log the data to ensure it's being fetched
+        data.forEach(function (dataItem, index) {
+          dataItem.latinText = latinText + ' ' + (index + 1);
+        });
+        gridApi.setRowData(data);
+      });
+  },
+};
+
+var latinText =
+  "https://super-duper-robot-6r6r695579Untether AI is building the world's highest performance pure-digital AI inference startup. We're a rapidly growing Toronto-based startup, with employees across Canada and the US, building next generation hardware AI accelerators for neural net inference. We are investing in software in a big way in order to make it as seamless as possible for researchers and developers to successfully deploy neural networks on our hardware. This class of chips will be the standard platform for running image recognition, speech synthesis, text to speech and many other applications in data centers, mobile phones and self-driving cars within the next 5 years. We're looking for best in";
+
+  function handleRowSelection(rowNode) {
+    // Check if the last clicked row is the same as the current row
+    if (lastClickedRowNode === rowNode) {
+        // If the same row is clicked again, do not reset its height
+        return;
+    }
+
+    // Reset all rows to default height before adjusting the selected row
+    gridApi.forEachNode(function(node) {
+        node.setRowHeight(100); // Assuming 100 is the default height
+    });
+
+    // Calculate and set the required height for the current row's content
+    const requiredHeight = calculateTextHeight(rowNode.data.latinText, 350);
+    rowNode.setRowHeight(requiredHeight);
+
+    // Apply the row height changes
+    gridApi.onRowHeightChanged();
+
+    // Update the last clicked row
+    lastClickedRowNode = rowNode;
+}
+
+  function calculateTextHeight(text, width) {
+    // Create a temporary element to measure the text height
+    const tempDiv = document.createElement("div");
+    tempDiv.style.width = width + "px";
+    tempDiv.style.position = "absolute";
+    tempDiv.style.visibility = "hidden";
+    tempDiv.style.whiteSpace = "pre-wrap";
+    tempDiv.style.boxSizing = "border-box"; // Ensure box-sizing matches that of the grid cells
+    tempDiv.style.font = "normal 12px Arial"; // Adjust to match the grid's exact font style and size
+    tempDiv.style.padding = "5px"; // Adjust based on your cell's actual padding
+    tempDiv.style.lineHeight = "19px"; // Adjust based on your cell's actual line height
+    tempDiv.style.wordBreak = "break-word"; // Ensure word break matches the cell's styling
+    // Consider adding any other styles that might affect the content height
+    tempDiv.innerText = text;
+    document.body.appendChild(tempDiv);
+    const height = tempDiv.offsetHeight;
+    document.body.removeChild(tempDiv);
+    // Increase the buffer or adjust the minimum height as needed
+    return Math.max(100, height + 20); // Increase buffer to ensure text is not cut off
+  }
+
+// setup the grid after the page has finished loading
+document.addEventListener("DOMContentLoaded", function () {
+  var gridDiv = document.querySelector("#myGrid");
+  new agGrid.Grid(gridDiv, gridOptions);
+});
+</script>
