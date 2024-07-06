@@ -1,10 +1,8 @@
 <html lang="en">
  <head>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/simplebar@latest/dist/simplebar.css"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/simplebar@latest/dist/simplebar.min.js"></script>
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simplebar@latest/dist/simplebar.css">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+   <script src="https://cdn.jsdelivr.net/npm/simplebar@latest/dist/simplebar.min.js"></script>
    <script src="https://cdn.jsdelivr.net/npm/ag-grid-enterprise/dist/ag-grid-enterprise.min.js"></script>
    <style>
     .cell-wrap-text {
@@ -39,6 +37,28 @@
     .scrollable-cell:hover .simplebar-scrollbar::before {
       background-color: rgba(0, 0, 0, 0.75); /* Red with 50% opacity */
     }
+
+    /* Flexbox layout for body */
+    body {
+      display: flex;
+      flex-direction: column; /* Stack elements vertically */
+      height: 100vh; /* Full viewport height */
+      margin: 0; /* Remove default margin */
+    }
+
+    /* Container for buttons */
+    .button-container {
+      flex-shrink: 0; /* Prevent shrinking */
+      margin: 10px 0;
+      overflow-x: auto; /* Enable horizontal scrolling for buttons */
+    }
+
+    /* Adjusted grid container */
+    #myGrid {
+      flex-grow: 1; /* Allow the grid to take up remaining space */
+      width: 100%; /* Full width */
+      /* Removed fixed height to allow flexbox to control the size */
+    }
   </style>
   <noscript>
     <style>
@@ -60,6 +80,12 @@
   </noscript>
  </head>
   <body>
+    <div style="margin: 10px 0">
+      <button class="btn btn-outline-primary" onclick="exportAllRowsToCSV()">Export All to CSV</button>
+      <button class="btn btn-outline-success" onclick="exportAllRowsToExcel()">Export All to Excel</button>
+      <button class="btn btn-outline-primary btn-sm" disabled onclick="exportSelectedRowsToCSV()">Export Selected to CSV</button>
+      <button class="btn btn-outline-success btn-sm" disabled onclick="exportSelectedRowsToExcel()">Export Selected to Excel</button>
+    </div>
     <div id="myGrid" style="width: 100%; height: 100%" class="ag-theme-quartz"></div>
   </body>
 </html>
@@ -82,6 +108,12 @@
     const firstUrl = urlMatch[0];
     const link = `<a href="${firstUrl}" target="_blank">${new URL(firstUrl).hostname}</a>`;
     return link;
+  }
+
+  function updateExportButtonsState() {
+    const noRowsSelected = gridApi && gridApi.getSelectedRows().length === 0;
+    document.querySelector('button[onclick="exportSelectedRowsToCSV()"]').disabled = noRowsSelected;
+    document.querySelector('button[onclick="exportSelectedRowsToExcel()"]').disabled = noRowsSelected;
   }
 
   function MultiLineTextCellEditor() {}
@@ -126,14 +158,18 @@
       //   },
       // },
       {
+        headerCheckboxSelection: true, // Enable checkbox on the header
+        checkboxSelection: true, // Enable row checkboxes
         field: "postingDate",
-        width: 125,
+        width: 155,
         rowGroup: true,
         hide: false,
+        pinned: 'left'
       },
       {
         field: "title",
         width: 125,
+        pinned: 'left'
       },
       {
         field: "company",
@@ -156,7 +192,7 @@
       {
         field: "numPositions",
         headerName: "Num of Positions",
-        width: 130,
+        width: 135,
         // Use a value formatter to check the value before displaying
         valueFormatter: function(params) {
           // Check if the value is a valid number
@@ -182,15 +218,14 @@
         cellRenderer: scrollableCellRenderer,
       },
       {
-        field: "salary",
-        width: 115,
-
-      },
-      {
         field: "preferredDisciplines",
         width: 150,
         // wrapText: false,
         cellRenderer: scrollableCellRenderer,
+      },
+      {
+        field: "salary",
+        width: 115,
       },
       {
         field: "startDate",
@@ -243,6 +278,9 @@
       // Return a different height for non-group rows or default height
       return 250; // Example: Set non-group row height to 25px
     },
+    rowSelection: 'multiple',
+    onSelectionChanged: updateExportButtonsState,
+
     groupDefaultExpanded: -1,
     groupDisplayType: 'groupRows',
 
@@ -326,6 +364,46 @@
   //       gridApi.setGridOption("datasource", dataSource);
   //     });
   // });
+
+  function exportSelectedRowsToCSV() {
+    if (gridApi) {
+      gridApi.exportDataAsCsv({
+        onlySelected: true,
+      });
+    } else {
+      console.error('Grid API is not available.');
+    }
+  }
+
+  function exportSelectedRowsToExcel() {
+    if (gridApi) {
+      gridApi.exportDataAsExcel({
+        onlySelected: true,
+      });
+    } else {
+      console.error('Grid API is not available.');
+    }
+  }
+
+  function exportAllRowsToCSV() {
+    if (gridApi) {
+      gridApi.exportDataAsCsv({
+        onlySelected: false,
+      });
+    } else {
+      console.error('Grid API is not available.');
+    }
+  }
+
+  function exportAllRowsToExcel() {
+    if (gridApi) {
+      gridApi.exportDataAsExcel({
+        onlySelected: false,
+      });
+    } else {
+      console.error('Grid API is not available.');
+    }
+  }
 
   document.addEventListener("DOMContentLoaded", function () {
     var gridDiv = document.querySelector("#myGrid");
