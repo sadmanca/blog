@@ -146,14 +146,14 @@
           <i class="fas fa-file-excel"></i> Export Selected Rows to Excel
       </button>
       <!-- <button class="btn btn-toggle-theme" onclick="toggleTheme()">Toggle Dark/Light Mode</button> -->
-      <button class="btn btn-dark" onclick="window.open('https://github.com/sadmanca/uoft-pey-coop-job-postings', '_blank')">
-        <i class="fa-brands fa-github"></i>
-      </button>
-      <button class="btn btn-primary" onclick="window.open('https://linkedin.com/in/sadmanca', '_blank')">
-        <i class="fa-brands fa-linkedin"></i>
-      </button>
       <button class="btn custom-btn btn-sm" onclick="window.open('https://sadman.ca', '_blank')">
         <i class="fa-solid fa-circle" style="color: #6e46e7;"></i> Sadman's Blog
+      </button>
+      <button class="btn btn-dark btn-sm" onclick="window.open('https://github.com/sadmanca/uoft-pey-coop-job-postings', '_blank')">
+        <i class="fa-brands fa-github"></i>
+      </button>
+      <button class="btn btn-primary btn-sm" onclick="window.open('https://linkedin.com/in/sadmanca', '_blank')">
+        <i class="fa-brands fa-linkedin"></i>
       </button>
 
     </div>
@@ -215,57 +215,45 @@
   const gridOptions = {
     columnDefs: [
       {
-        headerName: "Row",
-        maxWidth: 100,
-        // it is important to have node.id here, so that when the id changes (which happens
-        // when the row is loaded) then the cell is refreshed.
-        valueGetter: "node.id",
-        cellRenderer: (params) => {
-          if (params.value !== undefined) {
-            return params.value;
-          } else {
-            return '<img src="https://www.ag-grid.com/example-assets/loading.gif">';
-          }
+        headerCheckboxSelection: true, // Enable checkbox on the header
+        checkboxSelection: true, // Enable row checkboxes
+        field: "id",
+        headerName: "ID",
+        maxWidth: 108,
+        pinned: 'left',
+        filterParams: {
+          filters: [
+            { filter: "agNumberColumnFilter" },
+            { filter: "agSetColumnFilter" },
+          ],
         },
       },
-      // {
-      //   field: "postingDate",
-      //   width: 140,
-      //   rowGroup: true,
-      //   pinned: 'left',
-      // },
       {
-        // headerCheckboxSelection: true, // Enable checkbox on the header
-        // checkboxSelection: true, // Enable row checkboxes
         field: "title",
-        width: 120,
-        // pinned: 'left',
-        // filter: "agSetColumnFilter",
-        // hide: false,
-      },
-      {
-        field: "workStudyStream",
-        // rowGroup: true,
-        width: 117,
-      },
-      // {
-      //   field: "companyWebsite",
-      //   cellRenderer: CompanyWebsiteRenderer,
-      //   width: 117,
-      // },
-      {
-        field: "campusLocation",
-        width: 113,
+        width: 180,
+        pinned: 'left',
+        filter: "agSetColumnFilter",
+        hide: false,
       },
       {
         field: "positionType",
         width: 113,
+        rowGroup: true,
+        pinned: 'left',
+        hide: true,
+      },
+      {
+        field: "workStudyStream",
+        width: 117,
+        rowGroup: true,
+        pinned: 'left',
+        hide: true,
       },
       {
         field: "numPositions",
-        headerName: "Num of Positions",
+        headerName: "Num. of Positions",
         width: 115,
-        // filter: "agSetColumnFilter",
+        filter: "agSetColumnFilter",
         // Use a value formatter to check the value before displaying
         valueFormatter: function(params) {
           // Check if the value is a valid number
@@ -274,164 +262,130 @@
           return isValidNumber ? params.value : '';
         },
       },
-      {
-        field: "weeklySchedule",
-        width: 113,
-      },
-      {
-        field: "hoursPerWeek",
-        width: 113,
-      },
-      {
-        field: "degreeLevel",
-        width: 113,
-      },
-      {
-        field: "departmentOverview",
-        width: 113,
-      },
-      {
-        field: "weeklySchedule",
-        width: 113,
-      },
-      {
-        field: "hoursPerWeek",
-        width: 113,
-      },
-      {
-        field: "degreeLevel",
-        width: 113,
-      },
-      {
-        field: "departmentOverview",
-        width: 113,
-      },
+
+      // {
+      //   field: "hoursPerWeek",
+      //   width: 113,
+      // },
       {
         field: "description",
         width: 350,
-        // wrapText: false,
-        // cellClass: 'cell-wrap-text',
+        wrapText: true,
         cellRenderer: scrollableCellRenderer,
-        // filter: 'agTextColumnFilter',
+        filter: 'agTextColumnFilter',
       },
       {
         field: "qualifications",
         width: 350,
-        // wrapText: false,
-        // cellClass: 'cell-wrap-text',
+        wrapText: true,
         cellRenderer: scrollableCellRenderer,
-        // filter: 'agTextColumnFilter',
+        filter: 'agTextColumnFilter',
       },
       {
-        field: "accessibilityConsiderations",
-        width: 140,
-        // wrapText: false,
-        cellRenderer: scrollableCellRenderer,
-        // filter: 'agTextColumnFilter',
+        field: "degreeLevel",
+        headerName: "Degree",
+        width: 108,
       },
       {
-        field: "accessibilityAccommodations",
-        width: 140,
-        // wrapText: false,
-        cellRenderer: scrollableCellRenderer,
-        // filter: 'agTextColumnFilter',
+        field: "weeklySchedule",
+        headerName: "Weekly Hours",
+        width: 110,
+        filter: 'agTextColumnFilter',
+      },
+      // {
+      //   field: "accessibilityAccommodations",
+      //   width: 140,
+      //   wrapText: true,
+      //   cellRenderer: scrollableCellRenderer,
+      //   filter: 'agTextColumnFilter',
+      // },
+      // {
+      //   field: "salary",
+      //   width: 100,
+      // },
+      // {
+      //   field: "organization",
+      //   width: 120,
+      // },
+      {
+        field: "campusLocation",
+        width: 113,
       },
       {
-        field: "skills",
+        field: "division",
+        width: 120,
+      },
+{
+        field: "department",
         width: 140,
-        // wrapText: false,
+        rowGroup: true,
+      },
+      {
+        field: "departmentOverview",
+        width: 200,
+        cellRenderer: scrollableCellRenderer,
+        filter: 'agTextColumnFilter',
+      },
+      {
+        field: "supervisor",
+        width: 128,
+      },
+      {
+        field: "supervisorTitle",
+        width: 130,
+      },
+      {
+      field: "applicationDeadline",
+      width: 200,
+      filter: 'agDateColumnFilter',
+      comparator: dateComparator,
+        filterParams: {
+          comparator: function(filterLocalDateAtMidnight, cellValue) {
+            const cellDate = new Date(cellValue);
+            if (cellDate < filterLocalDateAtMidnight) return -1;
+            if (cellDate > filterLocalDateAtMidnight) return 1;
+            return 0;
+          }
+        },
+      },
+      // {
+      //   field: "applicationProcedure",
+      //   headerName: "Application Procedure",
+      //   width: 130,
+      //   cellRenderer: scrollableCellRenderer,
+      //   filter: 'agTextColumnFilter',
+      // },
+      {
+        field: "applicationDocuments",
+        width: 140,
         cellRenderer: scrollableCellRenderer,
         // filter: 'agTextColumnFilter',
       },
       {
         field: "scholarshipRecipientPreference",
         width: 140,
-        // wrapText: false,
+        wrapText: true,
         cellRenderer: scrollableCellRenderer,
-        // filter: 'agTextColumnFilter',
+        filter: 'agTextColumnFilter',
+        hide: true,
       },
-      {
-        field: "salary",
-        width: 100,
-      },
-      // {
-      //   field: "startDate",
-      //   width: 105,
-      //   filterParams: {
-      //     filters: [
-      //       { filter: "agDateColumnFilter", },
-      //       { filter: "agSetColumnFilter", },
-      //     ],
-      //   },
-      // },
-      // {
-      //   field: "endDate",
-      //   width: 105,
-      //   filterParams: {
-      //     filters: [
-      //       { filter: "agDateColumnFilter", },
-      //       { filter: "agSetColumnFilter", },
-      //     ],
-      //   },
-      // },
-      {
-        field: "organization",
-        width: 120,
-      },
-      {
-        field: "division",
-        width: 120,
-      },
-      {
-        field: "department",
-        width: 120,
-      },
-      {
-        field: "supervisor",
-        width: 120,
-      },
-      {
-        field: "supervisorTitle",
-        width: 120,
-      },
-      {
-      headerName: "Application",
-      children: [
-        {
-          field: "applicationDeadline",
-          width: 130,
-          // filter: 'agTextColumnFilter',
-        },
-        // Uncomment and include additional fields as needed
-        // {
-        //   field: "applicationMethod",
-        // },
-        {
-          field: "applicationProcedure",
-          headerName: "Application Procedure",
-          width: 130,
-          cellRenderer: scrollableCellRenderer,
-          // filter: 'agTextColumnFilter',
-        },
-        {
-          field: "applicationDocuments",
-          width: 130,
-          cellRenderer: scrollableCellRenderer,
-          // filter: 'agTextColumnFilter',
-        },
-        {
-          field: "id",
-          headerName: "Job ID",
-          maxWidth: 100,
-          // filterParams: {
-          //   filters: [
-          //     { filter: "agNumberColumnFilter" },
-          //     { filter: "agSetColumnFilter" },
-          //   ],
-          // },
-        },
-      ]
-    }
+    {
+      field: "skills",
+      width: 140,
+      wrapText: true,
+      cellRenderer: scrollableCellRenderer,
+      filter: 'agTextColumnFilter',
+      hide: true,
+    },
+    {
+      field: "accessibilityConsiderations",
+      headerName: "Accessibility",
+      width: 140,
+      wrapText: true,
+      cellRenderer: scrollableCellRenderer,
+      filter: 'agTextColumnFilter',
+      hide: true,
+    },
     ],
 
     defaultColDef: {
@@ -439,128 +393,95 @@
       sortable: true,
       initialWidth: 170,
       editable: true,
-      // filter: true,
+      filter: true,
       wrapText: true,
       cellEditor: MultiLineTextCellEditor,
       wrapHeaderText: true,
       autoHeaderHeight: true,
-      // floatingFilter: true,
-      // filter: "agMultiColumnFilter",
-      // filterParams: {
-      //   filters: [
-      //     { filter: "agTextColumnFilter", },
-      //     { filter: "agSetColumnFilter", },
-      //   ],
-      // },
-      // tooltipValueGetter: function(params) {
-      //   // Assuming 'jobTitle' and 'company' are the field names in your rowData
-      //   return `${params.data.title} at ${params.data.department}`;
-      // },
+      floatingFilter: true,
+      filter: "agMultiColumnFilter",
+      filterParams: {
+        filters: [
+          { filter: "agTextColumnFilter", },
+          { filter: "agSetColumnFilter", },
+        ],
+      },
+      tooltipValueGetter: function(params) {
+        // Assuming 'jobTitle' and 'company' are the field names in your rowData
+        return `${params.data.title} at ${params.data.department}`;
+      },
     },
 
-    rowHeight: 250,
-    // getRowHeight: function(params) {
-    //   // Check if the row is a group row
-    //   if (params.node.group) {
-    //     // Return the desired height for group rows
-    //     return 30; // Example: Set group row height to 100px
-    //   }
-    //   // Return a different height for non-group rows or default height
-    //   return 250; // Example: Set non-group row height to 25px
-    // },
+    // rowHeight: 250,
+    getRowHeight: function(params) {
+      // Check if the row is a group row
+      if (params.node.group) {
+        // Return the desired height for group rows
+        return 30; // Example: Set group row height to 100px
+      }
+      // Return a different height for non-group rows or default height
+      return 250; // Example: Set non-group row height to 25px
+    },
 
-    // rowSelection: 'multiple',
-    // onSelectionChanged: updateExportButtonsState,
+    rowSelection: 'multiple',
+    onSelectionChanged: updateExportButtonsState,
 
-    // groupDefaultExpanded: -1,
-    // groupDisplayType: 'groupRows',
+    groupDefaultExpanded: -1,
+    groupDisplayType: 'groupRows',
 
-    // tooltipShowDelay: 1500,
-    // tooltipHideDelay: 1000,
-    // tooltipMouseTrack: true,
+    tooltipShowDelay: 1500,
+    tooltipHideDelay: 1000,
+    tooltipMouseTrack: true,
 
-    // statusBar: {
-    //   statusPanels: [
-    //    {
-    //       statusPanel: "agTotalAndFilteredRowCountComponent",
-    //       align: "left",
-    //     },
-    //    {
-    //       statusPanel: "agSelectedRowCountComponent",
-    //       align: "left",
-    //     },
-    //   ],
-    // },
-    // enableRangeSelection: true,
-    // // Function to determine if a row should be selectable
-    // isRowSelectable: function(rowNode) {
-    //   // Return false if the row is a group row, making it not selectable
-    //   return !rowNode.group;
-    // },
+    statusBar: {
+      statusPanels: [
+       {
+          statusPanel: "agTotalAndFilteredRowCountComponent",
+          align: "left",
+        },
+       {
+          statusPanel: "agSelectedRowCountComponent",
+          align: "left",
+        },
+      ],
+    },
+    enableRangeSelection: true,
+    // Function to determine if a row should be selectable
+    isRowSelectable: function(rowNode) {
+      // Return false if the row is a group row, making it not selectable
+      return !rowNode.group;
+    },
 
-    // sideBar: {
-    //   toolPanels: [
-    //     {
-    //       id: "columns",
-    //       labelDefault: "Columns",
-    //       labelKey: "columns",
-    //       iconKey: "columns",
-    //       toolPanel: "agColumnsToolPanel",
-    //       width: 250,
-    //       toolPanelParams: {
-    //         suppressValues: true, // This will hide the aggregation options
-    //       },
-    //     },
-    //     // {
-    //     //   id: "filters",
-    //     //   labelDefault: "Filters",
-    //     //   labelKey: "filters",
-    //     //   iconKey: "filter",
-    //     //   toolPanel: "agFiltersToolPanel",
-    //     //   width: 250,
-    //     // },
-    //   ],
-    //   defaultToolPanel: "columns",
-    // },
+    pivotMode: false,
+    sideBar: {
+      toolPanels: [
+        {
+          id: "columns",
+          labelDefault: "Columns",
+          labelKey: "columns",
+          iconKey: "columns",
+          toolPanel: "agColumnsToolPanel",
+          width: 250,
+          toolPanelParams: {
+            suppressValues: true, // This will hide the aggregation options
+            suppressPivotMode: true, // This will hide the pivot mode options
+          },
+        },
+        {
+          id: "filters",
+          labelDefault: "Filters",
+          labelKey: "filters",
+          iconKey: "filter",
+          toolPanel: "agFiltersToolPanel",
+          width: 250,
+        },
+      ],
+      defaultToolPanel: "columns",
+    },
 
-    // pagination: true,
-    // paginationPageSize: 1,
-    // paginationPageSizeSelector: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],
-
-    // onGridReady: function(params) {
-    //   fetch("/pages/WorkStudyPosting.json")
-    //     .then(response => response.json())
-    //     .then(data => {
-    //       params.api.applyTransaction({ add: data });
-    //       params.api.hideOverlay();
-    //     })
-    //     .catch(error => {
-    //       console.error("Failed to load data", error);
-    //       params.api.showNoRowsOverlay();
-    //     });
-    // },
-
-    rowBuffer: 0,
-    // rowSelection: "multiple",
-
-    // tell grid we want virtual row model type
-    rowModelType: "infinite",
-    // how big each page in our page cache will be, default is 100
-    cacheBlockSize: 10,
-    // how many extra blank rows to display to the user at the end of the dataset,
-    // which sets the vertical scroll and then allows the grid to request viewing more rows of data.
-    // default is 1, ie show 1 row.
-    cacheOverflowSize: 5,
-    // how many server side requests to send at a time. if user is scrolling lots, then the requests
-    // are throttled down
-    maxConcurrentDatasourceRequests: 1,
-    // how many rows to initially show in the grid. having 1 shows a blank row, so it looks like
-    // the grid is loading from the users perspective (as we have a spinner in the first col)
-    infiniteInitialRowCount: 10,
-    // how many pages to store in cache. default is undefined, which allows an infinite sized cache,
-    // pages are never purged. this should be set for large data to stop your browser from getting
-    // full of data
-    maxBlocksInCache: 10,
+    pagination: true,
+    paginationPageSize: 1,
+    paginationPageSizeSelector: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],
 
   };
 
@@ -613,45 +534,28 @@
     }
   }
 
-  // document.addEventListener("DOMContentLoaded", function () {
-  //   var gridDiv = document.querySelector("#myGrid");
-  //   gridApi = agGrid.createGrid(gridDiv, gridOptions);
+  // Custom date comparator function
+  function dateComparator(date1, date2) {
+    const date1Parsed = Date.parse(date1);
+    const date2Parsed = Date.parse(date2);
 
-  //   fetch("/pages/WorkStudyPosting.json")
-  //     .then((response) => response.json())
-  //     .then((data) => gridApi.setGridOption("rowData", data));
+    if (date1Parsed < date2Parsed) return -1;
+    if (date1Parsed > date2Parsed) return 1;
+    return 0;
+  }
 
-  //   window.addEventListener('resize', checkWindowWidth);
-  // });
-
-
-  // setup the grid after the page has finished loading
   document.addEventListener("DOMContentLoaded", function () {
-    const gridDiv = document.querySelector("#myGrid");
+    var gridDiv = document.querySelector("#myGrid");
     gridApi = agGrid.createGrid(gridDiv, gridOptions);
 
     fetch("/pages/WorkStudyPosting.json")
       .then((response) => response.json())
-      .then(function (data) {
-        const dataSource = {
-          rowCount: undefined, // behave as infinite scroll
+      .then((data) => gridApi.setGridOption("rowData", data));
 
-          getRows: (params) => {
-            // take a slice of the total rows
-            const rowsThisPage = data.slice(params.startRow, params.endRow);
-            // if on or after the last page, work out the last row.
-            let lastRow = -1;
-            if (data.length <= params.endRow) {
-              lastRow = data.length;
-            }
-            // call the success callback
-            params.successCallback(rowsThisPage, lastRow);
-          },
-        };
-
-        gridApi.setGridOption("datasource", dataSource);
-      });
+    window.addEventListener('resize', checkWindowWidth);
   });
+
+
 
 </script>
 
