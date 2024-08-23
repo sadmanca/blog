@@ -56,8 +56,12 @@
     }
 
     .scrollable-cell {
-      /* max-height: 100px; */
-      overflow-y: auto; Enables vertical scrolling
+      height: 100%;
+      overflow-y: auto; /* Enables vertical scrolling */
+    }
+
+    .scrollable-cell::-webkit-scrollbar {
+      display: block;
     }
 
     .simplebar-scrollbar::before {
@@ -519,6 +523,8 @@
 
     window.addEventListener('resize', checkWindowWidth);
   });
+
+
 
 </script>
 
