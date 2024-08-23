@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AG Grid Example</title>
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simplebar@latest/dist/simplebar.css">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+   <script src="https://cdn.jsdelivr.net/npm/simplebar@latest/dist/simplebar.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/ag-grid-enterprise/dist/ag-grid-enterprise.min.js"></script>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+  <!-- Preconnect to the font file origin -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+  <!-- Preload the Inter Tight font CSS -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap" />
+
+  <!-- Asynchronously load the Inter Tight font CSS -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap" media="print" onload="this.media='all'" />
+
+  <!-- Fallback: Load the Inter Tight font CSS synchronously if JavaScript is disabled -->
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap" />
+  </noscript>
+
+  <!-- Preload the Inter font CSS (if you need both variants of the Inter font) -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap" />
+
+  <!-- Asynchronously load the Inter font CSS -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap" media="print" onload="this.media='all'" />
+
+  <!-- Fallback: Load the Inter font CSS synchronously if JavaScript is disabled -->
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap" />
+  </noscript>
+
+   <style>
+    .cell-wrap-text {
+      white-space: normal !important;
+    }
+
+    .ag-theme-quartz .ag-cell-value {
+      line-height: 15px !important;
+      word-break: break-word;
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+
+    .cell-ellipsis {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: normal;
+    }
+
+    .scrollable-cell {
+      height: 100%;
+      overflow-y: auto; /* Enables vertical scrolling */
+    }
+
+    .scrollable-cell::-webkit-scrollbar {
+      display: block;
+    }
+
+    .simplebar-scrollbar::before {
+      background-color: rgba(0, 0, 0, 0.1); /* Red with 50% opacity */
+    }
+
+    .scrollable-cell:hover .simplebar-scrollbar::before {
+      background-color: rgba(0, 0, 0, 0.75); /* Red with 50% opacity */
+    }
+
+    /* Flexbox layout for body */
+    body {
+      display: flex;
+      flex-direction: column; /* Stack elements vertically */
+      height: 100vh; /* Full viewport height */
+      margin: 0; /* Remove default margin */
+      font-family: 'Inter Tight', sans-serif;
+    }
+
+    /* Container for buttons */
+    .button-container {
+      flex-shrink: 0; /* Prevent shrinking */
+      margin: 10px 0;
+      overflow-x: auto; /* Enable horizontal scrolling for buttons */
+    }
+
+    /* Adjusted grid container */
+    #myGrid {
+      flex-grow: 1; /* Allow the grid to take up remaining space */
+      width: 100%; /* Full width */
+      /* Removed fixed height to allow flexbox to control the size */
+    }
+
+    .ag-theme-quartz {
+      /* --ag-grid-size: 3px;  */
+      /* --ag-header-height: 80px; */
+    }
+
+    .custom-btn {
+      background-color: #dfd2fd; /* Light purple background */
+      /* border: 3px solid black;  */
+      color: black; /* Text color */
+      font-weight: bold;
+    }
+    .custom-btn:hover {
+      background-color: #cdbafd; /* Slightly darker on hover */
+    }
+
+  </style>
+  <noscript>
+    <style>
+      /**
+      * Reinstate scrolling for non-JS clients
+      */
+      .simplebar-content-wrapper {
+        scrollbar-width: auto;
+        -ms-overflow-style: auto;
+      }
+
+      .simplebar-content-wrapper::-webkit-scrollbar,
+      .simplebar-hide-scrollbar::-webkit-scrollbar {
+        display: initial;
+        width: initial;
+        height: initial;
+      }
+    </style>
+  </noscript>
+ </head>
+  <body>
+    <div style="margin: 5px">
+      <button class="btn btn-primary btn-sm" onclick="exportAllRowsToCSV()">
+          <i class="fas fa-file-csv"></i> Download CSV
+      </button>
+      <button class="btn btn-success btn-sm" onclick="exportAllRowsToExcel()">
+          <i class="fas fa-file-excel"></i> Download Excel
+      </button>
+      <button class="btn btn-outline-primary btn-sm" disabled onclick="exportSelectedRowsToCSV()">
+          <i class="fas fa-file-csv"></i> Export Selected Rows to CSV
+      </button>
+      <button class="btn btn-outline-success btn-sm" disabled onclick="exportSelectedRowsToExcel()">
+          <i class="fas fa-file-excel"></i> Export Selected Rows to Excel
+      </button>
+      <!-- <button class="btn btn-toggle-theme" onclick="toggleTheme()">Toggle Dark/Light Mode</button> -->
+      <button class="btn btn-dark" onclick="window.open('https://github.com/sadmanca/uoft-pey-coop-job-postings', '_blank')">
+        <i class="fa-brands fa-github"></i>
+      </button>
+      <button class="btn btn-primary" onclick="window.open('https://linkedin.com/in/sadmanca', '_blank')">
+        <i class="fa-brands fa-linkedin"></i>
+      </button>
+      <button class="btn custom-btn btn-sm" onclick="window.open('https://sadman.ca', '_blank')">
+        <i class="fa-solid fa-circle" style="color: #6e46e7;"></i> Sadman's Blog
+      </button>
+
+    </div>
+    <div id="myGrid" style="width: 100%; height: 100%" class="ag-theme-quartz"></div>
+  </body>
+</html>
+
+<script>
+  function scrollableCellRenderer(params) {
+    // Check if params.value exists and replace newline characters with HTML line breaks
+    const formattedValue = params.value ? params.value.replace(/\n/g, '<br><br>') : '';
+    return `<div class="scrollable-cell" data-simplebar data-simplebar-auto-hide="false">${formattedValue}</div>`;
+  }
+
+  function CompanyWebsiteRenderer(params) {
+    // Ensure params.value is defined and is a string
+    if (typeof params.value !== 'string') return '';
+
+    // Extract the first URL from the text
+    const urlMatch = params.value.match(/https?:\/\/[^ \n]+/);
+    if (!urlMatch) return params.value; // Return original text if no URL found
+
+    const firstUrl = urlMatch[0];
+    const link = `<a href="${firstUrl}" target="_blank">${new URL(firstUrl).hostname}</a>`;
+    return link;
+  }
+
+  function updateExportButtonsState() {
+    const noRowsSelected = gridApi && gridApi.getSelectedRows().length === 0;
+    document.querySelector('button[onclick="exportSelectedRowsToCSV()"]').disabled = noRowsSelected;
+    document.querySelector('button[onclick="exportSelectedRowsToExcel()"]').disabled = noRowsSelected;
+  }
+
+  function MultiLineTextCellEditor() {}
+
+  MultiLineTextCellEditor.prototype.init = function(params) {
+    this.params = params;
+    this.eGui = document.createElement('textarea');
+    this.eGui.style.width = '100%';
+    this.eGui.style.height = '100%';
+    this.eGui.value = params.value;
+  };
+
+  MultiLineTextCellEditor.prototype.getGui = function() {
+    return this.eGui;
+  };
+
+  MultiLineTextCellEditor.prototype.afterGuiAttached = function() {
+    this.eGui.focus();
+    this.eGui.select();
+  };
+
+  MultiLineTextCellEditor.prototype.getValue = function() {
+    return this.eGui.value;
+  };
+
+  MultiLineTextCellEditor.prototype.destroy = function() {};
+
+  const gridOptions = {
+    columnDefs: [
+      {
+        headerName: "Row",
+        maxWidth: 100,
+        // it is important to have node.id here, so that when the id changes (which happens
+        // when the row is loaded) then the cell is refreshed.
+        valueGetter: "node.id",
+        cellRenderer: (params) => {
+          if (params.value !== undefined) {
+            return params.value;
+          } else {
+            return '<img src="https://www.ag-grid.com/example-assets/loading.gif">';
+          }
+        },
+      },
+      // {
+      //   field: "postingDate",
+      //   width: 140,
+      //   rowGroup: true,
+      //   pinned: 'left',
+      // },
+      {
+        // headerCheckboxSelection: true, // Enable checkbox on the header
+        // checkboxSelection: true, // Enable row checkboxes
+        field: "title",
+        width: 120,
+        // pinned: 'left',
+        // filter: "agSetColumnFilter",
+        // hide: false,
+      },
+      {
+        field: "workStudyStream",
+        // rowGroup: true,
+        width: 117,
+      },
+      // {
+      //   field: "companyWebsite",
+      //   cellRenderer: CompanyWebsiteRenderer,
+      //   width: 117,
+      // },
+      {
+        field: "campusLocation",
+        width: 113,
+      },
+      {
+        field: "positionType",
+        width: 113,
+      },
+      {
+        field: "numPositions",
+        headerName: "Num of Positions",
+        width: 115,
+        // filter: "agSetColumnFilter",
+        // Use a value formatter to check the value before displaying
+        valueFormatter: function(params) {
+          // Check if the value is a valid number
+          const isValidNumber = !isNaN(params.value) && isFinite(params.value);
+          // Return the value if it's a valid number, otherwise return an empty string
+          return isValidNumber ? params.value : '';
+        },
+      },
+      {
+        field: "weeklySchedule",
+        width: 113,
+      },
+      {
+        field: "hoursPerWeek",
+        width: 113,
+      },
+      {
+        field: "degreeLevel",
+        width: 113,
+      },
+      {
+        field: "departmentOverview",
+        width: 113,
+      },
+      {
+        field: "weeklySchedule",
+        width: 113,
+      },
+      {
+        field: "hoursPerWeek",
+        width: 113,
+      },
+      {
+        field: "degreeLevel",
+        width: 113,
+      },
+      {
+        field: "departmentOverview",
+        width: 113,
+      },
+      {
+        field: "description",
+        width: 350,
+        // wrapText: false,
+        // cellClass: 'cell-wrap-text',
+        cellRenderer: scrollableCellRenderer,
+        // filter: 'agTextColumnFilter',
+      },
+      {
+        field: "qualifications",
+        width: 350,
+        // wrapText: false,
+        // cellClass: 'cell-wrap-text',
+        cellRenderer: scrollableCellRenderer,
+        // filter: 'agTextColumnFilter',
+      },
+      {
+        field: "accessibilityConsiderations",
+        width: 140,
+        // wrapText: false,
+        cellRenderer: scrollableCellRenderer,
+        // filter: 'agTextColumnFilter',
+      },
+      {
+        field: "accessibilityAccommodations",
+        width: 140,
+        // wrapText: false,
+        cellRenderer: scrollableCellRenderer,
+        // filter: 'agTextColumnFilter',
+      },
+      {
+        field: "skills",
+        width: 140,
+        // wrapText: false,
+        cellRenderer: scrollableCellRenderer,
+        // filter: 'agTextColumnFilter',
+      },
+      {
+        field: "scholarshipRecipientPreference",
+        width: 140,
+        // wrapText: false,
+        cellRenderer: scrollableCellRenderer,
+        // filter: 'agTextColumnFilter',
+      },
+      {
+        field: "salary",
+        width: 100,
+      },
+      // {
+      //   field: "startDate",
+      //   width: 105,
+      //   filterParams: {
+      //     filters: [
+      //       { filter: "agDateColumnFilter", },
+      //       { filter: "agSetColumnFilter", },
+      //     ],
+      //   },
+      // },
+      // {
+      //   field: "endDate",
+      //   width: 105,
+      //   filterParams: {
+      //     filters: [
+      //       { filter: "agDateColumnFilter", },
+      //       { filter: "agSetColumnFilter", },
+      //     ],
+      //   },
+      // },
+      {
+        field: "organization",
+        width: 120,
+      },
+      {
+        field: "division",
+        width: 120,
+      },
+      {
+        field: "department",
+        width: 120,
+      },
+      {
+        field: "supervisor",
+        width: 120,
+      },
+      {
+        field: "supervisorTitle",
+        width: 120,
+      },
+      {
+      headerName: "Application",
+      children: [
+        {
+          field: "applicationDeadline",
+          width: 130,
+          // filter: 'agTextColumnFilter',
+        },
+        // Uncomment and include additional fields as needed
+        // {
+        //   field: "applicationMethod",
+        // },
+        {
+          field: "applicationProcedure",
+          headerName: "Application Procedure",
+          width: 130,
+          cellRenderer: scrollableCellRenderer,
+          // filter: 'agTextColumnFilter',
+        },
+        {
+          field: "applicationDocuments",
+          width: 130,
+          cellRenderer: scrollableCellRenderer,
+          // filter: 'agTextColumnFilter',
+        },
+        {
+          field: "id",
+          headerName: "Job ID",
+          maxWidth: 100,
+          // filterParams: {
+          //   filters: [
+          //     { filter: "agNumberColumnFilter" },
+          //     { filter: "agSetColumnFilter" },
+          //   ],
+          // },
+        },
+      ]
+    }
+    ],
+
+    defaultColDef: {
+      resizable: true,
+      sortable: true,
+      initialWidth: 170,
+      editable: true,
+      // filter: true,
+      wrapText: true,
+      cellEditor: MultiLineTextCellEditor,
+      wrapHeaderText: true,
+      autoHeaderHeight: true,
+      // floatingFilter: true,
+      // filter: "agMultiColumnFilter",
+      // filterParams: {
+      //   filters: [
+      //     { filter: "agTextColumnFilter", },
+      //     { filter: "agSetColumnFilter", },
+      //   ],
+      // },
+      // tooltipValueGetter: function(params) {
+      //   // Assuming 'jobTitle' and 'company' are the field names in your rowData
+      //   return `${params.data.title} at ${params.data.department}`;
+      // },
+    },
+
+    rowHeight: 250,
+    // getRowHeight: function(params) {
+    //   // Check if the row is a group row
+    //   if (params.node.group) {
+    //     // Return the desired height for group rows
+    //     return 30; // Example: Set group row height to 100px
+    //   }
+    //   // Return a different height for non-group rows or default height
+    //   return 250; // Example: Set non-group row height to 25px
+    // },
+
+    // rowSelection: 'multiple',
+    // onSelectionChanged: updateExportButtonsState,
+
+    // groupDefaultExpanded: -1,
+    // groupDisplayType: 'groupRows',
+
+    // tooltipShowDelay: 1500,
+    // tooltipHideDelay: 1000,
+    // tooltipMouseTrack: true,
+
+    // statusBar: {
+    //   statusPanels: [
+    //    {
+    //       statusPanel: "agTotalAndFilteredRowCountComponent",
+    //       align: "left",
+    //     },
+    //    {
+    //       statusPanel: "agSelectedRowCountComponent",
+    //       align: "left",
+    //     },
+    //   ],
+    // },
+    // enableRangeSelection: true,
+    // // Function to determine if a row should be selectable
+    // isRowSelectable: function(rowNode) {
+    //   // Return false if the row is a group row, making it not selectable
+    //   return !rowNode.group;
+    // },
+
+    // sideBar: {
+    //   toolPanels: [
+    //     {
+    //       id: "columns",
+    //       labelDefault: "Columns",
+    //       labelKey: "columns",
+    //       iconKey: "columns",
+    //       toolPanel: "agColumnsToolPanel",
+    //       width: 250,
+    //       toolPanelParams: {
+    //         suppressValues: true, // This will hide the aggregation options
+    //       },
+    //     },
+    //     // {
+    //     //   id: "filters",
+    //     //   labelDefault: "Filters",
+    //     //   labelKey: "filters",
+    //     //   iconKey: "filter",
+    //     //   toolPanel: "agFiltersToolPanel",
+    //     //   width: 250,
+    //     // },
+    //   ],
+    //   defaultToolPanel: "columns",
+    // },
+
+    // pagination: true,
+    // paginationPageSize: 1,
+    // paginationPageSizeSelector: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],
+
+    // onGridReady: function(params) {
+    //   fetch("/pages/WorkStudyPosting.json")
+    //     .then(response => response.json())
+    //     .then(data => {
+    //       params.api.applyTransaction({ add: data });
+    //       params.api.hideOverlay();
+    //     })
+    //     .catch(error => {
+    //       console.error("Failed to load data", error);
+    //       params.api.showNoRowsOverlay();
+    //     });
+    // },
+
+    rowBuffer: 0,
+    // rowSelection: "multiple",
+
+    // tell grid we want virtual row model type
+    rowModelType: "infinite",
+    // how big each page in our page cache will be, default is 100
+    cacheBlockSize: 10,
+    // how many extra blank rows to display to the user at the end of the dataset,
+    // which sets the vertical scroll and then allows the grid to request viewing more rows of data.
+    // default is 1, ie show 1 row.
+    cacheOverflowSize: 5,
+    // how many server side requests to send at a time. if user is scrolling lots, then the requests
+    // are throttled down
+    maxConcurrentDatasourceRequests: 1,
+    // how many rows to initially show in the grid. having 1 shows a blank row, so it looks like
+    // the grid is loading from the users perspective (as we have a spinner in the first col)
+    infiniteInitialRowCount: 10,
+    // how many pages to store in cache. default is undefined, which allows an infinite sized cache,
+    // pages are never purged. this should be set for large data to stop your browser from getting
+    // full of data
+    maxBlocksInCache: 10,
+
+  };
+
+  function exportSelectedRowsToCSV() {
+    if (gridApi) {
+      gridApi.exportDataAsCsv({
+        onlySelected: true,
+      });
+    } else {
+      console.error('Grid API is not available.');
+    }
+  }
+
+  function exportSelectedRowsToExcel() {
+    if (gridApi) {
+      gridApi.exportDataAsExcel({
+        onlySelected: true,
+      });
+    } else {
+      console.error('Grid API is not available.');
+    }
+  }
+
+  function exportAllRowsToCSV() {
+    if (gridApi) {
+      gridApi.exportDataAsCsv({
+        onlySelected: false,
+      });
+    } else {
+      console.error('Grid API is not available.');
+    }
+  }
+
+  function exportAllRowsToExcel() {
+    if (gridApi) {
+      gridApi.exportDataAsExcel({
+        onlySelected: false,
+      });
+    } else {
+      console.error('Grid API is not available.');
+    }
+  }
+
+  // Function to check window width and toggle side panel
+  function checkWindowWidth() {
+    if (window.innerWidth < 800) {
+      gridApi.closeToolPanel();
+    } else {
+      gridApi.openToolPanel('columns');
+    }
+  }
+
+  // document.addEventListener("DOMContentLoaded", function () {
+  //   var gridDiv = document.querySelector("#myGrid");
+  //   gridApi = agGrid.createGrid(gridDiv, gridOptions);
+
+  //   fetch("/pages/WorkStudyPosting.json")
+  //     .then((response) => response.json())
+  //     .then((data) => gridApi.setGridOption("rowData", data));
+
+  //   window.addEventListener('resize', checkWindowWidth);
+  // });
+
+
+  // setup the grid after the page has finished loading
+  document.addEventListener("DOMContentLoaded", function () {
+    const gridDiv = document.querySelector("#myGrid");
+    gridApi = agGrid.createGrid(gridDiv, gridOptions);
+
+    fetch("/pages/WorkStudyPosting.json")
+      .then((response) => response.json())
+      .then(function (data) {
+        const dataSource = {
+          rowCount: undefined, // behave as infinite scroll
+
+          getRows: (params) => {
+            // take a slice of the total rows
+            const rowsThisPage = data.slice(params.startRow, params.endRow);
+            // if on or after the last page, work out the last row.
+            let lastRow = -1;
+            if (data.length <= params.endRow) {
+              lastRow = data.length;
+            }
+            // call the success callback
+            params.successCallback(rowsThisPage, lastRow);
+          },
+        };
+
+        gridApi.setGridOption("datasource", dataSource);
+      });
+  });
+
+</script>
+
+<!--
+for mapping pages to dates:
+
+// Example mapping of page numbers to dates
+const pageNumberToDateMap = {
+  1: '2023-01-01',
+  2: '2023-01-02',
+  // Add more mappings as needed
+};
+const lastDate = '2023-01-31'; // Example last date
+
+const gridOptions = {
+  // Other grid options...
+  pagination: true,
+  paginationPageSize: 1,
+  paginationNumberFormatter: function(params) {
+    const currentPageDate = pageNumberToDateMap[params.value] || 'Unknown Date';
+    return `${currentPageDate} out of ${lastDate}`;
+  },
+  // Other options like columnDefs, rowData, etc.
+};
+
+<div class="ag-tooltip ag-tooltip-animate ag-ltr ag-popup-child ag-tooltip-hiding" role="dialog" aria-label="Tooltip" style="top: 279px; left: 1230px;">Full Stack Engineer, Business Systems at ecobee</div>
+-->
