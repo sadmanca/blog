@@ -138,6 +138,13 @@
       background-color: #3c5491; /* Slightly darker on hover */
     }
 
+    .btn-sm {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+      line-height: 1.5;
+      border-radius: 0.2rem;
+    }
+
   </style>
   <noscript>
     <style>
@@ -169,39 +176,48 @@
   </script>
  </head>
   <body>
-    <div id="buttonContainer" style="padding: 5px">
-      <button class="btn clnx-btn btn-sm" onclick="window.open('https://clnx.utoronto.ca/myAccount/jobs/work-study/wsjobs.htm', '_blank')">
-        <i class="fa-solid fa-briefcase"></i> CLNx
-      </button>
-      <span style="margin: 0 5px;">|</span> <!-- Spacer -->
-      <button class="btn btn-outline-primary btn-sm" disabled onclick="exportSelectedRowsToCSV()">
-        <i class="fas fa-file-csv"></i> Export Selected Rows to CSV
-      </button>
-      <button class="btn btn-outline-success btn-sm" disabled onclick="exportSelectedRowsToExcel()">
+    <div id="buttonContainer" style="padding: 5px" class="d-flex justify-content-between align-items-center flex-wrap">
+      <div>
+        <button class="btn clnx-btn btn-sm" onclick="window.open('https://clnx.utoronto.ca/myAccount/jobs/work-study/wsjobs.htm', '_blank')">
+          <i class="fa-solid fa-briefcase"></i> CLNx
+        </button>
+        <span style="margin: 0 3px;">|</span> <!-- Spacer -->
+        <button class="btn btn-outline-primary btn-sm" disabled onclick="exportSelectedRowsToCSV()">
+          <i class="fas fa-file-csv"></i> Export Selected Rows to CSV
+        </button>
+        <button class="btn btn-outline-success btn-sm" disabled onclick="exportSelectedRowsToExcel()">
           <i class="fas fa-file-excel"></i> Export Selected Rows to Excel
-      </button>
-      <span style="margin: 0 5px;">|</span> <!-- Spacer -->
-      <button class="btn btn-primary btn-sm" onclick="exportAllRowsToCSV()">
+        </button>
+        <span style="margin: 0 3px;">|</span> <!-- Spacer -->
+        <button class="btn btn-primary btn-sm" onclick="exportAllRowsToCSV()">
           <i class="fas fa-file-csv"></i> Download CSV
-      </button>
-      <button class="btn btn-success btn-sm" onclick="exportAllRowsToExcel()">
+        </button>
+        <button class="btn btn-success btn-sm" onclick="exportAllRowsToExcel()">
           <i class="fas fa-file-excel"></i> Download Excel
-      </button>
-      <span style="margin: 0 5px;">|</span> <!-- Spacer -->
-      <button id="toggleThemeButton" class="btn btn-outline-dark btn-sm" onclick="toggleTheme()">
-        <i class="fas fa-circle"></i> Dark Mode
-      </button>
-      <span style="margin: 0 5px;">|</span> <!-- Spacer -->
-      <button class="btn blog-btn btn-sm" onclick="window.open('https://sadman.ca', '_blank')">
-        <i class="fa-solid fa-circle" style="color: #6e46e7;"></i> Sadman's Blog
-      </button>
-      <button class="btn btn-dark btn-sm" onclick="window.open('https://github.com/sadmanca/uoft-pey-coop-job-postings', '_blank')">
-        <i class="fa-brands fa-github"></i>
-      </button>
-      <button class="btn btn-primary btn-sm" onclick="window.open('https://linkedin.com/in/sadmanca', '_blank')">
-        <i class="fa-brands fa-linkedin"></i>
-      </button>
-
+        </button>
+        <span style="margin: 0 3px;">|</span> <!-- Spacer -->
+        <button id="hideExpiredJobsButton" class="btn btn-primary btn-sm">
+          <i class="fas fa-circle"></i> Hide Expired Jobs
+        </button>
+        <button id="showExpiringJobsButton" class="btn btn-secondary btn-sm">
+          <i class="fas fa-circle"></i> Jobs Expiring Soon
+        </button>
+        <span style="margin: 0 3px;">|</span> <!-- Spacer -->
+        <button id="toggleThemeButton" class="btn btn-outline-dark btn-sm" onclick="toggleTheme()">
+          <i class="fas fa-circle"></i> Dark Mode
+        </button>
+      </div>
+      <div class="d-flex justify-content-end">
+        <button class="btn blog-btn btn-sm" onclick="window.open('https://sadman.ca', '_blank')">
+          <i class="fa-solid fa-circle" style="color: #6e46e7;"></i> Sadman's Blog
+        </button>
+        <button class="btn btn-dark btn-sm" onclick="window.open('https://github.com/sadmanca/uoft-pey-coop-job-postings', '_blank')">
+          <i class="fa-brands fa-github"></i>
+        </button>
+        <button class="btn btn-primary btn-sm" onclick="window.open('https://linkedin.com/in/sadmanca', '_blank')">
+          <i class="fa-brands fa-linkedin"></i>
+        </button>
+      </div>
     </div>
     <div id="myGrid" style="width: 100%; height: 100%"></div>
   </body>
@@ -476,7 +492,7 @@ function toggleTheme() {
 
                 if (dayDiff < 0) {
                     return { backgroundColor: '#2e0000', color: 'white' };
-                } else if (dayDiff <= 2) {
+                } else if (dayDiff <= 3) {
                     return { backgroundColor: '#3b3b01', color: 'white' };
                 }
             }
@@ -570,7 +586,7 @@ function toggleTheme() {
 
             if (dayDiff < 0) {
                 return { backgroundColor: '#520000', color: 'white' };
-            } else if (dayDiff <= 2) {
+            } else if (dayDiff <= 3) {
                 return { backgroundColor: '#525200', color: 'white' };
             }
         }
@@ -701,6 +717,36 @@ function toggleTheme() {
     }
   }
 
+  function hideExpiredJobs() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set to midnight to compare only the date part
+
+    gridApi.getFilterInstance('applicationDeadline', function(filterInstance) {
+      filterInstance.setModel({
+        type: 'greaterThan',
+        dateFrom: today.toISOString().split('T')[0] // Format date as YYYY-MM-DD
+      });
+      gridApi.onFilterChanged();
+    });
+  }
+
+  function showExpiringJobs() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set to midnight to compare only the date part
+
+    const twoDaysFromToday = new Date(today);
+    twoDaysFromToday.setDate(today.getDate() + 2); // Add 2 days to today
+
+    gridApi.getFilterInstance('applicationDeadline', function(filterInstance) {
+      filterInstance.setModel({
+        type: 'inRange',
+        dateFrom: today.toISOString().split('T')[0], // Format date as YYYY-MM-DD
+        dateTo: twoDaysFromToday.toISOString().split('T')[0] // Format date as YYYY-MM-DD
+      });
+      gridApi.onFilterChanged();
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     var gridDiv = document.querySelector("#myGrid");
     gridApi = agGrid.createGrid(gridDiv, gridOptions);
@@ -710,6 +756,9 @@ function toggleTheme() {
       .then((data) => gridApi.setGridOption("rowData", data));
 
     window.addEventListener('resize', checkWindowWidth);
+    document.querySelector('#hideExpiredJobsButton').addEventListener('click', hideExpiredJobs);
+    document.querySelector('#showExpiringJobsButton').addEventListener('click', showExpiringJobs);
+    document.getElementById('toggleGroupingButton').addEventListener('click', toggleGrouping);
   });
 
 
