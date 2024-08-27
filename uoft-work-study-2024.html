@@ -145,6 +145,10 @@
       border-radius: 0.2rem;
     }
 
+    .right-buttons {
+      margin-right: 4px;
+    }
+
   </style>
   <noscript>
     <style>
@@ -196,25 +200,25 @@
           <i class="fas fa-file-excel"></i> Download Excel
         </button>
         <span style="margin: 0 3px;">|</span> <!-- Spacer -->
-        <button id="hideExpiredJobsButton" class="btn btn-primary btn-sm">
-          <i class="fas fa-circle"></i> Hide Expired Jobs
+        <button id="hideExpiredJobsButton" class="btn btn-sm" style="background-color: #520000; border-color: #520000; color: #fff;">
+          <i class="fas fa-xmark"></i> Hide Expired Jobs
         </button>
-        <button id="showExpiringJobsButton" class="btn btn-secondary btn-sm">
-          <i class="fas fa-circle"></i> Jobs Expiring Soon
+        <button id="showExpiringJobsButton" class="btn btn-sm" style="background-color: #525200; border-color: #525200; color: #fff;">
+          <i class="fas fa-clock"></i> Jobs Expiring Soon
         </button>
         <span style="margin: 0 3px;">|</span> <!-- Spacer -->
         <button id="toggleThemeButton" class="btn btn-outline-dark btn-sm" onclick="toggleTheme()">
-          <i class="fas fa-circle"></i> Dark Mode
+          <i class="fas fa-moon"></i> Dark Mode
         </button>
       </div>
       <div class="d-flex justify-content-end">
-        <button class="btn blog-btn btn-sm" onclick="window.open('https://sadman.ca', '_blank')">
+        <button class="btn blog-btn btn-sm right-buttons" onclick="window.open('https://sadman.ca', '_blank')">
           <i class="fa-solid fa-circle" style="color: #6e46e7;"></i> Sadman's Blog
         </button>
-        <button class="btn btn-dark btn-sm" onclick="window.open('https://github.com/sadmanca/uoft-pey-coop-job-postings', '_blank')">
+        <button id="githubButton" class="btn btn-dark btn-sm right-buttons" onclick="window.open('https://github.com/sadmanca/uoft-pey-coop-job-postings', '_blank')">
           <i class="fa-brands fa-github"></i>
         </button>
-        <button class="btn btn-primary btn-sm" onclick="window.open('https://linkedin.com/in/sadmanca', '_blank')">
+        <button class="btn btn-primary btn-sm right-buttons" onclick="window.open('https://linkedin.com/in/sadmanca', '_blank')">
           <i class="fa-brands fa-linkedin"></i>
         </button>
       </div>
@@ -224,52 +228,56 @@
 </html>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const gridDiv = document.getElementById('myGrid');
-    const buttonContainer = document.getElementById('buttonContainer');
-    const toggleButton = document.getElementById('toggleThemeButton');
-    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  document.addEventListener('DOMContentLoaded', function() {
+      const gridDiv = document.getElementById('myGrid');
+      const buttonContainer = document.getElementById('buttonContainer');
+      const toggleButton = document.getElementById('toggleThemeButton');
+      const githubButton = document.getElementById('githubButton');
+      const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const savedTheme = localStorage.getItem('theme');
 
-    if (prefersDarkScheme) {
-        gridDiv.classList.add('ag-theme-quartz-dark');
-        buttonContainer.style.backgroundColor = '#1c232e'; // Dark background for button container
-        document.body.style.backgroundColor = '#1c232e'; // Dark background for base page
-        toggleButton.classList.remove('btn-outline-dark');
-        toggleButton.classList.add('btn-outline-light');
-        toggleButton.innerHTML = '<i class="fas fa-circle"></i> Light Mode';
-    } else {
-        gridDiv.classList.add('ag-theme-quartz');
-        buttonContainer.style.backgroundColor = '#fff'; // Light background for button container
-        document.body.style.backgroundColor = '#fff'; // Light background for base page
-        toggleButton.classList.remove('btn-outline-light');
-        toggleButton.classList.add('btn-outline-dark');
-        toggleButton.innerHTML = '<i class="fas fa-circle"></i> Dark Mode';
-    }
-});
+      if (savedTheme) {
+          applyTheme(savedTheme);
+      } else if (prefersDarkScheme) {
+          applyTheme('dark');
+      } else {
+          applyTheme('light');
+      }
 
-function toggleTheme() {
-    const gridDiv = document.getElementById('myGrid');
-    const buttonContainer = document.getElementById('buttonContainer');
-    const toggleButton = document.getElementById('toggleThemeButton');
-    if (gridDiv.classList.contains('ag-theme-quartz')) {
-        gridDiv.classList.remove('ag-theme-quartz');
-        gridDiv.classList.add('ag-theme-quartz-dark');
-        buttonContainer.style.backgroundColor = '#1c232e'; // Dark background for button container
-        document.body.style.backgroundColor = '#1c232e'; // Dark background for base page
-        toggleButton.classList.remove('btn-outline-dark');
-        toggleButton.classList.add('btn-outline-light');
-        toggleButton.innerHTML = '<i class="fas fa-circle"></i> Light Mode';
-    } else {
-        gridDiv.classList.remove('ag-theme-quartz-dark');
-        gridDiv.classList.add('ag-theme-quartz');
-        buttonContainer.style.backgroundColor = '#fff'; // Light background for button container
-        document.body.style.backgroundColor = '#fff'; // Light background for base page
-        toggleButton.classList.remove('btn-outline-light');
-        toggleButton.classList.add('btn-outline-dark');
-        toggleButton.innerHTML = '<i class="fas fa-circle"></i> Dark Mode';
-    }
-}
-</script>
+      toggleButton.addEventListener('click', toggleTheme);
+
+      function applyTheme(theme) {
+          if (theme === 'dark') {
+              gridDiv.classList.remove('ag-theme-quartz');
+              gridDiv.classList.add('ag-theme-quartz-dark');
+              buttonContainer.style.backgroundColor = '#1c232e';
+              document.body.style.backgroundColor = '#1c232e';
+              toggleButton.classList.remove('btn-outline-dark');
+              githubButton.classList.remove('btn-dark');
+              toggleButton.classList.add('btn-outline-light');
+              githubButton.classList.add('btn-light');
+              toggleButton.innerHTML = '<i class="fas fa-circle"></i> Light Mode';
+          } else {
+              gridDiv.classList.remove('ag-theme-quartz-dark');
+              gridDiv.classList.add('ag-theme-quartz');
+              buttonContainer.style.backgroundColor = '#fff';
+              document.body.style.backgroundColor = '#fff';
+              toggleButton.classList.remove('btn-outline-light');
+              githubButton.classList.remove('btn-light');
+              toggleButton.classList.add('btn-outline-dark');
+              githubButton.classList.add('btn-dark');
+              toggleButton.innerHTML = '<i class="fas fa-moon"></i> Dark Mode';
+          }
+          localStorage.setItem('theme', theme);
+      }
+
+      function toggleTheme() {
+          const currentTheme = gridDiv.classList.contains('ag-theme-quartz') ? 'light' : 'dark';
+          const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+          applyTheme(newTheme);
+      }
+  });
+  </script>
 
 <script>
   function scrollableCellRenderer(params) {
@@ -329,9 +337,9 @@ function toggleTheme() {
         checkboxSelection: true, // Enable row checkboxes
         field: "id",
         headerName: "ID",
-        maxWidth: 108,
+        maxWidth: 113,
         pinned: 'left',
-        filter: false,
+        filter: "agTextColumnFilter",
       },
       {
         field: "title",
@@ -409,6 +417,9 @@ function toggleTheme() {
         cellRenderer: scrollableCellRenderer,
         filter: 'agTextColumnFilter',
         hide: false,
+        tooltipValueGetter: function(params) {
+          return `${params.data.weeklySchedule}`;
+        },
       },
       // {
       //   field: "accessibilityAccommodations",
@@ -607,13 +618,14 @@ function toggleTheme() {
 
     rowSelection: 'multiple',
     onSelectionChanged: updateExportButtonsState,
+    rowMultiSelectWithClick: true, // Allow multiple rows to be selected with clicks
 
     groupDefaultExpanded: -1,
     groupDisplayType: 'groupRows',
     rowGroupPanelShow: 'always',
 
-    tooltipShowDelay: 100,
-    tooltipHideDelay: 1000,
+    tooltipShowDelay: 500,
+    tooltipHideDelay: 1200,
     tooltipMouseTrack: true,
 
     statusBar: {
@@ -668,10 +680,29 @@ function toggleTheme() {
 
   };
 
+  function generateReadableTimestamp() {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    return `${year}_${month}_${day}-${hours}_${minutes}_${seconds}`;
+  }
+
+  // Function to generate the filename with a readable timestamp
+  function generateFilename(baseName) {
+    const timestamp = generateReadableTimestamp();
+    return `${baseName}-${timestamp}.csv`;
+  }
+
   function exportSelectedRowsToCSV() {
     if (gridApi) {
+      const filename = generateFilename('SELECTED-uoft-work-study-jobs', 'csv');
       gridApi.exportDataAsCsv({
         onlySelected: true,
+        fileName: filename
       });
     } else {
       console.error('Grid API is not available.');
@@ -680,8 +711,10 @@ function toggleTheme() {
 
   function exportSelectedRowsToExcel() {
     if (gridApi) {
+      const filename = generateFilename('SELECTED-uoft-work-study-jobs', 'xlsx');
       gridApi.exportDataAsExcel({
         onlySelected: true,
+        fileName: filename
       });
     } else {
       console.error('Grid API is not available.');
@@ -689,9 +722,11 @@ function toggleTheme() {
   }
 
   function exportAllRowsToCSV() {
+    const filename = generateFilename('ALL-uoft-work-study-jobs', 'csv');
     if (gridApi) {
       gridApi.exportDataAsCsv({
         onlySelected: false,
+        fileName: filename
       });
     } else {
       console.error('Grid API is not available.');
@@ -699,9 +734,11 @@ function toggleTheme() {
   }
 
   function exportAllRowsToExcel() {
+    const filename = generateFilename('ALL-uoft-work-study-jobs', 'xlsx');
     if (gridApi) {
       gridApi.exportDataAsExcel({
         onlySelected: false,
+        fileName: filename
       });
     } else {
       console.error('Grid API is not available.');
@@ -710,7 +747,7 @@ function toggleTheme() {
 
   // Function to check window width and toggle side panel
   function checkWindowWidth() {
-    if (window.innerWidth < 800) {
+    if (window.innerWidth < 1600) {
       gridApi.closeToolPanel();
     } else {
       gridApi.openToolPanel('columns');
