@@ -692,9 +692,9 @@
   }
 
   // Function to generate the filename with a readable timestamp
-  function generateFilename(baseName) {
+  function generateFilename(baseName, extension) {
     const timestamp = generateReadableTimestamp();
-    return `${baseName}-${timestamp}.csv`;
+    return `${baseName}-${timestamp}.{extension}`;
   }
 
   function exportSelectedRowsToCSV() {
