@@ -150,8 +150,8 @@
     }
 
     .btn-sm {
-      margin-top: 3px; /* Adjust the value as needed */
-      margin-bottom: 3px; /* Adjust the value as needed */
+      margin-top: 2px; /* Adjust the value as needed */
+      margin-bottom: 2px; /* Adjust the value as needed */
     }
 
     .ag-tooltip{
@@ -190,54 +190,63 @@
  </head>
   <body>
     <div id="buttonContainer" style="padding: 4px" class="d-flex justify-content-between align-items-center flex-wrap">
-      <div>
-        <button class="btn clnx-btn btn-sm btn-spacing" onclick="window.open('https://clnx.utoronto.ca/myAccount/jobs/work-study/wsjobs.htm', '_blank')">
-          <i class="fa-solid fa-briefcase"></i> CLNx
-        </button>
-        <span style="margin: 0 3px;">|</span> <!-- Spacer -->
-        <button class="btn btn-outline-primary btn-sm" disabled onclick="exportSelectedRowsToCSV()">
-          <i class="fas fa-file-csv"></i> Export Selected Rows to CSV
-        </button>
-        <button class="btn btn-outline-success btn-sm" disabled onclick="exportSelectedRowsToExcel()">
-          <i class="fas fa-file-excel"></i> Export Selected Rows to Excel
-        </button>
-        <span style="margin: 0 3px;">|</span> <!-- Spacer -->
-        <button class="btn btn-primary btn-sm" onclick="exportAllRowsToCSV()">
-          <i class="fas fa-file-csv"></i> Download CSV
-        </button>
-        <button class="btn btn-success btn-sm" onclick="exportAllRowsToExcel()">
-          <i class="fas fa-file-excel"></i> Download Excel
-        </button>
-        <span style="margin: 0 3px;">|</span> <!-- Spacer -->
-        <button id="hideExpiredJobsButton" class="btn btn-sm" style="background-color: #520000; border-color: #520000; color: #fff;">
-          <i class="fas fa-xmark"></i> Hide Expired Jobs
-        </button>
-        <button id="showExpiringJobsButton" class="btn btn-sm" style="background-color: #525200; border-color: #525200; color: #fff;">
-          <i class="fas fa-clock"></i> Jobs Expiring Soon
-        </button>
-        <span style="margin: 0 3px;">|</span> <!-- Spacer -->
-        <button id="toggleThemeButton" class="btn btn-outline-dark btn-sm" onclick="toggleTheme()">
-          <i class="fas fa-moon"></i> Dark Mode
-        </button>
+      <div class="d-flex justify-content-between align-items-center flex-wrap" style="padding: 4px;">
+        <h5 id='workStudyTitle' class="mb-0"><b>UofT Work Study Jobs</b> (2024-2025 Fall/Winter)</h5>
+        <div class="d-flex justify-content-end">
+          <span style="margin: 0 5px;"> </span> <!-- Spacer -->
+          <button class="btn blog-btn btn-sm right-buttons" onclick="window.open('/', '_blank')">
+            <i class="fa-solid fa-circle" style="color: #6e46e7;"></i> Sadman's Blog
+          </button>
+          <button class="btn btn-success btn-sm right-buttons" onclick="window.open('/posts/work-study-at-uoft/', '_blank')">
+            <i class="fa-solid fa-circle-question" style="color: #ffffff;"></i> <i>What are work study jobs?</i>
+          </button>
+          <button id="githubButton" class="btn btn-dark btn-sm right-buttons" onclick="window.open('https://github.com/sadmanca/uoft-pey-coop-job-postings', '_blank')">
+            <i class="fa-brands fa-github"></i>
+          </button>
+          <button class="btn btn-primary btn-sm right-buttons" onclick="window.open('https://linkedin.com/in/sadmanca', '_blank')">
+            <i class="fa-brands fa-linkedin"></i>
+          </button>
+        </div>
       </div>
-      <div class="d-flex justify-content-end">
-        <button class="btn btn-success btn-sm right-buttons" onclick="window.open('https://sadman.ca', '_blank')">
-          <i class="fa-solid fa-circle-question" style="color: #ffffff;"></i> <i>What are work study jobs?</i>
-        </button>
-        <button class="btn blog-btn btn-sm right-buttons" onclick="window.open('https://sadman.ca', '_blank')">
-          <i class="fa-solid fa-circle" style="color: #6e46e7;"></i> Sadman's Blog
-        </button>
-        <button id="githubButton" class="btn btn-dark btn-sm right-buttons" onclick="window.open('https://github.com/sadmanca/uoft-pey-coop-job-postings', '_blank')">
-          <i class="fa-brands fa-github"></i>
-        </button>
-        <button class="btn btn-primary btn-sm right-buttons" onclick="window.open('https://linkedin.com/in/sadmanca', '_blank')">
-          <i class="fa-brands fa-linkedin"></i>
-        </button>
+
+      <div id="buttonContainer" style="padding: 4px" class="d-flex justify-content-between align-items-center flex-wrap">
+        <div>
+          <button class="btn clnx-btn btn-sm btn-spacing" onclick="window.open('https://clnx.utoronto.ca/myAccount/jobs/work-study/wsjobs.htm', '_blank')">
+            <i class="fa-solid fa-briefcase"></i> CLNx
+          </button>
+          <span style="margin: 0 3px;">|</span> <!-- Spacer -->
+          <button class="btn btn-outline-primary btn-sm" disabled onclick="exportSelectedRowsToCSV()">
+            <i class="fas fa-file-csv"></i> Export Selected Rows to CSV
+          </button>
+          <button class="btn btn-outline-success btn-sm" disabled onclick="exportSelectedRowsToExcel()">
+            <i class="fas fa-file-excel"></i> Export Selected Rows to Excel
+          </button>
+          <span style="margin: 0 3px;">|</span> <!-- Spacer -->
+          <button class="btn btn-primary btn-sm" onclick="exportAllRowsToCSV()">
+            <i class="fas fa-file-csv"></i> Download CSV
+          </button>
+          <button class="btn btn-success btn-sm" onclick="exportAllRowsToExcel()">
+            <i class="fas fa-file-excel"></i> Download Excel
+          </button>
+          <span style="margin: 0 3px;">|</span> <!-- Spacer -->
+          <button id="hideExpiredJobsButton" class="btn btn-sm" style="background-color: #520000; border-color: #520000; color: #fff;">
+            <i class="fas fa-xmark"></i> Hide Expired Jobs
+          </button>
+          <button id="showExpiringJobsButton" class="btn btn-sm" style="background-color: #525200; border-color: #525200; color: #fff;">
+            <i class="fas fa-clock"></i> Jobs Expiring Soon
+          </button>
+          <span style="margin: 0 3px;">|</span> <!-- Spacer -->
+          <button id="toggleThemeButton" class="btn btn-outline-dark btn-sm" onclick="toggleTheme()">
+            <i class="fas fa-moon"></i> Dark Mode
+          </button>
+        </div>
       </div>
     </div>
     <div id="myGrid" style="width: 100%; height: 100%"></div>
   </body>
 </html>
+
+<h5 id="workStudyTitle" class="mb-0"><b>UofT Work Study Jobs</b> (2024-2025 Fall/Winter)</h5>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -245,6 +254,7 @@
       const buttonContainer = document.getElementById('buttonContainer');
       const toggleButton = document.getElementById('toggleThemeButton');
       const githubButton = document.getElementById('githubButton');
+      const workStudyTitle = document.getElementById('workStudyTitle');
       const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
       const savedTheme = localStorage.getItem('theme');
 
@@ -268,6 +278,7 @@
               toggleButton.classList.add('btn-outline-light');
               githubButton.classList.remove('btn-dark');
               githubButton.classList.add('btn-light');
+              workStudyTitle.style.color = '#ffffff';
               toggleButton.innerHTML = '<i class="fas fa-circle"></i> Light Mode';
           } else {
               gridDiv.classList.remove('ag-theme-quartz-dark');
@@ -278,6 +289,7 @@
               githubButton.classList.remove('btn-light');
               toggleButton.classList.add('btn-outline-dark');
               githubButton.classList.add('btn-dark');
+              workStudyTitle.style.color = '#000000';
               toggleButton.innerHTML = '<i class="fas fa-moon"></i> Dark Mode';
           }
           localStorage.setItem('theme', theme);
@@ -289,7 +301,7 @@
           applyTheme(newTheme);
       }
   });
-  </script>
+</script>
 
 <script>
   function scrollableCellRenderer(params) {
@@ -427,7 +439,7 @@
       {
         field: "accessibilityConsiderations",
         headerName: "Accessibility",
-        width: 140,
+        width: 130,
         wrapText: true,
         cellRenderer: scrollableCellRenderer,
         filter: 'agTextColumnFilter',
