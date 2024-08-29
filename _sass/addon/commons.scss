@@ -23,7 +23,9 @@ html {
     }
   }
 
-  font-size: 16px;
+  & {
+    font-size: 16px;
+  }
 }
 
 body {
@@ -753,8 +755,10 @@ $btn-mb: 0.5rem;
   }
 
   /* Hide scrollbar for IE, Edge and Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  & {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 
   %sidebar-link-hover {
     &:hover {
@@ -1109,8 +1113,10 @@ search {
     @extend %no-bottom-border;
     @extend %heading;
 
-    font-size: 1.4rem;
-    line-height: 2.5rem;
+    & {
+      font-size: 1.4rem;
+      line-height: 2.5rem;
+    }
   }
 
   > article {
