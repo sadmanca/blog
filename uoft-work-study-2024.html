@@ -200,7 +200,7 @@
           <button class="btn btn-success btn-sm right-buttons" onclick="window.open('/posts/work-study-at-uoft/', '_blank')">
             <i class="fa-solid fa-circle-question" style="color: #ffffff;"></i> <i>What are work study jobs?</i>
           </button>
-          <button id="githubButton" class="btn btn-dark btn-sm right-buttons" onclick="window.open('https://github.com/sadmanca/uoft-pey-coop-job-postings', '_blank')">
+          <button id="githubButton" class="btn btn-dark btn-sm right-buttons" onclick="window.open('https://github.com/sadmanca', '_blank')">
             <i class="fa-brands fa-github"></i>
           </button>
           <button class="btn btn-primary btn-sm right-buttons" onclick="window.open('https://linkedin.com/in/sadmanca', '_blank')">
@@ -246,8 +246,6 @@
   </body>
 </html>
 
-<h5 id="workStudyTitle" class="mb-0"><b>UofT Work Study Jobs</b> (2024-2025 Fall/Winter)</h5>
-
 <script>
   document.addEventListener('DOMContentLoaded', function() {
       const gridDiv = document.getElementById('myGrid');
@@ -255,8 +253,18 @@
       const toggleButton = document.getElementById('toggleThemeButton');
       const githubButton = document.getElementById('githubButton');
       const workStudyTitle = document.getElementById('workStudyTitle');
-      const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
       const savedTheme = localStorage.getItem('theme');
+      const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const override = false;
+
+      // Listen for messages from the parent document
+      window.addEventListener('message', function(event) {
+        if (event.data && typeof event.data.isDarkMode !== 'undefined') {
+          prefersDarkScheme = event.data.isDarkMode;
+          override = true;
+          // You can now use isDarkMode in your script
+        }
+      });
 
       if (savedTheme) {
           applyTheme(savedTheme);
@@ -721,7 +729,7 @@
   // Function to generate the filename with a readable timestamp
   function generateFilename(baseName, extension) {
     const timestamp = generateReadableTimestamp();
-    return `${baseName}-${timestamp}.{extension}`;
+    return `${baseName}-${timestamp}.${extension}`;
   }
 
   function exportSelectedRowsToCSV() {
@@ -819,6 +827,7 @@
       .then((response) => response.json())
       .then((data) => gridApi.setGridOption("rowData", data));
 
+    checkWindowWidth();
     window.addEventListener('resize', checkWindowWidth);
     document.querySelector('#hideExpiredJobsButton').addEventListener('click', hideExpiredJobs);
     document.querySelector('#showExpiringJobsButton').addEventListener('click', showExpiringJobs);
