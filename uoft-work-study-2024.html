@@ -215,10 +215,13 @@
             <i class="fa-solid fa-briefcase"></i> CLNx
           </button>
           <span style="margin: 0 3px;">|</span> <!-- Spacer -->
-          <button class="btn btn-outline-primary btn-sm" disabled onclick="exportSelectedRowsToCSV()">
+          <!-- <button class="btn btn-outline-success btn-sm" disabled onclick="exportSelectedRowsToExcel()">
+            <i class="fas fa-file-excel"></i> Export Selected Rows to Excel
+          </button> -->
+          <button id="exportCsvButton" class="btn btn-outline-primary btn-sm" disabled onclick="exportSelectedRowsToCSV()">
             <i class="fas fa-file-csv"></i> Export Selected Rows to CSV
           </button>
-          <button class="btn btn-outline-success btn-sm" disabled onclick="exportSelectedRowsToExcel()">
+          <button id="exportExcelButton" class="btn btn-outline-success btn-sm" disabled onclick="exportSelectedRowsToExcel()">
             <i class="fas fa-file-excel"></i> Export Selected Rows to Excel
           </button>
           <span style="margin: 0 3px;">|</span> <!-- Spacer -->
@@ -333,8 +336,8 @@
 
   function updateExportButtonsState() {
     const noRowsSelected = gridApi && gridApi.getSelectedRows().length === 0;
-    document.querySelector('button[onclick="exportSelectedRowsToCSV()"]').disabled = noRowsSelected;
-    document.querySelector('button[onclick="exportSelectedRowsToExcel()"]').disabled = noRowsSelected;
+    document.getElementById('exportCsvButton').disabled = noRowsSelected;
+    document.getElementById('exportExcelButton').disabled = noRowsSelected;
   }
 
   function MultiLineTextCellEditor() {}
