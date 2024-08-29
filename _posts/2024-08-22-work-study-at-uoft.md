@@ -41,13 +41,14 @@ gallery-clnx-landing:
 
 ---
 
-If you're already familiar with the work study program at UofT then the following is for you:
+If you're already familiar with the work study program at UofT then feel free to take a look at the following:
 
-> **There's an easier to view work study jobs for this year** and you can check it out at **<a href="{{ site.baseurl }}/uoft-work-study-2024" target="_blank">sadman.ca/uoft-work-study-2024</a>** (preview below).
+> **There's an easier to view work study jobs for this year** and you can check it out at <br>**<a href="{{ site.baseurl }}/uoft-work-study-2024" target="_blank">sadman.ca/uoft-work-study-2024</a>** (preview below).
 {: .prompt-info }
 
 > If you're interested in applying to work study jobs right now *(applications are still open!)* or want to explore what jobs are posted so you can better prepare in the future, then **try taking a look at the preview below or at the dashboard at the link**.
-> While work study job postings on CLNx disappear after their respective application deadline, their data is archived on the dashboard so *they remain visible even after their application deadline*.
+
+> While work study job postings on CLNx disappear if you don't view them before their respective application deadline, their data is archived on the dashboard so *they remain visible even after their application deadline passes*.
 
 <style>
   .iframe-container {
@@ -129,24 +130,28 @@ If you're already familiar with the work study program at UofT then the followin
 
 <br>
 
-## Work Study: (Underappreciated) Part-time <br>Emplyoment for Students
+## Work Study: (Underappreciated) Part-time <br>Employment for Students
 
-**The work study job program at the University of Toronto (UofT) is an amazing resource for students to get part-time work during their studies**, but I'm surpised at how many fellow students aren't aware of it (many of them first years). As a student whose very first paid part-time position (that was also technically relevant to my area of study) was a work study job in my first year of post-secondary, I can attest to the value of the program, and I feel that the work experience I was able to get by work study early in my academic career helped out a ton when I was applying to internships and research opportunities later on.
+**The work study job program at the University of Toronto (UofT) is an amazing resource for students to get part-time work during their studies**, but I'm surpised at how many fellow students aren't aware of it (many of them first years) or aren't familiar with the breadth of job opportunities offered.
+
+As a student whose very first paid part-time position (that was also technically relevant to my area of study) was a work study job in my first year of post-secondary, I can attest to the value of the program, and I feel that the work experience I was able to get by work study early in my academic career helped out a ton when I was applying to internships and research opportunities later on.
 
 > With over 4000 jobs posted every year for at least the past half decade (i.e. from what I've seen since my freshman year) and a huge variety of positions, **there truly is something for everyone in the work study program.**
 {: .prompt-tip }
 
 ## What is work study?
-Work study or work learn programs (commonplace at universities in Canada) offer **part-time on-campus employment opportunities** to enrolled students so they can:
+Work study or work learn programs offer **part-time on-campus employment opportunities** to enrolled students so they can:
 - develop workplace skills & experience
 - explore potential career paths
 - earn supplemental income
 
-The beauty of work study in my opinion lies in it's **accessibility**: work study jobs are *exclusive* to students at the respective university and there are thousands of jobs posted every year, so it can be **much easier** to land an offer for a position (even if you're a person with limited experience or skills) compared to searching for opportunities on external job boards like LinkedIn or cold-emailing professors to take part in research.
+The beauty of work study in my opinion lies in it's **accessibility**: work study jobs are *exclusive* to students at the respective university and there are thousands of jobs posted every year[^1], so it can be **much easier** to land an offer for a position (even if you're a person with limited experience or skills) compared to searching for opportunities on external job boards like LinkedIn or cold-emailing professors to take part in research.
+
+[^1]: at least at the University of Toronto
 
 ### Types of Jobs Posted For Work Study
 
-Whether you're in your first year aspiring to take part in technically challenging quantitative research or someone whose looking for a casual service-oriented job (such as a front-desk position or helping out with IT in lecture halls), there's almost 20 different types of positions avaialble across all three of the UofT campuses (and plenty that are hybrid or remote to accomodate your commute/timetable) including:
+Whether you're in your first year aspiring to start getting involved in a research lab or someone whose looking for a casual service-oriented job (such as a front-desk position or helping out with IT in lecture halls), there's 17 different types of positions available across all three of the UofT campuses (and plenty that are hybrid or remote to accomodate your commute/timetable) including:
 
 | Casual                                | Technical                                             | Office                              |
 |---------------------------------------|-------------------------------------------------------|-------------------------------------|
@@ -160,7 +165,9 @@ Whether you're in your first year aspiring to take part in technically challengi
 
 ### Why apply to work study positions?
 
-Work study positions can also be a gateway to future employment opportunities; a lot of research-based positions can lead to summer research opportunities (or the opposite as well; I know students who started a work study position at a research lab in the summer and were offered a part-time contract to continue working in the lab part-time in the Fall/Winter semesters).
+In addition to helping you build your work experience, work study positions can also be a gateway to future employment opportunities: a lot of research-based positions can lead to summer research opportunities.
+
+> *The opposite can be true as well*; I know students who started a work study position at a research lab in the summer and were offered part-time contracts to continue working part-time in the following semesters.
 
 While I was employed in my work study position in first year, the professor I worked under actually reached out to me to offer me an extension to my employment for the summer (outside of the work study program). She offered a part-time contract to continue working in the lab (which was great for me because I had just started searching for summer internships and, as any freshman will attest, finding an internship in first year can feel close to impossible).
 
@@ -174,55 +181,53 @@ The specific minimum number of credits/courses you need to be taking in order to
 
 | Requirement                                | Details                                                                                       |
 |--------------------------------------------|-----------------------------------------------------------------------------------------------|
-| At least 4 courses in Fall AND Winter        | 2.0 FCE (full course equivalent) — *with a minimum of 0.5 credits in one session & 1.5 credits in the other* |
-| At least one course in Summer          | 0.5 FCE (full-course equivalents)                                                             |
+| At least 4 courses in Fall/Winter & minimum 1 course in either semester        | 2.0 FCE (full course equivalent) — *a minimum of 0.5 credits in one session & 1.5 credits in the other* |
+| At least 1 course in Summer          | 0.5 FCE (full-course equivalents)                                                             |
 
 *There can be concessions to this requirement.* If you're a graduate student, then you just need to be registered in a session in order to be able to do a work study in that session (I'm not well-versed in the particulars of grad studies at UofT, but this probably still entails taking some minimum number of courses). Or if you have a disability or simply need to take a reduced course load due to circumstances beyond your control, you can reach out to the work study department and at the university and request for special accomodation.
 
-*Enrolment is also not the only requirement for eligibility*. Students on a co-op term aren't eligible to apply for work study positions (even if they're taking courses on a part-time basis), and neither are students registered in the Toronto School of Theology (perhaps because their divine calling doesn’t include working at the campus libraries).
+***Enrolment is also not the only requirement for eligibility***. Students on a co-op term aren't eligible to apply for work study positions (even if they're taking courses on a part-time basis), and neither are students registered in the Toronto School of Theology (perhaps because their divine calling doesn’t include working at the campus libraries).
 
 > You can read the official eligibility requirements for work study positions at UofT at:
 > - [registrar.utoronto.ca/finances-and-funding/work-study-program/review-your-eligibility/](https://registrar.utoronto.ca/finances-and-funding/work-study-program/review-your-eligibility/) (viewable without login)
 > - or [clnx.utoronto.ca/myAccount/jobs/work-study/aboutws](https://clnx.utoronto.ca/myAccount/jobs/work-study/aboutws.htm) (requires logging in to CLNx).
 {: .prompt-tip }
 
-But if you're just a run-of-the-mill undergraduate student—whatever department you may be in—then you should be good to apply and get hired in a work study job.
+**But if you're just a run-of-the-mill undergraduate student**—whatever department you may be in—**then you should be good to apply and get hired in any work study job.**
 
 ## Pay
 
-A bit of a low point: **the pay for work study jobs... isn't great**. Most positions just offer the minimum wage in Ontario (rising to `CAD$17.20` this October 2024) and on top of that you can only work a maximum of `200 hours` in work study positions in the Fall/Winter semesters (`100 hours` for Summer positions).
+This is a bit of a low point: **the pay for work study jobs... isn't great**. Most positions just offer the minimum wage in Ontario (rising to `CAD$17.20` this October 2024) and on top of that you can only work a maximum of `200 hours` in work study positions in the Fall/Winter semesters (`100 hours` for Summer positions).
 
 A large part of this is because the university subsidizes 70% of the pay for work study students, leaving supervisors to cover the remaining 30% (which of course does mean lower risk on the part of staff employing work study students and is a big reason why there are so many professors posting so many work study positions).
 
 Some work study positions do pay more however; in my first work study position the department I worked in topped off the minimum pay with an additional `CAD$3` per hour. Of course, even the minimum pay can be very nice supplementary income: work the maximum number of hours in a single session and you're looking at a pre-tax income `CAD$3440` in the Fall/Winter or `CAD$1720` in the Summer (enough to purchase a high-end laptop for your studies and still have some leftover for splurging elsewhere).
 
-> You don't have to work the maximum number of hours in work study jobs, so depending on the requirements of the position you can keep your supervisor informed of busy periods in your timetable/semester and work fewer hours during those times; the work study program is designed for putting your education first, which is why professors and supervisors are more than welcome to accomodate your schedule.
+> You don't have to work the maximum number of hours in work study jobs, so depending on the requirements of the position you can keep your supervisor informed of busy periods in your timetable/semester and work fewer hours during those times; **the work study program is designed with putting your education first**, which is why professors and supervisors are more than welcome to accomodate your schedule.
 {: .prompt-tip }
 
 ## Applying
 
 Work study job postings at the University of Toronto can be viewed & applications can be sent using **CLNx (Career & Co-Curricular Learning Network) at [clnx.utoronto.ca/myAccount/jobs/work-study/wsjobs](https://clnx.utoronto.ca/myAccount/jobs/work-study/wsjobs)**.
 
-CLNx is a catch-all hub for cross-university events & workshops, accessing student resources (such as apointments for activating your student TCard for first years), and access to on/off-campus job boards (one of which is for work study jobs).
+CLNx is a catch-all hub for cross-university events & workshops, accessing student resources (such as appointments for activating your student TCard for first years), and access to on/off-campus job boards (one of which is for work study jobs).
 
 <div style="--images-per-row: 3;">
 {% include my-gallery.html images=page.gallery-clnx-landing %}
 </div>
 
-The dashboard for work study jobs is a bit tucked away under the navigational dropdown (which is why every semester you have someone on the university subreddit at [reddit.com/r/uoft](https://reddit.com/r/uoft/) post about how they can't find any jobs once the application period opens) under: `Hamburger Menu on the top-left` `>` `Jobs & Recruitment` `>` `Work Study` `>` `Work Study Jobs`. You can click on the blue `Search` button to view all posted jobs (that aren't past the application deadline) or one of the options under `Quick Searches` to quickly view jobs expiring today/in the next 10 days, jobs you viewed/applied to previously, or new jobs posted since you last logged in.
+The dashboard for work study jobs is a bit tucked away under the navigational dropdown[^2] under: `Hamburger Menu on the top-left` `>` `Jobs & Recruitment` `>` `Work Study` `>` `Work Study Jobs`.
 
-After searching, job postings are listed in a table with the following fields visible :
+[^2]: Which is why every semester you have someone on the university subreddit at [reddit.com/r/uoft](https://reddit.com/r/uoft/) post about how they can't find any work study job postings after the application period opens
 
-- Job ID
-- Job application status (blank if unapplied)
-- Job title
-- Division
-- Position type (e.g. research, marketing, etc.)
-- and Application deadlin
+You can click on the blue `Search` button to view all posted jobs (that aren't past the application deadline) or one of the options under `Quick Searches` to quickly view jobs expiring today/in the next 10 days, jobs you viewed/applied to previously, or new jobs posted since you last logged in.
 
 <div style="--images-per-row: 3;">
 {% include my-gallery.html images=page.gallery-clnx-jobs %}
 </div>
+
+![What a job description page looks like on CLNx]({{ site.baseurl }}/assets/img/posts/2024-08-22-work-study-at-uoft/03-example-job.png)
+*What a job description page looks like on CLNx*
 
 The work study job board itself is built on a platform by [Orbis Communications](https://orbiscommunications.com) (which, from a cursory glance at their website, appears to build job boards for quite the number of institutions), and while the platform works fine **it's definitely not as easy to use as it could be**.
 
@@ -234,7 +239,7 @@ The work study job board itself is built on a platform by [Orbis Communications]
 You have to deal with all of the following:
 
 ##### Vague Job Titles
-*Many jobs have incredibly vague titles*, such as `"<<VERB or NOUN>> Assistant"` or just plain old `"Research Assistant"`, which means that students need to basically need to open every individual job to read the description and then understand what they're actually about.
+*Many jobs have incredibly vague titles*, such as `"<<VERB or NOUN>> Assistant"` or just plain old `"Research Assistant"`, which means that you basically need to open every individual job to read the description and then understand what they're actually about.
 
 ##### Can Only View Job Details After Opening a Job Post
 *Clicking on a job posting opens it in a new tab*, which can be slightly annoying but at least means you can jump between multiple job descriptions at the same time. Annoyingly, however, there's no way to save job postings for viewing later on the job description page either (you can shortlist jobs in the listings *after* doing keyword searches or filtering, but not *in the actual page with the job description itself*, which is a rather annoying UX snafu).
@@ -257,19 +262,25 @@ So with all of those considerations at hand, it's safe to say it would be nice i
 
 I've been procrastinating on doing anything about it for the longest time though, so this summer I decided to make the most of those thoughts and design a brand-new easier-to-navigate dashboard to display the work study job postings that are visible on the official CLNx job portal right now (that is, for the 2024-2025 fall/winter semester).
 
-> **The dashboard is live and you can view it at [sadman.ca/uoft-work-study-2024](https://sadman.ca/uoft-work-study-2024)**.
+> **The dashboard is live and you can view it at [sadman.ca/uoft-work-study-2024]({{ site.baseurl }}//uoft-work-study-2024)**.
 {: .prompt-info }
 
-![Redesigned Work Study Job Dashboard]({{ site.baseurl }}/assets/img/posts/2024-08-22-work-study-at-uoft/04-new-work-study-job-dashboard.png)
+![Redesigned Work Study Job Dashboard]({{ site.baseurl }}/assets/img/posts/2024-08-22-work-study-at-uoft/04-new-work-study-job-dashboard.png)*Redesigned Work Study Job Dashboard*
+
+![Zoomed-in view of the work study dashboard]({{ site.baseurl }}/assets/img/posts/2024-08-22-work-study-at-uoft/04-zoom-in.png)
+*Zoomed-in view of the work study dashboard*
 
 I'll save the technical details for a future post; the gist of backend behind it is that *the raw data was scraped from the CLNx job board* and is displayed on using the incredibly performant [AG Grid library](https://www.ag-grid.com/) (with some additional customization by myself). And in many ways, **it's a lot easier to use for browsing job postings than CLNx.**
+
+> After you've taken a look at jobs on the dashboard, you can just **search for jobs you're interested by their job ID on the CLNx work study dashboard & apply to them directly** (without having to click through hundreds of job postings on CLNx).
+{: .prompt-tip}
 
 ### Why to use it
 
 Some of the standout features include:
 - **Viewing job descriptions & required qualifications on the job listing page itself** (vs. having to open every job in a new tab to view the description on CLNx)
 - **Grouping job postings by user-specified fields** (such as position type, department, campus, etc.) to easily see, say, all jobs posted under a specific professor or department
-- **Detailed & faster filtering & sorting capabilities**, including setting fine filters such as date ranges or multiple conditional text filters (e.g. "finance AND python", "python OR java", etc.)
+- **Detailed & faster filtering & sorting capabilities**, including setting fine filters such as date ranges or multiple conditional text filters (e.g. "finance AND python", "python OR java OR web", etc.)
 - **Quick switching between filters and sort orders**, including viewing jobs expiring soon
 - **Viewing expired jobs and their respective job descriptions**
 - **Selecting multiple job postings** (using checkboxes) and exporting posting data (including description and application deadline) to .csv or .xlsx files to view/analyze jobs using a tool of your own choice (e.g. Excel, Google Sheets, Python Pandas, etc.)
@@ -278,3 +289,11 @@ Some of the standout features include:
 At the time of writing, it's been a bit over 2 weeks since work study job applications first opened for the following Fall/Winter semesters, and while it is true that applying early is your best shot at landing a job, there's still plenty of time (almost a month) left until job applications close, so *whether you're a first year student looking to snag your first paying part-time job or in your senior year and looking to build connections with a professor in a lab you're interested in*, **I highly recommend taking a look at the work study jobs out there and consider applying to a few that you might be interested in.**
 
 You never know, you might just land something you love that kickstarts the rest of your career.
+
+-----
+
+-----
+
+-----
+
+## Footnotes
