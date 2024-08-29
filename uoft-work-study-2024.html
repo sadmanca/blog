@@ -149,6 +149,15 @@
       margin-right: 4px;
     }
 
+    .btn-sm {
+      margin-top: 3px; /* Adjust the value as needed */
+      margin-bottom: 3px; /* Adjust the value as needed */
+    }
+
+    .ag-tooltip{
+      max-width: 300px;
+    }
+
   </style>
   <noscript>
     <style>
@@ -180,9 +189,9 @@
   </script>
  </head>
   <body>
-    <div id="buttonContainer" style="padding: 5px" class="d-flex justify-content-between align-items-center flex-wrap">
+    <div id="buttonContainer" style="padding: 4px" class="d-flex justify-content-between align-items-center flex-wrap">
       <div>
-        <button class="btn clnx-btn btn-sm" onclick="window.open('https://clnx.utoronto.ca/myAccount/jobs/work-study/wsjobs.htm', '_blank')">
+        <button class="btn clnx-btn btn-sm btn-spacing" onclick="window.open('https://clnx.utoronto.ca/myAccount/jobs/work-study/wsjobs.htm', '_blank')">
           <i class="fa-solid fa-briefcase"></i> CLNx
         </button>
         <span style="margin: 0 3px;">|</span> <!-- Spacer -->
@@ -212,6 +221,9 @@
         </button>
       </div>
       <div class="d-flex justify-content-end">
+        <button class="btn btn-success btn-sm right-buttons" onclick="window.open('https://sadman.ca', '_blank')">
+          <i class="fa-solid fa-circle-question" style="color: #ffffff;"></i> <i>What are work study jobs?</i>
+        </button>
         <button class="btn blog-btn btn-sm right-buttons" onclick="window.open('https://sadman.ca', '_blank')">
           <i class="fa-solid fa-circle" style="color: #6e46e7;"></i> Sadman's Blog
         </button>
@@ -253,8 +265,8 @@
               buttonContainer.style.backgroundColor = '#1c232e';
               document.body.style.backgroundColor = '#1c232e';
               toggleButton.classList.remove('btn-outline-dark');
-              githubButton.classList.remove('btn-dark');
               toggleButton.classList.add('btn-outline-light');
+              githubButton.classList.remove('btn-dark');
               githubButton.classList.add('btn-light');
               toggleButton.innerHTML = '<i class="fas fa-circle"></i> Light Mode';
           } else {
@@ -343,14 +355,17 @@
       },
       {
         field: "title",
-        width: 180,
+        width: 140,
         pinned: 'left',
         filterParams: {
-            filters: [
-              { filter: "agTextColumnFilter" },
-              { filter: "agSetColumnFilter" },
-            ],
-          },
+          filters: [
+            { filter: "agTextColumnFilter" },
+            { filter: "agSetColumnFilter" },
+          ],
+        },
+        tooltipValueGetter: function(params) {
+          return `${params.data.department} (${params.data.division})`;
+        },
       },
       {
         field: "numPositions",
@@ -397,7 +412,7 @@
       },
       {
         field: "positionType",
-        width: 113,
+        width: 117,
         rowGroup: false,
         // pinned: 'left',
         hide: false,
