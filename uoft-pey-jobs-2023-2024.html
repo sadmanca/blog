@@ -1,8 +1,9 @@
+<!doctype html>
 <html lang="en">
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AG Grid Example</title>
+  <title>UofT PEY Co-op Jobs (2023-2024 Fall/Winter)</title>
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simplebar@latest/dist/simplebar.css">
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
    <script src="https://cdn.jsdelivr.net/npm/simplebar@latest/dist/simplebar.min.js"></script>
@@ -34,12 +35,28 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap" />
   </noscript>
 
+  <style>
+    .ag-header-cell-label {
+      white-space: normal; /* Allow text to wrap */
+      overflow: hidden; /* Hide overflow text */
+      text-overflow: ellipsis; /* Add ellipsis for overflow text */
+      max-height: 3em; /* Limit header height to approximately 2 lines */
+    }
+  </style>
+
    <style>
     .cell-wrap-text {
       white-space: normal !important;
     }
 
     .ag-theme-quartz .ag-cell-value {
+      line-height: 15px !important;
+      word-break: break-word;
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+
+    .ag-theme-quartz-dark .ag-cell-value {
       line-height: 15px !important;
       word-break: break-word;
       padding-top: 5px;
@@ -65,11 +82,11 @@
     }
 
     .simplebar-scrollbar::before {
-      background-color: rgba(0, 0, 0, 0.1); /* Red with 50% opacity */
+      background-color: rgba(0, 0, 0, 0.1);
     }
 
     .scrollable-cell:hover .simplebar-scrollbar::before {
-      background-color: rgba(0, 0, 0, 0.75); /* Red with 50% opacity */
+      background-color: rgba(0, 0, 0, 0.75);
     }
 
     /* Flexbox layout for body */
@@ -100,14 +117,45 @@
       /* --ag-header-height: 80px; */
     }
 
-    .custom-btn {
+    .blog-btn {
       background-color: #dfd2fd; /* Light purple background */
       /* border: 3px solid black;  */
       color: black; /* Text color */
       font-weight: bold;
     }
-    .custom-btn:hover {
+    .blog-btn:hover {
       background-color: #cdbafd; /* Slightly darker on hover */
+    }
+
+    .clnx-btn {
+      background-color: #4663aa; /* Light purple background */
+      /* border: 3px solid black;  */
+      color: white; /* Text color */
+      font-weight: bold;
+    }
+    .clnx-btn:hover {
+      color: white; /* Text color */
+      background-color: #3c5491; /* Slightly darker on hover */
+    }
+
+    .btn-sm {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+      line-height: 1.5;
+      border-radius: 0.2rem;
+    }
+
+    .right-buttons {
+      margin-right: 4px;
+    }
+
+    .btn-sm {
+      margin-top: 2px; /* Adjust the value as needed */
+      margin-bottom: 2px; /* Adjust the value as needed */
+    }
+
+    .ag-tooltip{
+      max-width: 300px;
     }
 
   </style>
@@ -129,36 +177,142 @@
       }
     </style>
   </noscript>
+  <link rel="icon" href="assets/img/favicons/favicon.ico" type="image/x-icon">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q095PB1G6R"></script>
+  <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-Q095PB1G6R');
+  </script>
  </head>
   <body>
-    <div style="margin: 5px">
-      <button class="btn btn-primary btn-sm" onclick="exportAllRowsToCSV()">
-          <i class="fas fa-file-csv"></i> Download CSV
-      </button>
-      <button class="btn btn-success btn-sm" onclick="exportAllRowsToExcel()">
-          <i class="fas fa-file-excel"></i> Download Excel
-      </button>
-      <button class="btn btn-outline-primary btn-sm" disabled onclick="exportSelectedRowsToCSV()">
-          <i class="fas fa-file-csv"></i> Export Selected Rows to CSV
-      </button>
-      <button class="btn btn-outline-success btn-sm" disabled onclick="exportSelectedRowsToExcel()">
-          <i class="fas fa-file-excel"></i> Export Selected Rows to Excel
-      </button>
-      <!-- <button class="btn btn-toggle-theme" onclick="toggleTheme()">Toggle Dark/Light Mode</button> -->
-      <button class="btn btn-dark" onclick="window.open('https://github.com/sadmanca/uoft-pey-coop-job-postings', '_blank')">
-        <i class="fa-brands fa-github"></i>
-      </button>
-      <button class="btn btn-primary" onclick="window.open('https://linkedin.com/in/sadmanca', '_blank')">
-        <i class="fa-brands fa-linkedin"></i>
-      </button>
-      <button class="btn custom-btn btn-sm" onclick="window.open('https://sadman.ca', '_blank')">
-        <i class="fa-solid fa-circle" style="color: #6e46e7;"></i> Sadman's Blog
-      </button>
+    <div id="buttonContainer" style="padding: 4px" class="d-flex justify-content-between align-items-center flex-wrap">
+      <div class="d-flex justify-content-between align-items-center flex-wrap" style="padding: 4px;">
+        <h5 id='workStudyTitle' class="mb-0"><b>UofT PEY Co-op Jobs</b> (2023-2024 Fall/Winter)</h5>
+        <div class="d-flex justify-content-end">
+          <span style="margin: 0 5px;"> </span> <!-- Spacer -->
+          <button class="btn blog-btn btn-sm right-buttons" onclick="window.open('/', '_blank')">
+            <i class="fa-solid fa-circle" style="color: #6e46e7;"></i> Sadman's Blog
+          </button>
+          <button class="btn btn-success btn-sm right-buttons" onclick="window.open('/posts/work-study-at-uoft/', '_blank')">
+            <i class="fa-solid fa-circle-question" style="color: #ffffff;"></i> <i>What are work study jobs?</i>
+          </button>
+          <button id="githubButton" class="btn btn-dark btn-sm right-buttons" onclick="window.open('https://github.com/sadmanca/uoft-work-study-jobs-2024', '_blank')">
+            <i class="fa-brands fa-github"></i>
+          </button>
+          <button class="btn btn-primary btn-sm right-buttons" onclick="window.open('https://linkedin.com/in/sadmanca', '_blank')">
+            <i class="fa-brands fa-linkedin"></i>
+          </button>
+        </div>
+      </div>
 
+      <div id="buttonContainer" style="padding: 4px" class="d-flex justify-content-between align-items-center flex-wrap">
+        <div>
+          <button class="btn clnx-btn btn-sm btn-spacing" onclick="window.open('https://clnx.utoronto.ca/myAccount/jobs/work-study/wsjobs.htm', '_blank')">
+            <i class="fa-solid fa-briefcase"></i> CLNx
+          </button>
+          <span style="margin: 0 3px;">|</span> <!-- Spacer -->
+          <!-- <button class="btn btn-outline-success btn-sm" disabled onclick="exportSelectedRowsToExcel()">
+            <i class="fas fa-file-excel"></i> Export Selected Rows to Excel
+          </button> -->
+          <button id="exportCsvButton" class="btn btn-outline-primary btn-sm" disabled onclick="exportSelectedRowsToCSV()">
+            <i class="fas fa-file-csv"></i> Export Selected Rows to CSV
+          </button>
+          <button id="exportExcelButton" class="btn btn-outline-success btn-sm" disabled onclick="exportSelectedRowsToExcel()">
+            <i class="fas fa-file-excel"></i> Export Selected Rows to Excel
+          </button>
+          <span style="margin: 0 3px;">|</span> <!-- Spacer -->
+          <button class="btn btn-primary btn-sm" onclick="exportAllRowsToCSV()">
+            <i class="fas fa-file-csv"></i> Download CSV
+          </button>
+          <button class="btn btn-success btn-sm" onclick="exportAllRowsToExcel()">
+            <i class="fas fa-file-excel"></i> Download Excel
+          </button>
+          <span style="margin: 0 3px;">|</span> <!-- Spacer -->
+          <button id="hideExpiredJobsButton" class="btn btn-sm" style="background-color: #520000; border-color: #520000; color: #fff;">
+            <i class="fas fa-xmark"></i> Hide Expired Jobs
+          </button>
+          <button id="showExpiringJobsButton" class="btn btn-sm" style="background-color: #525200; border-color: #525200; color: #fff;">
+            <i class="fas fa-clock"></i> Jobs Expiring Soon
+          </button>
+          <span style="margin: 0 3px;">|</span> <!-- Spacer -->
+          <button id="toggleThemeButton" class="btn btn-outline-dark btn-sm" onclick="toggleTheme()">
+            <i class="fas fa-moon"></i> Dark Mode
+          </button>
+        </div>
+      </div>
     </div>
-    <div id="myGrid" style="width: 100%; height: 100%" class="ag-theme-quartz"></div>
+    <div id="myGrid" style="width: 100%; height: 100%"></div>
   </body>
 </html>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const gridDiv = document.getElementById('myGrid');
+      const buttonContainer = document.getElementById('buttonContainer');
+      const toggleButton = document.getElementById('toggleThemeButton');
+      const githubButton = document.getElementById('githubButton');
+      const workStudyTitle = document.getElementById('workStudyTitle');
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const override = false;
+
+      // Listen for messages from the parent document
+      window.addEventListener('message', function(event) {
+        if (event.data && typeof event.data.isDarkMode !== 'undefined') {
+          prefersDarkScheme = event.data.isDarkMode;
+          override = true;
+          // You can now use isDarkMode in your script
+        }
+      });
+
+      if (savedTheme) {
+          applyTheme(savedTheme);
+      } else if (prefersDarkScheme) {
+          applyTheme('dark');
+      } else {
+          applyTheme('light');
+      }
+
+      toggleButton.addEventListener('click', toggleTheme);
+
+      function applyTheme(theme) {
+          if (theme === 'dark') {
+              gridDiv.classList.remove('ag-theme-quartz');
+              gridDiv.classList.add('ag-theme-quartz-dark');
+              buttonContainer.style.backgroundColor = '#1c232e';
+              document.body.style.backgroundColor = '#1c232e';
+              toggleButton.classList.remove('btn-outline-dark');
+              toggleButton.classList.add('btn-outline-light');
+              githubButton.classList.remove('btn-dark');
+              githubButton.classList.add('btn-light');
+              workStudyTitle.style.color = '#ffffff';
+              toggleButton.innerHTML = '<i class="fas fa-circle"></i> Light Mode';
+          } else {
+              gridDiv.classList.remove('ag-theme-quartz-dark');
+              gridDiv.classList.add('ag-theme-quartz');
+              buttonContainer.style.backgroundColor = '#fff';
+              document.body.style.backgroundColor = '#fff';
+              toggleButton.classList.remove('btn-outline-light');
+              githubButton.classList.remove('btn-light');
+              toggleButton.classList.add('btn-outline-dark');
+              githubButton.classList.add('btn-dark');
+              workStudyTitle.style.color = '#000000';
+              toggleButton.innerHTML = '<i class="fas fa-moon"></i> Dark Mode';
+          }
+          localStorage.setItem('theme', theme);
+      }
+
+      function toggleTheme() {
+          const currentTheme = gridDiv.classList.contains('ag-theme-quartz') ? 'light' : 'dark';
+          const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+          applyTheme(newTheme);
+      }
+  });
+</script>
 
 <script>
   function scrollableCellRenderer(params) {
@@ -175,15 +329,18 @@
     const urlMatch = params.value.match(/https?:\/\/[^ \n]+/);
     if (!urlMatch) return params.value; // Return original text if no URL found
 
-    const firstUrl = urlMatch[0];
+    let firstUrl = urlMatch[0];
+    // Replace any "/)" with "/"
+    firstUrl = firstUrl.replace('/)', '/');
+
     const link = `<a href="${firstUrl}" target="_blank">${new URL(firstUrl).hostname}</a>`;
     return link;
   }
 
   function updateExportButtonsState() {
     const noRowsSelected = gridApi && gridApi.getSelectedRows().length === 0;
-    document.querySelector('button[onclick="exportSelectedRowsToCSV()"]').disabled = noRowsSelected;
-    document.querySelector('button[onclick="exportSelectedRowsToExcel()"]').disabled = noRowsSelected;
+    document.getElementById('exportCsvButton').disabled = noRowsSelected;
+    document.getElementById('exportExcelButton').disabled = noRowsSelected;
   }
 
   function MultiLineTextCellEditor() {}
@@ -213,20 +370,6 @@
 
   const gridOptions = {
     columnDefs: [
-      // {
-      //   headerName: "Row",
-      //   maxWidth: 100,
-      //   // it is important to have node.id here, so that when the id changes (which happens
-      //   // when the row is loaded) then the cell is refreshed.
-      //   valueGetter: "node.id",
-      //   cellRenderer: (params) => {
-      //     if (params.value !== undefined) {
-      //       return params.value;
-      //     } else {
-      //       return '<img src="https://www.ag-grid.com/example-assets/loading.gif">';
-      //     }
-      //   },
-      // },
       {
         headerCheckboxSelection: true, // Enable checkbox on the header
         checkboxSelection: true, // Enable row checkboxes
@@ -235,7 +378,15 @@
         rowGroup: true,
         hide: false,
         pinned: 'left',
-        filter: "agSetColumnFilter",
+        filterParams: {
+          filters: [
+            { filter: "agSetColumnFilter" },
+            { filter: "agDateColumnFilter" },
+          ],
+        },
+        tooltipValueGetter: function(params) {
+          return `Date when job was posted on the PEY portal`;
+        },
       },
       {
         field: "title",
@@ -262,8 +413,8 @@
       },
       {
         field: "numPositions",
-        headerName: "Num of Positions",
-        width: 115,
+        headerName: "Num. Posts",
+        width: 93,
         filter: "agSetColumnFilter",
         // Use a value formatter to check the value before displaying
         valueFormatter: function(params) {
@@ -371,6 +522,9 @@
     ],
 
     defaultColDef: {
+      enableRowGroup: true,
+      wrapHeaderText: true, // Allow header text to wrap
+      autoHeaderHeight: true, // Automatically adjust header height
       resizable: true,
       sortable: true,
       initialWidth: 170,
@@ -388,11 +542,10 @@
           { filter: "agSetColumnFilter", },
         ],
       },
-      tooltipValueGetter: function(params) {
-        // Assuming 'jobTitle' and 'company' are the field names in your rowData
-        return `${params.data.title} at ${params.data.company}`;
       },
-    },
+
+    groupUseEntireRow: true,
+
 
     // rowHeight: 250,
     getRowHeight: function(params) {
@@ -404,14 +557,17 @@
       // Return a different height for non-group rows or default height
       return 250; // Example: Set non-group row height to 25px
     },
+
     rowSelection: 'multiple',
     onSelectionChanged: updateExportButtonsState,
+    rowMultiSelectWithClick: true, // Allow multiple rows to be selected with clicks
 
     groupDefaultExpanded: -1,
     groupDisplayType: 'groupRows',
+    rowGroupPanelShow: 'always',
 
-    tooltipShowDelay: 1500,
-    tooltipHideDelay: 1000,
+    tooltipShowDelay: 500,
+    tooltipHideDelay: 1200,
     tooltipMouseTrack: true,
 
     statusBar: {
@@ -433,6 +589,7 @@
       return !rowNode.group;
     },
 
+    pivotMode: false,
     sideBar: {
       toolPanels: [
         {
@@ -444,6 +601,7 @@
           width: 250,
           toolPanelParams: {
             suppressValues: true, // This will hide the aggregation options
+            suppressPivotMode: true, // This will hide the pivot mode options
           },
         },
         {
@@ -452,22 +610,41 @@
           labelKey: "filters",
           iconKey: "filter",
           toolPanel: "agFiltersToolPanel",
-          width: 250,
+          width: 200,
         },
       ],
       defaultToolPanel: "columns",
     },
 
-    pagination: true,
-    paginationPageSize: 1,
-    paginationPageSizeSelector: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],
+    pagination: false,
+    // paginationPageSize: 1,
+    // paginationPageSizeSelector: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],
 
   };
 
+  function generateReadableTimestamp() {
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    return `${year}_${month}_${day}-${hours}_${minutes}_${seconds}`;
+  }
+
+  // Function to generate the filename with a readable timestamp
+  function generateFilename(baseName, extension) {
+    const timestamp = generateReadableTimestamp();
+    return `${baseName}-${timestamp}.${extension}`;
+  }
+
   function exportSelectedRowsToCSV() {
     if (gridApi) {
+      const filename = generateFilename('SELECTED-uoft-work-study-jobs', 'csv');
       gridApi.exportDataAsCsv({
         onlySelected: true,
+        fileName: filename
       });
     } else {
       console.error('Grid API is not available.');
@@ -476,8 +653,10 @@
 
   function exportSelectedRowsToExcel() {
     if (gridApi) {
+      const filename = generateFilename('SELECTED-uoft-work-study-jobs', 'xlsx');
       gridApi.exportDataAsExcel({
         onlySelected: true,
+        fileName: filename
       });
     } else {
       console.error('Grid API is not available.');
@@ -485,9 +664,11 @@
   }
 
   function exportAllRowsToCSV() {
+    const filename = generateFilename('ALL-uoft-work-study-jobs', 'csv');
     if (gridApi) {
       gridApi.exportDataAsCsv({
         onlySelected: false,
+        fileName: filename
       });
     } else {
       console.error('Grid API is not available.');
@@ -495,9 +676,11 @@
   }
 
   function exportAllRowsToExcel() {
+    const filename = generateFilename('ALL-uoft-work-study-jobs', 'xlsx');
     if (gridApi) {
       gridApi.exportDataAsExcel({
         onlySelected: false,
+        fileName: filename
       });
     } else {
       console.error('Grid API is not available.');
@@ -506,10 +689,18 @@
 
   // Function to check window width and toggle side panel
   function checkWindowWidth() {
-    if (window.innerWidth < 800) {
+    if (window.innerWidth < 1600) {
       gridApi.closeToolPanel();
     } else {
       gridApi.openToolPanel('columns');
+    }
+
+    if (window.innerWidth < 1000) {
+      // Unpin all columns using gridApi
+      const allColumns = gridApi.getColumnDefs();
+      allColumns.forEach(col => {
+        gridApi.setColumnPinned(col.field, null);
+      });
     }
   }
 
@@ -521,6 +712,7 @@
       .then((response) => response.json())
       .then((data) => gridApi.setGridOption("rowData", data));
 
+    checkWindowWidth();
     window.addEventListener('resize', checkWindowWidth);
   });
 
