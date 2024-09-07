@@ -262,7 +262,7 @@ So with all of those considerations at hand, it's safe to say it would be nice i
 
 I've been procrastinating on doing anything about it for the longest time though, so this summer I decided to make the most of those thoughts and design a brand-new easier-to-navigate dashboard to display the work study job postings that are visible on the official CLNx job portal right now (that is, for the 2024-2025 fall/winter semester).
 
-> **The dashboard is live and you can view it at [sadman.ca/uoft-work-study-2024]({{ site.baseurl }}//uoft-work-study-2024)**.
+> **The dashboard is live and you can view it at [sadman.ca/uoft-work-study-2024]({{ site.baseurl }}/uoft-work-study-2024)**.
 {: .prompt-info }
 
 ![Redesigned Work Study Job Dashboard]({{ site.baseurl }}/assets/img/posts/2024-08-22-work-study-at-uoft/04-new-work-study-job-dashboard.png)*Redesigned Work Study Job Dashboard*
