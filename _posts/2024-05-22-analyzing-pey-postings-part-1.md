@@ -10,7 +10,7 @@ last_modified_at: 2024-06-30 23:14:19 -400
 categories: [Co-op, Data Analysis]
 tags: [university, code, python, work, co-op]
 
-pin: true
+pin: false
 math: false
 mermaid: false
 progressBarColor: "#315080"
