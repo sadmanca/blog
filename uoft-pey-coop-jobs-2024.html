@@ -323,9 +323,15 @@
 </script>
 
 <script>
+  function scrollableHTMLCellRenderer(params) {
+    const formattedValue = params.value ? params.value : '';
+    return `<div class="scrollable-cell" data-simplebar data-simplebar-auto-hide="false">${formattedValue}</div>`;
+  }
+
   function scrollableCellRenderer(params) {
     // Check if params.value exists and replace newline characters with HTML line breaks
-    const formattedValue = params.value ? params.value.replace(/\n/g, '<br><br>') : '';
+    const formattedValue1 = params.value ? params.value.replace(/\n/g, '<br><br>') : '';
+    const formattedValue = formattedValue1.replace(/<br><br><br>/g, '<br><br>');
     return `<div class="scrollable-cell" data-simplebar data-simplebar-auto-hide="false">${formattedValue}</div>`;
   }
 
@@ -391,7 +397,7 @@
         //   comparator: filterDateComparator
         // },
         sortable: true,
-        sort: 'asc',
+        sort: 'desc',
         // comparator: dateComparator,
         cellEditor: MultiLineTextCellEditor,
         tooltipValueGetter: function(params) {
@@ -409,20 +415,22 @@
         width: 117,
       },
       {
-        field: "contact",
-        width: 120,
+        field: "jobDescription",
+        width: 350,
+        wrapText: true,
+        // cellClass: 'cell-wrap-text',
+        // autoHeight: true,
+        cellRenderer: scrollableHTMLCellRenderer,
+        filter: 'agTextColumnFilter',
       },
       {
-        field: "workTerm",
-        width: 120,
-      },
-      {
-        field: "workTermDuration",
-        width: 120,
-      },
-      {
-        field: "workTermDurationOther",
-        width: 120,
+        field: "requiredQualifications",
+        width: 350,
+        wrapText: true,
+        // cellClass: 'cell-wrap-text',
+        // autoHeight: true,
+        cellRenderer: scrollableCellRenderer,
+        filter: 'agTextColumnFilter',
       },
       // {
       //   field: "companyWebsite",
@@ -455,24 +463,6 @@
         //   // Return the value if it's a valid number, otherwise return an empty string
         //   return isValidNumber ? params.value : '';
         // },
-      },
-      {
-        field: "jobDescription",
-        width: 350,
-        wrapText: true,
-        // cellClass: 'cell-wrap-text',
-        // autoHeight: true,
-        cellRenderer: scrollableCellRenderer,
-        filter: 'agTextColumnFilter',
-      },
-      {
-        field: "requiredQualifications",
-        width: 350,
-        wrapText: true,
-        // cellClass: 'cell-wrap-text',
-        // autoHeight: true,
-        cellRenderer: scrollableCellRenderer,
-        filter: 'agTextColumnFilter',
       },
       {
         field: "preferredProgramClusters",
@@ -527,32 +517,48 @@
     // {
     //   field: "applicationMethod",
     // },
-    {
-      field: "applicationReceiptProcedure",
-      headerName: "Application Procedure",
-      width: 130,
-      cellRenderer: scrollableCellRenderer,
-      filter: 'agTextColumnFilter',
-    },
-    {
-      field: "applicationDetails",
-      width: 130,
-      cellRenderer: scrollableCellRenderer,
-      filter: 'agTextColumnFilter',
-      hide: true,
-    },
+    // {
+    //   field: "applicationReceiptProcedure",
+    //   headerName: "Application Procedure",
+    //   width: 130,
+    //   cellRenderer: scrollableCellRenderer,
+    //   filter: 'agTextColumnFilter',
+    // },
+    // {
+    //   field: "applicationDetails",
+    //   width: 130,
+    //   cellRenderer: scrollableCellRenderer,
+    //   filter: 'agTextColumnFilter',
+    //   hide: true,
+    // },
     {
       field: "jobId",
       headerName: "Job ID",
       width: 100,
-      hide: true,
+      hide: false,
       filterParams: {
         filters: [
           { filter: "agNumberColumnFilter" },
           { filter: "agSetColumnFilter" },
         ],
       },
-    }
+    },
+    {
+      field: "contact",
+      width: 120,
+    },
+    {
+      field: "workTerm",
+      width: 120,
+    },
+    {
+      field: "workTermDuration",
+      width: 120,
+    },
+    {
+      field: "workTermDurationOther",
+      width: 120,
+    },
     ],
 
     defaultColDef: {
