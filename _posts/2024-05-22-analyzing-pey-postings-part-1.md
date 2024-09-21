@@ -6,7 +6,7 @@ redirect_from:
 description: Collecting unstructured data on 2k+ job postings from UofT's PEY Co-op job board & pipelining to a single SQLite database less than 10 MB in size
 author: sadman
 date: 2024-05-22 17:12:00 -400
-last_modified_at: 2024-06-30 23:14:19 -400
+last_modified_at: 2024-09-11 00:14:0 -400
 categories: [Co-op, Data Analysis]
 tags: [university, code, python, work, co-op]
 
