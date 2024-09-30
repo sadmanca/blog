@@ -18,14 +18,9 @@ mermaid: false
 
 ---
 
-```python
-inbox = ['new email'] * 1000
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/episode/5MLeTNQEBdV1EiVUxO5jTO?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
-for email in inbox:
-    print("📧 Deleting... Archiving... Ignoring... 😅")
-
-print("🎉 Inbox zero achieved! Time for a victory dance! 💃")
-```
+<br>
 
 **Everybody needs a system for making their to do lists.**
 

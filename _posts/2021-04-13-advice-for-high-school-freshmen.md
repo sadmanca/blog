@@ -18,6 +18,10 @@ mermaid: false
 
 ---
 
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/episode/18lLs1V5m4VMavWMWuX34L?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
+<br>
+
 **As my own high school journey comes to an end**, I’ve decided to put together a few of the lessons I’ve learned over the years. I didn't have much guidance when I was a freshman coming into high school, so the following reflections are really what I would’ve told myself back then if I could do so now.
 
 ## Prioritize more than just schoolwork

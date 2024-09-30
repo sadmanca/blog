@@ -18,6 +18,8 @@ mermaid: false
 
 ---
 
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/episode/2BN57ednLMyiPkRik18fwA?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
 ## Rote Memorization
 
 **The memorization strategy you’re probably most familiar with is rote memorization**, where you try to memorize something by just repeating it to yourself over and over. And while this might work if you have a short test the day after, it's one of the worst ways you can memorize something. It's horrendously inefficient. It won't help you deeply understand a subject. And it's not going to help you remember things in the long term. But we can do better.

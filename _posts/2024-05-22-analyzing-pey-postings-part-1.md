@@ -44,6 +44,11 @@ gallery-pey-02:
     caption: "Current design for PEY job postings. One of the most recent jobs posted at the time of writing. Shown: Software Developer Intern @ Geotab"
 
 ---
+
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/episode/5vZMDW1066AwJc4Yldab9j?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
+<br>
+
 Whether you're a new applicant to engineering/computer science at the University of Toronto (UofT) or someone who's going through their 1st, 2nd, or even 3rd or 4th years, you've probably been curious at one point or another about **what 12-16 month job positions are actually posted on the much acclaimed PEY Co-op job board**.
 
 Well, as a computer engineering student at UofT who's just finished their third year (and consequently have been able to access the portal for the entire past two semesters), I thought it would be interesting to do my own data collection on the topic, along with some analysis on recurring patterns (e.g. locations, international opportunities, etc.), and share both my findings and the raw data (thousands of jobs posted across several months) so that future PEY Co-op students can get a better idea of what to expect from the portal.

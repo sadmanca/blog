@@ -229,3 +229,4 @@ jekyll-archives:
 plugins:
   - jekyll-pdf-embed
   - jekyll-redirect-from
+  - jekyll-spaceship

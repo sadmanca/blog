@@ -39,6 +39,10 @@ latex-cheatsheet-gallery:
     # caption: "Zoom out (front page)"
 ---
 
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/episode/2X4461sYMz7cdNbbkAwcWY?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
+<br>
+
 **Picture it.** You're finally in that type of course that allows you to put *whatever* you want on your cheatsheet for the exam, no requirement to have handwritten it on your tablet or (god forbid) using a physical pen on a physical piece of paper, just free reign to type all of it up and copy-paste images to your heart's content. As an engineering student, such a scenario appears rarely, but when it does, it is oh-so-sweet.
 
 Except... when the opportunity does arise, it's usually for a course where the lecture content rivals some textbooks in just the sheer amount of concepts covered (typically 1k+ slides over the course of a semester, with each slide as dense and filled to the brim with testable content as any other). Which leads to the question: ***what's the best way of writing out everything you can reasonably put down on a single sheet of paper (double-sided, of course)?***

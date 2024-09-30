@@ -18,6 +18,10 @@ mermaid: false
 
 ---
 
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/episode/0zxSaWfECtWZrcuGxMoJHY?utm_source=generator&theme=0" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
+<br>
+
 I’ve used a lot of IDEs and code editors since I first wrote a “Hello World” program in grade school, from environments as simple as Python’s IDLE to those as jam-packed as IntelliJ IDEA. For now, I’ve settled on using Microsoft’s Visual Studio Code (VS Code) for pretty much all my programming needs. It’s free, open source, and insanely configurable (it can be as lightweight or as complex as you want it to be).
 
 As someone who does development across multiple machines, it's important for me to have a consistent workflow with my tools and themes on each of them. While the default VS Code configuration is usable, it's not ideal. VS Code without any extensions is effectively just a text editor. Once you add all the extensions, however, it becomes fully-fledged IDE.

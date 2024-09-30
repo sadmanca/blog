@@ -41,6 +41,10 @@ gallery-clnx-landing:
 
 ---
 
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/episode/5ml4va3CKRiLOHgRibEW24?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
+<br>
+
 If you're already familiar with the work study program at UofT then feel free to take a look at the following:
 
 > **There's an easier to view work study jobs for this year** and you can check it out at <br>**<a href="{{ site.baseurl }}/uoft-work-study-2024" target="_blank">sadman.ca/uoft-work-study-2024</a>** (preview below).

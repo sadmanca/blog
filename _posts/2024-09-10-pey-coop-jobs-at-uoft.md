@@ -43,6 +43,8 @@ gallery-clnx-landing:
 
 ---
 
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/episode/73t1R9CqOaued8QPEmEGgE?utm_source=generator" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
 > **Check out <a href="{{ site.baseurl }}/uoft-pey-coop-jobs-2023" target="_blank">sadman.ca/uoft-pey-coop-jobs-2023</a> to view all jobs posted for the 12-16 month University of Toronto PEY Co-op program from September 2023 to June 2024**.
 {: .prompt-info }
 
@@ -184,4 +186,4 @@ Another thing to bear in mind while you're going through the dashboard: all of t
 
 ## Closing thoughts: let me know what you think
 
-I genuinely hope that this dashboard is helpful to future students in PEY, and even if you're not registered for PEY or studying at the University of Toronto I hope that it gives you a some idea of what the internship/co-op job market is like for undergraduate students (or at least what it was like back when I did my 3rd year of studies). If you have any questions, feel free to ask them in the comments below or reach out to me personally at sadman.hossain(at)mail.utoronto.ca (or on Discord, my personal group chat application of prefernece, at @sadmanca; I'm always lurking on the UofT ECE servers).
+I genuinely hope that this dashboard is helpful to future students in PEY, and even if you're not registered for PEY or studying at the University of Toronto I hope that it gives you a some idea of what the internship/co-op job market is like for undergraduate students (or at least what it was like back when I did my 3rd year of studies). If you have any questions, feel free to ask them in the comments below or reach out to me personally at sadman.hossain(at)mail.utoronto.ca (or on Discord, my personal group chat application of preference, at @sadmanca; I'm always lurking on the UofT ECE servers).
