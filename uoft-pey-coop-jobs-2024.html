@@ -245,17 +245,17 @@
             <i class="fas fa-file-excel"></i> Export Selected Rows to Excel
           </button> -->
           <button id="exportCsvButton" class="btn btn-outline-primary btn-sm" disabled onclick="exportSelectedRowsToCSV()">
-            <i class="fas fa-file-csv"></i> Export Selected Rows to CSV
+            <i class="fas fa-file-csv"></i> Download Selected: CSV
           </button>
           <button id="exportExcelButton" class="btn btn-outline-success btn-sm" disabled onclick="exportSelectedRowsToExcel()">
-            <i class="fas fa-file-excel"></i> Export Selected Rows to Excel
+            <i class="fas fa-file-excel"></i> Download Selected Rows: Excel
           </button>
           <span style="margin: 0 2px;">|</span>
           <button class="btn btn-primary btn-sm" onclick="exportAllRowsToCSV()">
-            <i class="fas fa-file-csv"></i> Download CSV
+            <i class="fas fa-file-csv"></i> Download All: CSV
           </button>
           <button class="btn btn-success btn-sm" onclick="exportAllRowsToExcel()">
-            <i class="fas fa-file-excel"></i> Download Excel
+            <i class="fas fa-file-excel"></i> Download All: Excel
           </button>
           <button id="toggleExpiredJobsButton" class="btn btn-sm" style="background-color: #520000; border-color: #520000; color: #fff;">
             <i class="fas fa-xmark"></i> Hide Expired Jobs
@@ -978,10 +978,16 @@
 
   function exportSelectedRowsToCSV() {
     if (gridApi) {
-      const filename = generateFilename('SELECTED-uoft-work-study-jobs', 'csv');
+      const filename = generateFilename('uoft-pey-coop-jobs-2024-2025-SELECTED', 'csv');
       gridApi.exportDataAsCsv({
         onlySelected: true,
-        fileName: filename
+        fileName: filename,
+        processCellCallback: function(params) {
+          if (params.column.getColId() === 'jobDescription') {
+            return convertHtmlToPlainText(params.value);
+          }
+          return params.value;
+        }
       });
     } else {
       console.error('Grid API is not available.');
@@ -990,10 +996,16 @@
 
   function exportSelectedRowsToExcel() {
     if (gridApi) {
-      const filename = generateFilename('SELECTED-uoft-work-study-jobs', 'xlsx');
+      const filename = generateFilename('uoft-pey-coop-jobs-2024-2025-SELECTED', 'xlsx');
       gridApi.exportDataAsExcel({
         onlySelected: true,
-        fileName: filename
+        fileName: filename,
+        processCellCallback: function(params) {
+          if (params.column.getColId() === 'jobDescription') {
+            return convertHtmlToPlainText(params.value);
+          }
+          return params.value;
+        }
       });
     } else {
       console.error('Grid API is not available.');
@@ -1001,11 +1013,17 @@
   }
 
   function exportAllRowsToCSV() {
-    const filename = generateFilename('ALL-uoft-work-study-jobs', 'csv');
+    const filename = generateFilename('uoft-pey-coop-jobs-2024-2025-ALL', 'csv');
     if (gridApi) {
       gridApi.exportDataAsCsv({
         onlySelected: false,
-        fileName: filename
+        fileName: filename,
+        processCellCallback: function(params) {
+          if (params.column.getColId() === 'jobDescription') {
+            return convertHtmlToPlainText(params.value);
+          }
+          return params.value;
+        }
       });
     } else {
       console.error('Grid API is not available.');
@@ -1013,15 +1031,36 @@
   }
 
   function exportAllRowsToExcel() {
-    const filename = generateFilename('ALL-uoft-work-study-jobs', 'xlsx');
-    if (gridApi) {
-      gridApi.exportDataAsExcel({
-        onlySelected: false,
-        fileName: filename
-      });
-    } else {
-      console.error('Grid API is not available.');
-    }
+      const filename = generateFilename('uoft-pey-coop-jobs-2024-2025-ALL', 'xlsx');
+      if (gridApi) {
+          gridApi.exportDataAsExcel({
+              onlySelected: false,
+              fileName: filename,
+              processCellCallback: function(params) {
+                  if (params.column.getColId() === 'jobDescription') {
+                      return convertHtmlToPlainText(params.value);
+                  }
+                  return params.value;
+              }
+          });
+      } else {
+          console.error('Grid API is not available.');
+      }
+  }
+
+  function convertHtmlToPlainText(html) {
+    // Convert HTML to plain text
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    let plainText = div.textContent || div.innerText || '';
+
+    // Remove all spaces before the first non-space character
+    plainText = plainText.trimStart();
+
+    // Replace all consecutive spaces with a single space
+    plainText = plainText.replace(/\s+/g, ' ');
+
+    return plainText;
   }
 
   // Function to check window width and toggle side panel
