@@ -1041,62 +1041,76 @@
     }
   }
 
-  let hideExpired = false;
+  let hideExpired = false; // Track the current state for hiding expired jobs
+  let showExpiring = false; // Track the current state for showing expiring jobs
+
   function toggleExpiredJobs() {
-        hideExpired = !hideExpired; // Toggle the state
+      // Reset the state of the other button
+      if (showExpiring) {
+          showExpiring = false;
+          const expiringButton = document.querySelector('#toggleExpiringJobsButton');
+          expiringButton.innerHTML = '<i class="fas fa-clock"></i> Show Jobs Expiring Soon';
+      }
 
-        const today = new Date();
-        today.setHours(0, 0, 0, 0); // Set to midnight to compare only the date part
+      hideExpired = !hideExpired; // Toggle the state
 
-        gridApi.getFilterInstance('applicationDeadline', function(filterInstance) {
-            if (hideExpired) {
-                // Set the filter to hide expired jobs
-                filterInstance.setModel({
-                    type: 'greaterThan',
-                    dateFrom: today.toISOString().split('T')[0] // Format date as YYYY-MM-DD
-                });
-            } else {
-                // Clear the filter to show all jobs
-                filterInstance.setModel(null);
-            }
-            gridApi.onFilterChanged();
-        });
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Set to midnight to compare only the date part
 
-        // Update button text
-        const button = document.querySelector('#toggleExpiredJobsButton');
-        button.innerHTML = hideExpired ? '<i class="fas fa-bars"></i> Show Expired Jobs' : '<i class="fas fa-xmark"></i> Hide Expired Jobs';
-    }
+      gridApi.getFilterInstance('applicationDeadline', function(filterInstance) {
+          if (hideExpired) {
+              // Set the filter to hide expired jobs
+              filterInstance.setModel({
+                  type: 'greaterThan',
+                  dateFrom: today.toISOString().split('T')[0] // Format date as YYYY-MM-DD
+              });
+          } else {
+              // Clear the filter to show all jobs
+              filterInstance.setModel(null);
+          }
+          gridApi.onFilterChanged();
+      });
 
-    let showExpiring = false; // Track the current state
+      // Update button text
+      const button = document.querySelector('#toggleExpiredJobsButton');
+      button.innerHTML = hideExpired ? '<i class="fas fa-bars"></i> Show Expired Jobs' : '<i class="fas fa-xmark"></i> Hide Expired Jobs';
+  }
 
-    function toggleExpiringJobs() {
-        showExpiring = !showExpiring; // Toggle the state
+  function toggleExpiringJobs() {
+      // Reset the state of the other button
+      if (hideExpired) {
+          hideExpired = false;
+          const expiredButton = document.querySelector('#toggleExpiredJobsButton');
+          expiredButton.innerHTML = '<i class="fas fa-xmark"></i> Hide Expired Jobs';
+      }
 
-        const today = new Date();
-        today.setHours(0, 0, 0, 0); // Set to midnight to compare only the date part
+      showExpiring = !showExpiring; // Toggle the state
 
-        const sevenDaysFromToday = new Date(today);
-        sevenDaysFromToday.setDate(today.getDate() + 7); // Add 7 days to today
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Set to midnight to compare only the date part
 
-        gridApi.getFilterInstance('applicationDeadline', function(filterInstance) {
-            if (showExpiring) {
-                // Set the filter to show expiring jobs only
-                filterInstance.setModel({
-                    type: 'inRange',
-                    dateFrom: today.toISOString().split('T')[0], // Format date as YYYY-MM-DD
-                    dateTo: sevenDaysFromToday.toISOString().split('T')[0] // Format date as YYYY-MM-DD
-                });
-            } else {
-                // Clear the filter to show all jobs
-                filterInstance.setModel(null);
-            }
-            gridApi.onFilterChanged();
-        });
+      const sevenDaysFromToday = new Date(today);
+      sevenDaysFromToday.setDate(today.getDate() + 7); // Add 7 days to today
 
-        // Update button text
-        const button = document.querySelector('#toggleExpiringJobsButton');
-        button.innerHTML = showExpiring ? '<i class="fas fa-bars"></i> Show All Jobs' : '<i class="fas fa-clock"></i> Show Jobs Expiring Soon';
-    }
+      gridApi.getFilterInstance('applicationDeadline', function(filterInstance) {
+          if (showExpiring) {
+              // Set the filter to show expiring jobs only
+              filterInstance.setModel({
+                  type: 'inRange',
+                  dateFrom: today.toISOString().split('T')[0], // Format date as YYYY-MM-DD
+                  dateTo: sevenDaysFromToday.toISOString().split('T')[0] // Format date as YYYY-MM-DD
+              });
+          } else {
+              // Clear the filter to show all jobs
+              filterInstance.setModel(null);
+          }
+          gridApi.onFilterChanged();
+      });
+
+      // Update button text
+      const button = document.querySelector('#toggleExpiringJobsButton');
+      button.innerHTML = showExpiring ? '<i class="fas fa-bars"></i> Show All Jobs' : '<i class="fas fa-clock"></i> Show Jobs Expiring Soon';
+  }
 
   // Function to compare dates for sorting
   function appDeadlineSortDateComparator(date1, date2) {
