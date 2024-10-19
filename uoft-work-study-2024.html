@@ -232,12 +232,12 @@
             <i class="fas fa-file-excel"></i> Download Excel
           </button>
           <span style="margin: 0 3px;">|</span> <!-- Spacer -->
-          <button id="hideExpiredJobsButton" class="btn btn-sm" style="background-color: #520000; border-color: #520000; color: #fff;">
+          <!-- <button id="hideExpiredJobsButton" class="btn btn-sm" style="background-color: #520000; border-color: #520000; color: #fff;">
             <i class="fas fa-xmark"></i> Hide Expired Jobs
-          </button>
-          <button id="showExpiringJobsButton" class="btn btn-sm" style="background-color: #525200; border-color: #525200; color: #fff;">
+          </button> -->
+          <!-- <button id="showExpiringJobsButton" class="btn btn-sm" style="background-color: #525200; border-color: #525200; color: #fff;">
             <i class="fas fa-clock"></i> Jobs Expiring Soon
-          </button>
+          </button> -->
           <span style="margin: 0 3px;">|</span> <!-- Spacer -->
           <button id="toggleThemeButton" class="btn btn-outline-dark btn-sm" onclick="toggleTheme()">
             <i class="fas fa-moon"></i> Dark Mode
@@ -531,22 +531,22 @@
           }
         },
         pinned: 'right',
-        cellStyle: params => {
-            const today = new Date();
-            const deadline = new Date(params.value);
+        // cellStyle: params => {
+        //     const today = new Date();
+        //     const deadline = new Date(params.value);
 
-            if (deadline) {
-                const timeDiff = deadline - today;
-                const dayDiff = timeDiff / (1000 * 60 * 60 * 24);
+        //     if (deadline) {
+        //         const timeDiff = deadline - today;
+        //         const dayDiff = timeDiff / (1000 * 60 * 60 * 24);
 
-                if (dayDiff < 0) {
-                    return { backgroundColor: '#2e0000', color: 'white' };
-                } else if (dayDiff <= 3) {
-                    return { backgroundColor: '#3b3b01', color: 'white' };
-                }
-            }
-            return null;
-        },
+        //         if (dayDiff < 0) {
+        //             return { backgroundColor: '#2e0000', color: 'white' };
+        //         } else if (dayDiff <= 3) {
+        //             return { backgroundColor: '#3b3b01', color: 'white' };
+        //         }
+        //     }
+        //     return null;
+        // },
       },
       // {
       //   field: "applicationProcedure",
@@ -621,27 +621,27 @@
     //   return data.id; // Provide a unique ID for each row
     // },
 
-    getRowStyle: function(params) {
-        if (params.node.group) {
-          return null; // Do not apply any style to group rows
-        }
+    // getRowStyle: function(params) {
+    //     if (params.node.group) {
+    //       return null; // Do not apply any style to group rows
+    //     }
 
-        const today = new Date();
-        const deadline = params.data ? new Date(params.data.applicationDeadline) : null;
+    //     const today = new Date();
+    //     const deadline = params.data ? new Date(params.data.applicationDeadline) : null;
 
-        if (deadline) {
-            const timeDiff = deadline - today;
-            const dayDiff = timeDiff / (1000 * 60 * 60 * 24);
+    //     if (deadline) {
+    //         const timeDiff = deadline - today;
+    //         const dayDiff = timeDiff / (1000 * 60 * 60 * 24);
 
-            if (dayDiff < 0) {
-                return { backgroundColor: '#520000', color: 'white' };
-            } else if (dayDiff <= 3) {
-                return { backgroundColor: '#525200', color: 'white' };
-            }
-        }
+    //         if (dayDiff < 0) {
+    //             return { backgroundColor: '#260000', color: 'white' };
+    //         } else if (dayDiff <= 3) {
+    //             return { backgroundColor: '#212100', color: 'white' };
+    //         }
+    //     }
 
-        return null;
-    },
+    //     return null;
+    // },
 
     // rowHeight: 250,
     getRowHeight: function(params) {
@@ -800,35 +800,35 @@
     }
   }
 
-  function hideExpiredJobs() {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); // Set to midnight to compare only the date part
+  // function hideExpiredJobs() {
+  //   const today = new Date();
+  //   today.setHours(0, 0, 0, 0); // Set to midnight to compare only the date part
 
-    gridApi.getFilterInstance('applicationDeadline', function(filterInstance) {
-      filterInstance.setModel({
-        type: 'greaterThan',
-        dateFrom: today.toISOString().split('T')[0] // Format date as YYYY-MM-DD
-      });
-      gridApi.onFilterChanged();
-    });
-  }
+  //   gridApi.getFilterInstance('applicationDeadline', function(filterInstance) {
+  //     filterInstance.setModel({
+  //       type: 'greaterThan',
+  //       dateFrom: today.toISOString().split('T')[0] // Format date as YYYY-MM-DD
+  //     });
+  //     gridApi.onFilterChanged();
+  //   });
+  // }
 
-  function showExpiringJobs() {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); // Set to midnight to compare only the date part
+  // function showExpiringJobs() {
+  //   const today = new Date();
+  //   today.setHours(0, 0, 0, 0); // Set to midnight to compare only the date part
 
-    const twoDaysFromToday = new Date(today);
-    twoDaysFromToday.setDate(today.getDate() + 2); // Add 2 days to today
+  //   const twoDaysFromToday = new Date(today);
+  //   twoDaysFromToday.setDate(today.getDate() + 2); // Add 2 days to today
 
-    gridApi.getFilterInstance('applicationDeadline', function(filterInstance) {
-      filterInstance.setModel({
-        type: 'inRange',
-        dateFrom: today.toISOString().split('T')[0], // Format date as YYYY-MM-DD
-        dateTo: twoDaysFromToday.toISOString().split('T')[0] // Format date as YYYY-MM-DD
-      });
-      gridApi.onFilterChanged();
-    });
-  }
+  //   gridApi.getFilterInstance('applicationDeadline', function(filterInstance) {
+  //     filterInstance.setModel({
+  //       type: 'inRange',
+  //       dateFrom: today.toISOString().split('T')[0], // Format date as YYYY-MM-DD
+  //       dateTo: twoDaysFromToday.toISOString().split('T')[0] // Format date as YYYY-MM-DD
+  //     });
+  //     gridApi.onFilterChanged();
+  //   });
+  // }
 
   document.addEventListener("DOMContentLoaded", function () {
     var gridDiv = document.querySelector("#myGrid");
@@ -840,8 +840,8 @@
 
     checkWindowWidth();
     window.addEventListener('resize', checkWindowWidth);
-    document.querySelector('#hideExpiredJobsButton').addEventListener('click', hideExpiredJobs);
-    document.querySelector('#showExpiringJobsButton').addEventListener('click', showExpiringJobs);
+    // document.querySelector('#hideExpiredJobsButton').addEventListener('click', hideExpiredJobs);
+    // document.querySelector('#showExpiringJobsButton').addEventListener('click', showExpiringJobs);
   });
 
 
