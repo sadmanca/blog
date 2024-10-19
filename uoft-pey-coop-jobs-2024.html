@@ -220,7 +220,7 @@
             <i class="fa-solid fa-circle" style="color: #6e46e7;"></i> Sadman's Blog
           </button>
           <button id="dataButton" class="btn btn-dark btn-sm right-buttons" onclick="window.open('posts/analyzing-pey-postings-part-1/', '_blank')">
-            <i class="fa-solid fa-circle-question" style="color: #ffffff;"></i> <i>How was this data sourced?</i>
+            <i class="fa-solid fa-circle-question"></i> <i>How was this data sourced?</i>
           </button>
           <button id="githubButton" class="btn btn-dark btn-sm right-buttons" onclick="window.open('https://github.com/sadmanca/uoft-pey-coop-job-postings', '_blank')">
             <i class="fa-brands fa-github"></i>
@@ -257,12 +257,12 @@
           <button class="btn btn-success btn-sm" onclick="exportAllRowsToExcel()">
             <i class="fas fa-file-excel"></i> Download Excel
           </button>
-          <!-- <button id="hideExpiredJobsButton" class="btn btn-sm" style="background-color: #520000; border-color: #520000; color: #fff;">
+          <button id="hideExpiredJobsButton" class="btn btn-sm" style="background-color: #520000; border-color: #520000; color: #fff;">
             <i class="fas fa-xmark"></i> Hide Expired Jobs
-          </button> -->
-          <!-- <button id="showExpiringJobsButton" class="btn btn-sm" style="background-color: #525200; border-color: #525200; color: #fff;">
+          </button>
+          <button id="showExpiringJobsButton" class="btn btn-sm" style="background-color: #525200; border-color: #525200; color: #fff;">
             <i class="fas fa-clock"></i> Jobs Expiring Soon
-          </button> -->
+          </button>
           <span style="margin: 0 2px;">|</span>
           <button id="toggleThemeButton" class="btn btn-outline-dark btn-sm" onclick="toggleTheme()">
             <i class="fas fa-moon"></i> Dark Mode
@@ -340,6 +340,7 @@
           const currentTheme = gridDiv.classList.contains('ag-theme-quartz') ? 'light' : 'dark';
           const newTheme = currentTheme === 'light' ? 'dark' : 'light';
           applyTheme(newTheme);
+          gridApi.redrawRows();
       }
   });
 </script>
@@ -694,34 +695,49 @@
     {
       field: "workTerm",
       width: 120,
-      cellStyle: function(params) {
-        const workTerm = params.value;
-        if (!workTerm) {
-          return ''; // Return an empty string if the location is blank
-        }
-        let backgroundColor = '';
-        const currentTheme = getCurrentTheme();
-        if (workTerm.includes('Summer')) {
-            backgroundColor = currentTheme === 'dark' ? '#1d361d' : '#e6f7e6'; // Dark green for dark mode, light green for light mode
-        } else if (workTerm.includes('Fall')) {
-            backgroundColor = currentTheme === 'dark' ? '#381e38' : '#ffe8ff'; // Dark red for dark mode, light red for light mode
-        } else if (workTerm.includes('Winter')) {
-            backgroundColor = currentTheme === 'dark' ? '#29394d' : '#e8f2ff'; // Dark red for dark mode, light red for light mode
-        }
-        return { backgroundColor: backgroundColor, color: currentTheme === 'dark' ? 'white' : 'black' };
-      }
+      // cellStyle: function(params) {
+      //   const workTerm = params.value;
+      //   if (!workTerm) {
+      //     return ''; // Return an empty string if the location is blank
+      //   }
+      //   let backgroundColor = '';
+      //   const currentTheme = getCurrentTheme();
+      //   if (workTerm.includes('Summer')) {
+      //       backgroundColor = currentTheme === 'dark' ? '#1d361d' : '#e6f7e6'; // Dark green for dark mode, light green for light mode
+      //   } else if (workTerm.includes('Fall')) {
+      //       backgroundColor = currentTheme === 'dark' ? '#381e38' : '#ffe8ff'; // Dark red for dark mode, light red for light mode
+      //   } else if (workTerm.includes('Winter')) {
+      //       backgroundColor = currentTheme === 'dark' ? '#29394d' : '#e8f2ff'; // Dark red for dark mode, light red for light mode
+      //   }
+      //   return { backgroundColor: backgroundColor, color: currentTheme === 'dark' ? 'white' : 'black' };
+      // }
     },
     {
       field: "applicationDeadline",
       width: 170,
       filter: 'agDateColumnFilter',
-      // filterParams: {
-      //     comparator: appDeadlineFilterDateComparator
-      //   },
-      // sortable: true,
-      // comparator: appDeadlineSortDateComparator
+      filterParams: {
+          comparator: appDeadlineFilterDateComparator
+        },
+      sortable: true,
+      comparator: appDeadlineSortDateComparator,
+      cellStyle: params => {
+          const today = new Date();
+          const deadline = new Date(params.value);
+
+          if (deadline) {
+              const timeDiff = deadline - today;
+              const dayDiff = timeDiff / (1000 * 60 * 60 * 24);
+
+              if (dayDiff < 0) {
+                  return { backgroundColor: '#2e0000', color: 'white' };
+              } else if (dayDiff <= 7) {
+                  return { backgroundColor: '#3b3b01', color: 'white' };
+              }
+          }
+          return null;
+      },
     },
-    // Uncomment and include additional fields as needed
     // {
     //   field: "applicationMethod",
     // },
@@ -825,6 +841,36 @@
 
     groupUseEntireRow: true,
 
+    getRowStyle: function(params) {
+    if (params.node.group) {
+        return null; // Do not apply any style to group rows
+    }
+
+    const today = new Date();
+    const deadline = params.data ? new Date(params.data.applicationDeadline) : null;
+
+    if (deadline) {
+        const timeDiff = deadline - today;
+        const dayDiff = timeDiff / (1000 * 60 * 60 * 24);
+
+        const theme = getCurrentTheme();
+        const isDarkTheme = theme === 'dark';
+
+        if (dayDiff < 0) {
+            return {
+                backgroundColor: isDarkTheme ? '#260000' : '#faeae8',
+                color: isDarkTheme ? 'white' : 'black'
+            };
+        } else if (dayDiff <= 7) {
+            return {
+                backgroundColor: isDarkTheme ? '#212100' : '#fffce6',
+                color: isDarkTheme ? 'white' : 'black'
+            };
+        }
+    }
+
+    return null;
+},
 
     // rowHeight: 250,
     getRowHeight: function(params) {
@@ -995,96 +1041,91 @@
     }
   }
 
+  function hideExpiredJobs() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set to midnight to compare only the date part
+
+    gridApi.getFilterInstance('applicationDeadline', function(filterInstance) {
+      filterInstance.setModel({
+        type: 'greaterThan',
+        dateFrom: today.toISOString().split('T')[0] // Format date as YYYY-MM-DD
+      });
+      gridApi.onFilterChanged();
+    });
+  }
+
+  function showExpiringJobs() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set to midnight to compare only the date part
+
+    const twoDaysFromToday = new Date(today);
+    twoDaysFromToday.setDate(today.getDate() + 7); // Add 2 days to today
+
+    gridApi.getFilterInstance('applicationDeadline', function(filterInstance) {
+      filterInstance.setModel({
+        type: 'inRange',
+        dateFrom: today.toISOString().split('T')[0], // Format date as YYYY-MM-DD
+        dateTo: twoDaysFromToday.toISOString().split('T')[0] // Format date as YYYY-MM-DD
+      });
+      gridApi.onFilterChanged();
+    });
+  }
+
   // Function to compare dates for sorting
-  // function appDeadlineSortDateComparator(date1, date2) {
-  //   // Check if date1 or date2 is undefined or empty
-  //   if (!date1 || !date2) {
-  //     return 0;
-  //   }
+  function appDeadlineSortDateComparator(date1, date2) {
+    // Check if date1 or date2 is undefined or empty
+    if (!date1 || !date2) {
+        return 0;
+    }
 
-  //   // Parse the date1 to a Date object
-  //   const dateParts1 = date1.split(/\s+/);
-  //   const month1 = dateParts1[0];
-  //   const day1 = parseInt(dateParts1[1].replace(',', ''));
-  //   const year1 = parseInt(dateParts1[2]);
-  //   const parsedDate1 = new Date(`${month1} ${day1}, ${year1}`);
+    // Parse the dates to Date objects
+    const parsedDate1 = new Date(date1);
+    const parsedDate2 = new Date(date2);
 
-  //   // Parse the date2 to a Date object
-  //   const dateParts2 = date2.split(/\s+/);
-  //   const month2 = dateParts2[0];
-  //   const day2 = parseInt(dateParts2[1].replace(',', ''));
-  //   const year2 = parseInt(dateParts2[2]);
-  //   const parsedDate2 = new Date(`${month2} ${day2}, ${year2}`);
+    // Compare the dates
+    if (parsedDate1 < parsedDate2) {
+        return -1;
+    } else if (parsedDate1 > parsedDate2) {
+        return 1;
+    } else {
+        return 0;
+    }
+  }
 
-  //   // Compare the dates
-  //   if (parsedDate1 < parsedDate2) {
+// Function to compare dates for filtering
+function appDeadlineFilterDateComparator(filterLocalDateAtMidnight, cellValue) {
+  // Parse the cell value to a Date object
+  const date = new Date(cellValue);
 
-  //   const currentGroupColumns = gridApi.getRowGroupColumns().map(col => col.getColId());
-  //   const isGroupedByCompany = currentGroupColumns.includes('companyName');
+  // Compare the dates
+  if (date < filterLocalDateAtMidnight) {
+    return -1;
+  } else if (date > filterLocalDateAtMidnight) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
 
-  //   function getSortModel() {
-  //       const sortState = gridApi.getAllColumns().map(col => ({
-  //           colId: col.getColId(),
-  //           sort: col.getSort()
-  //       })).filter(col => col.sort != null);
-  //       return sortState.length > 0 ? sortState : [];
-  //   }
+function dateComparator(date1, date2) {
+  if (!date1 || !date2) {
+    return 0;
+  }
+  const parsedDate1 = new Date(date1);
+  const parsedDate2 = new Date(date2);
+  return parsedDate1 - parsedDate2;
+}
 
-  //   function setSortModel(sortModel) {
-  //       gridApi.applyColumnState({
-  //           state: sortModel,
-  //           applyOrder: true
-  //       });
-  //   }
-
-  //   if (isGroupedByCompany) {
-  //       // Clear grouping and revert sort
-  //       gridApi.setRowGroupColumns([]);      return -1;
-  //   } else if (parsedDate1 > parsedDate2) {
-  //     return 1;
-  //   } else {
-  //     return 0;
-  //   }
-  // }
-
-  // // Function to compare dates for filtering
-  // function appDeadlineFilterDateComparator(filterLocalDateAtMidnight, cellValue) {
-  //   // Parse the cell value to a Date object
-  //   const dateParts = cellValue.split(/\s+/);
-  //   const month = dateParts[0];
-  //   const day = parseInt(dateParts[1].replace(',', ''));
-  //   const year = parseInt(dateParts[2]);
-  //   const date = new Date(`${month} ${day}, ${year}`);
-
-  //   // Compare the dates
-  //   if (date < filterLocalDateAtMidnight) {
-  //     return -1;
-  //   } else if (date > filterLocalDateAtMidnight) {
-  //     return 1;
-  //   } else {
-  //     return 0;
-  //   }
-  // }
-
-  // function dateComparator(date1, date2) {
-  //   if (!date1 || !date2) {
-  //     return 0;
-  //   }
-  //   const parsedDate1 = new Date(date1);
-  //   const parsedDate2 = new Date(date2);
-  //   return parsedDate1 - parsedDate2;
-  // }
-
-  // function filterDateComparator(filterLocalDateAtMidnight, cellValue) {
-  //   const date = new Date(cellValue);
-  //   if (date < filterLocalDateAtMidnight) {
-  //     return -1;
-  //   } else if (date > filterLocalDateAtMidnight) {
-  //     return 1;
-  //   } else {
-  //     return 0;
-  //   }
-  // }
+function filterDateComparator(filterLocalDateAtMidnight, cellValue) {
+  const date = new Date(cellValue);
+  if (date < filterLocalDateAtMidnight) {
+    return -1;
+  } else if (date > filterLocalDateAtMidnight) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
 
   // External filter to hide rows with blank postingDate
   function isExternalFilterPresent() {
@@ -1117,13 +1158,13 @@
     if (isGroupedByCompany) {
         // Clear grouping and revert sort
         gridApi.setRowGroupColumns([]);
-        setSortModel([{ colId: 'companyName', sort: 'asc' }]);
+        // setSortModel([{ colId: 'companyName', sort: 'asc' }]);
         gridApi.setColumnVisible('companyName', true); // Ensure the column is visible after ungrouping
     } else {
         // Group by Company, show the Company column, and sort by Company in ascending order
         gridApi.setRowGroupColumns(['companyName']);
         gridApi.setColumnVisible('companyName', true); // Ensure the column is visible
-        setSortModel([{ colId: 'companyName', sort: 'asc' }]);
+        // setSortModel([{ colId: 'companyName', sort: 'asc' }]);
     }
 
     gridApi.refreshClientSideRowModel('group');
@@ -1140,6 +1181,8 @@
 
     checkWindowWidth();
     window.addEventListener('resize', checkWindowWidth);
+    document.querySelector('#hideExpiredJobsButton').addEventListener('click', hideExpiredJobs);
+    document.querySelector('#showExpiringJobsButton').addEventListener('click', showExpiringJobs);
   });
 
 </script>
