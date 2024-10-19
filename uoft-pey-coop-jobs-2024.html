@@ -257,11 +257,11 @@
           <button class="btn btn-success btn-sm" onclick="exportAllRowsToExcel()">
             <i class="fas fa-file-excel"></i> Download Excel
           </button>
-          <button id="hideExpiredJobsButton" class="btn btn-sm" style="background-color: #520000; border-color: #520000; color: #fff;">
+          <button id="toggleExpiredJobsButton" class="btn btn-sm" style="background-color: #520000; border-color: #520000; color: #fff;">
             <i class="fas fa-xmark"></i> Hide Expired Jobs
           </button>
-          <button id="showExpiringJobsButton" class="btn btn-sm" style="background-color: #525200; border-color: #525200; color: #fff;">
-            <i class="fas fa-clock"></i> Jobs Expiring Soon
+          <button id="toggleExpiringJobsButton" class="btn btn-sm" style="background-color: #525200; border-color: #525200; color: #fff;">
+            <i class="fas fa-clock"></i> Show Jobs Expiring Soon
           </button>
           <span style="margin: 0 2px;">|</span>
           <button id="toggleThemeButton" class="btn btn-outline-dark btn-sm" onclick="toggleTheme()">
@@ -479,7 +479,7 @@
     "Mattamy Homes Limited": "https://www.mattamyhomes.com/",
     "MedMe Health": "https://www.medmehealth.com/",
     "Memme Infrastructure Contractors": "https://www.memme.com/",
-    "Metrolinx": "https://www.metrolinx.com/en",
+    "Metrolinx": "https://www.metrolinx.com",
     "Microchip Technology Inc.": "https://www.microchip.com/",
     "Monday Girl": "https://www.joinmondaygirl.com/",
     "Moody's Analytics": "https://www.moodys.com/",
@@ -1041,35 +1041,62 @@
     }
   }
 
-  function hideExpiredJobs() {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); // Set to midnight to compare only the date part
+  let hideExpired = false;
+  function toggleExpiredJobs() {
+        hideExpired = !hideExpired; // Toggle the state
 
-    gridApi.getFilterInstance('applicationDeadline', function(filterInstance) {
-      filterInstance.setModel({
-        type: 'greaterThan',
-        dateFrom: today.toISOString().split('T')[0] // Format date as YYYY-MM-DD
-      });
-      gridApi.onFilterChanged();
-    });
-  }
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // Set to midnight to compare only the date part
 
-  function showExpiringJobs() {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); // Set to midnight to compare only the date part
+        gridApi.getFilterInstance('applicationDeadline', function(filterInstance) {
+            if (hideExpired) {
+                // Set the filter to hide expired jobs
+                filterInstance.setModel({
+                    type: 'greaterThan',
+                    dateFrom: today.toISOString().split('T')[0] // Format date as YYYY-MM-DD
+                });
+            } else {
+                // Clear the filter to show all jobs
+                filterInstance.setModel(null);
+            }
+            gridApi.onFilterChanged();
+        });
 
-    const twoDaysFromToday = new Date(today);
-    twoDaysFromToday.setDate(today.getDate() + 7); // Add 2 days to today
+        // Update button text
+        const button = document.querySelector('#toggleExpiredJobsButton');
+        button.innerHTML = hideExpired ? '<i class="fas fa-bars"></i> Show Expired Jobs' : '<i class="fas fa-xmark"></i> Hide Expired Jobs';
+    }
 
-    gridApi.getFilterInstance('applicationDeadline', function(filterInstance) {
-      filterInstance.setModel({
-        type: 'inRange',
-        dateFrom: today.toISOString().split('T')[0], // Format date as YYYY-MM-DD
-        dateTo: twoDaysFromToday.toISOString().split('T')[0] // Format date as YYYY-MM-DD
-      });
-      gridApi.onFilterChanged();
-    });
-  }
+    let showExpiring = false; // Track the current state
+
+    function toggleExpiringJobs() {
+        showExpiring = !showExpiring; // Toggle the state
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // Set to midnight to compare only the date part
+
+        const sevenDaysFromToday = new Date(today);
+        sevenDaysFromToday.setDate(today.getDate() + 7); // Add 7 days to today
+
+        gridApi.getFilterInstance('applicationDeadline', function(filterInstance) {
+            if (showExpiring) {
+                // Set the filter to show expiring jobs only
+                filterInstance.setModel({
+                    type: 'inRange',
+                    dateFrom: today.toISOString().split('T')[0], // Format date as YYYY-MM-DD
+                    dateTo: sevenDaysFromToday.toISOString().split('T')[0] // Format date as YYYY-MM-DD
+                });
+            } else {
+                // Clear the filter to show all jobs
+                filterInstance.setModel(null);
+            }
+            gridApi.onFilterChanged();
+        });
+
+        // Update button text
+        const button = document.querySelector('#toggleExpiringJobsButton');
+        button.innerHTML = showExpiring ? '<i class="fas fa-bars"></i> Show All Jobs' : '<i class="fas fa-clock"></i> Show Jobs Expiring Soon';
+    }
 
   // Function to compare dates for sorting
   function appDeadlineSortDateComparator(date1, date2) {
@@ -1181,8 +1208,8 @@ function filterDateComparator(filterLocalDateAtMidnight, cellValue) {
 
     checkWindowWidth();
     window.addEventListener('resize', checkWindowWidth);
-    document.querySelector('#hideExpiredJobsButton').addEventListener('click', hideExpiredJobs);
-    document.querySelector('#showExpiringJobsButton').addEventListener('click', showExpiringJobs);
+    document.querySelector('#toggleExpiredJobsButton').addEventListener('click', toggleExpiredJobs);
+    document.querySelector('#toggleExpiringJobsButton').addEventListener('click', toggleExpiringJobs);
   });
 
 </script>
