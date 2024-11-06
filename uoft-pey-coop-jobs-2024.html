@@ -245,17 +245,17 @@
             <i class="fas fa-file-excel"></i> Export Selected Rows to Excel
           </button> -->
           <button id="exportCsvButton" class="btn btn-outline-primary btn-sm" disabled onclick="exportSelectedRowsToCSV()">
-            <i class="fas fa-file-csv"></i> Download Selected: CSV
+            <i class="fas fa-file-csv"></i> Download Selected CSV
           </button>
           <button id="exportExcelButton" class="btn btn-outline-success btn-sm" disabled onclick="exportSelectedRowsToExcel()">
-            <i class="fas fa-file-excel"></i> Download Selected Rows: Excel
+            <i class="fas fa-file-excel"></i> Download Selected Rows Excel
           </button>
           <span style="margin: 0 2px;">|</span>
           <button class="btn btn-primary btn-sm" onclick="exportAllRowsToCSV()">
-            <i class="fas fa-file-csv"></i> Download All: CSV
+            <i class="fas fa-file-csv"></i> Download All CSV
           </button>
           <button class="btn btn-success btn-sm" onclick="exportAllRowsToExcel()">
-            <i class="fas fa-file-excel"></i> Download All: Excel
+            <i class="fas fa-file-excel"></i> Download All Excel
           </button>
           <button id="toggleExpiredJobsButton" class="btn btn-sm" style="background-color: #520000; border-color: #520000; color: #fff;">
             <i class="fas fa-xmark"></i> Hide Expired Jobs
@@ -1144,7 +1144,7 @@
   }
 
   function exportAllRowsToCSV() {
-    const filename = generateFilename('uoft-pey-coop-jobs-2024-2025-ALL', 'csv');
+    const filename = generateFilename('uoft-pey-coop-jobs-2024-2025', 'csv');
     if (gridApi) {
       gridApi.exportDataAsCsv({
         onlySelected: false,
